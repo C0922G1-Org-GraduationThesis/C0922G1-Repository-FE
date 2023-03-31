@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-import {BannerComponent} from './component/shared/banner/banner.component';
 import {HomeComponent} from './component/shared/home/home.component';
 
 
