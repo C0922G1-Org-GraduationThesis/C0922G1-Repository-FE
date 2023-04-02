@@ -1,0 +1,28 @@
+<div class="d-flex justify-content-center ">
+  <div class="w-50 border border-2 border-info p-3 rounded">
+    <form [formGroup]="formCreate" (ngSubmit)="create()">
+      <div class="row">
+        <div class="card" style="width: 100%">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-2">
+                <div class="d-flex justify-content-start mb-2">
+                  <img style="width: 50px; " class="rounded-circle"
+                       src="https://trello-members.s3.amazonaws.com/6419258324eb7de7ddbc2717/171c559d6c162cdfbb5ac71cc6826acb/original.png">
+                </div>
+              </div>
+              <div class="col-md-10">
+                <input class="form-control ms-2" type="text"
+                       placeholder="Nhập thắc mắc của bạn ở đây...">
+              </div>
+            </div>
+            <div class="row" style="float: right">
+              <button class="btn btn-outline-info" style="float: right" type="submit">Đăng</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+

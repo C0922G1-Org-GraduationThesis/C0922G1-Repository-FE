@@ -1,0 +1,72 @@
+<div class="d-flex justify-content-center ">
+  <div class="w-50 border border-2 border-info p-3 rounded">
+    <h5 class="text-center">Thắc mắc của sinh viên</h5>
+    <div class="row">
+      <div class="card" style="width: 100%">
+        <div class="card-body">
+          <div class="row" *ngFor="let question of questions">
+            <div class="col-md-2">
+              <div class="d-flex justify-content-start mb-2 align-items-center">
+                <img style="width: 50px; " class="rounded-circle"
+                     src="https://trello-members.s3.amazonaws.com/6419258324eb7de7ddbc2717/171c559d6c162cdfbb5ac71cc6826acb/original.png">
+              </div>
+            </div>
+            <div class="col-md-10">
+              <div class="row">
+                <span><b>{{question.studentName}}</b></span>
+              </div>
+              <span style="color: white" class="badge bg-primary">{{question.questionTopic}}</span>
+              <p>{{question.questionContent}}</p>
+              <div class="row">
+                <div class="col-md-9">
+                  <p class="btn btn-outline-info">Trả lời</p>
+                </div>
+                <div class="col-md-3">
+                  <span style="font-size: 12px">{{question.dateTime| date: 'dd-MM-yyyy hh:mm'}}</span>
+                </div>
+              </div>
+              <hr>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-6"> <span> <a style="text-align: left" role="button" (click)="loadMore()"
+                                             *ngIf="flag">Xem thêm</a></span>
+            </div>
+            <div class="col-md-4">
+              <span *ngIf="totalElement>1"> <a style="text-align: left" role="button" (click)="hidden()">Ẩn đánh giá</a></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-template #noContent>
+      <h5 class="text-center mt-5 text-success">Không có câu hỏi nào</h5>
+    </ng-template>
+
+    <form [formGroup]="formCreate" (ngSubmit)="create()" >
+      <div class="row">
+        <div class="card" style="width: 100%">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-2">
+                <div class="d-flex justify-content-start mb-2">
+                  <img style="width: 50px; " class="rounded-circle"
+                       src="https://trello-members.s3.amazonaws.com/6419258324eb7de7ddbc2717/171c559d6c162cdfbb5ac71cc6826acb/original.png">
+                </div>
+              </div>
+              <div class="col-md-10">
+                <input class="form-control ms-2" type="text" formControlName="questionContent"
+                       placeholder="Nhập thắc mắc của bạn ở đây...">
+              </div>
+            </div>
+            <div class="row" style="float: right">
+              <button class="btn btn-outline-info" style="float: right" type="submit">Đăng</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+

@@ -17,6 +17,5 @@ export interface Student {
   flagLeader?: boolean;
   teamId?: Team;
   clazzId?: Clazz;
-  accountId?: Account;
-  questionId?: Question;
+  account?: Account;
 }

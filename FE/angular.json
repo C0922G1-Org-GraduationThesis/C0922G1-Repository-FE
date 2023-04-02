@@ -121,6 +121,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "graduation-thesis-angular"
+    }
+  },
+  "defaultProject": "graduation-thesis-angular",
+  "cli": {
+    "analytics": "333a0d22-de99-45ba-bc75-9705447fb23e"
+  }
 }
