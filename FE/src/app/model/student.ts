@@ -18,4 +18,5 @@ export interface Student {
   team?: Team;
   clazz?: Clazz;
   account?: Account;
+
 }
