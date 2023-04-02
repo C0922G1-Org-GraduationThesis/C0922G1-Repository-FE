@@ -1,0 +1,21 @@
+<div class="container" style="margin-top: 20px">
+
+  <div class="mb-5 mt-4">
+    <h2 class="text-center text-primary">CHI TIẾT ĐỀ TÀI</h2>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-6 col-sm-12 mb-3">
+      <img src="{{project.projectImg}}" style="max-width: 100%; max-height: 320px" alt="">
+    </div>
+    <div class="col-lg-6 col-sm-12 mb-3">
+      <h3 class="text-center mb-3">{{project.projectName}}</h3>
+      <p>
+        <a routerLink="/projects/list" class="btn btn-outline-primary">Quay lại</a>
+      </p>
+      <p>Description: {{project.projectDescription}}</p>
+      <p>Content: {{project.projectContent}}</p>
+    </div>
+  </div>
+
+</div>

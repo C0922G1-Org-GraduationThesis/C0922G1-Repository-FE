@@ -7,5 +7,5 @@ export interface Project {
   projectDescription?: string;
   projectStatus?: boolean;
   projectImg?: string;
-  teamId?: Team;
+  team?: Team;
 }

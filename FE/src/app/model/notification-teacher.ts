@@ -5,5 +5,5 @@ export interface NotificationTeacher {
   notificationTeacherTopic?: string;
   notificationTeacherTime?: string;
   notificationTeacherContent?: string;
-  teacherId?: Teacher;
+  teacher?: Teacher;
 }
