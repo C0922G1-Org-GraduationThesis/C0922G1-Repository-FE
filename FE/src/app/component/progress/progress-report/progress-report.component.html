@@ -1,0 +1,93 @@
+<div class="row ">
+  <h3>Báo Cáo Tiến Độ</h3>
+</div>
+<div class="container">
+  <form *ngIf="progressReportForm" [formGroup]="progressReportForm" (ngSubmit)="save()">
+    <div class="row-input-project "><input hidden style="font-size: x-large" formControlName="project"></div>
+    <div class="row topic-name form-group" style="margin-bottom: 4%; margin-top: 4%">
+      <div class="col-md-1 "></div>
+      <div class="col-md-2 "><span><img style="width: 20%; height: 90%;"
+                                        src="../../../../assets/img/progress_report_icon_img/book_icon.png"
+                                        alt=""></span><span>Tên đề tài</span>
+      </div>
+      <div class="col-md-7 "><p style="font-size: x-large">{{projectName}}</p></div>
+      <div class="col-md-2 "></div>
+    </div>
+    <div class="row stage-process" style="margin-bottom: 4%">
+      <div class="col-md-1 "></div>
+      <div class="col-md-2 "><span><img style="width:20%; height: 80%"
+                                        src="../../../../assets/img/progress_report_icon_img/wave_icon.png"
+                                        alt=""></span><span>{{stageName}}</span><input hidden formControlName="stage">
+      </div>
+      <div class="col-md-7 ">
+        <div  class="progress-bar progress-bar-striped progress-bar-animated"  role="progressbar" [style.backgroundColor]="backgroundColor">
+          <div class="progress" style="display: flex ; justify-content: center; text-align:center; color: aliceblue"
+               [style]="{
+  backgroundColor: progressColor,
+  width: progress + '%'}"aria-valuemin="0" aria-valuemax="100"><span>{{maxStagePercent}}%</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2 "></div>
+    </div>
+    <div class="row file-report form-group" style="margin-bottom: 4%">
+      <div class="col-md-1 "></div>
+      <div class="col-md-2 "><span><img style="width: 25%; height: 100%"
+                                        src="../../../../assets/img/progress_report_icon_img/file_icon.png"
+                                        alt=""></span><span>File báo cáo</span>
+      </div>
+      <div class="col-md-7">
+        <div class="row">
+          <div class="col-md-6">
+            <input class="btn" type="file" #uploadFile (change)="uploadFileImg()" [value]="fileUrl" formControlName="progressReportFile">
+          </div>
+          <div class="col-md-6">
+            <a
+              routerLink="/progress/history/{{projectId}}/{{stageId}}" style="text-decoration: none">
+              <button class="btn btn-outline-info btn-block mx-auto" type="button" style="margin-right: 10%; width: 70%"> Lịch sử file
+              đã báo cáo</button></a>
+
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2 "></div>
+    </div>
+    <div class="row content" style="margin-bottom: 4%">
+      <div class="col-md-1 "></div>
+      <div class="col-md-2 "><span><img style="width: 20%; height: 30%"
+                                        src="../../../../assets/img/progress_report_icon_img/content_icon.png"
+                                        alt=""></span><span>Nội dung</span>
+      </div>
+      <div class="col-md-7 ">
+        <div class="content-area">
+                <textarea class="editor" id="" style="width: 100%" rows="7" formControlName="progressReportContent"
+                          placeholder="Nội dung báo cáo..."></textarea>
+        </div>
+      </div>
+      <div class="col-md-2 "></div>
+    </div>
+    <div class="row-dateTime"><input type="hidden" formControlName="progressReportTime"></div>
+    <div class="row action-button">
+      <div class="col-md-3"></div>
+      <div class="col-md-7">
+        <div class="row">
+          <div class="col-md-4"></div>
+          <div class="col-md-2">
+            <button type="button" class="btn btn-outline-secondary btn-block mx-auto"
+                    style="border-radius: 15px; width: 89%;color: #100e0e"><a routerLink="/progress"></a>Thoát
+            </button>
+          </div>
+          <div class="col-md-2">
+            <button class="btn btn-outline-info btn-block mx-auto"
+                    style="border-radius: 15px; width: 89%;color: #100e0e">
+              Gửi
+            </button>
+          </div>
+          <div class="col-md-4"></div>
+        </div>
+      </div>
+      <div class="col-md-2"></div>
+    </div>
+  </form>
+</div>
+

@@ -1,0 +1,33 @@
+<h3>{{projectName}} -  {{stageName}}</h3>
+<div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+  <div class="w-80 border border-2 border-info p-3 rounded">
+    <h5 class="text-center" style="font-size: xx-large">Lịch sử file báo cáo</h5>
+
+    <div class="d-flex justify-content-center ">
+
+      <table class="table">
+        <tr>
+          <td>STT</td>
+          <td>File link</td>
+          <td></td>
+          <td>Time report</td>
+        </tr>
+        <tr *ngFor="let progressReport of progressReportHistory; index as i">
+          <td>{{i + 1}}</td>
+          <td>{{progressReport.progressReportFile}}</td>
+          <td><a (click)="dowFile(progressReport.progressReportFile)">
+            <button class="btn btn-outline-info">Download file</button>
+          </a></td>
+          <td>{{progressReport.progressReportTime}}</td>
+        </tr>
+        <tr></tr>
+      </table>
+
+    </div>
+    <div><a routerLink="/progress/report/{{projectId}}/{{stageId}}">
+      <button type="button" class="btn btn-outline-secondary btn-block mx-auto"
+              style="border-radius: 15px; width: 10%;color: #100e0e">Thoát
+      </button>
+    </a></div>
+  </div>
+</div>

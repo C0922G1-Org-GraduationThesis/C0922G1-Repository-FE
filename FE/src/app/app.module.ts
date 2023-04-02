@@ -13,6 +13,15 @@ import {StudentModule} from './component/student/student.module';
 import {TeacherModule} from './component/teacher/teacher.module';
 import {TopicModule} from './component/topic/topic.module';
 
+import {environment} from "../environments/environment";
+
+import {AngularFireStorageModule} from "@angular/fire/storage";
+// @ts-ignore
+import {AngularFireModule} from "@angular/fire";
+
+
+
+
 @NgModule({
   declarations: [
     AppComponent
@@ -28,7 +37,11 @@ import {TopicModule} from './component/topic/topic.module';
     SharedModule,
     StudentModule,
     TeacherModule,
-    TopicModule
+    TopicModule,
+    AngularFireStorageModule,
+    AngularFireModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+
   ],
   providers: [],
   bootstrap: [AppComponent]
