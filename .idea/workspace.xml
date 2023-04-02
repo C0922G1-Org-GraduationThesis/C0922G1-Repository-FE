@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a1c5e2ae-dff5-4594-8404-9d5ee76a7727" name="Default Changelist" comment="" />
+    <list default="true" id="a1c5e2ae-dff5-4594-8404-9d5ee76a7727" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/app/service/notification-teacher.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/app/service/notification-teacher.service.ts" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -20,6 +23,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/FE" />
+    <property name="ts.external.directory.path" value="E:\m6 l2\project_3\C0922G1-Repository-FE\FE\node_modules\typescript\lib" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -32,13 +36,18 @@
       <option name="presentableId" value="Default" />
       <updated>1680245356682</updated>
       <workItem from="1680245357918" duration="11000" />
+      <workItem from="1680462770514" duration="79000" />
+      <workItem from="1680464635863" duration="100000" />
     </task>
     <servers />
   </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
   <component name="WindowStateProjectService">
-    <state x="549" y="163" key="FileChooserDialogImpl" timestamp="1680245367399">
+    <state x="549" y="163" key="FileChooserDialogImpl" timestamp="1680464733673">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
-    <state x="549" y="163" key="FileChooserDialogImpl/0.0.1536.816@0.0.1536.816" timestamp="1680245367399" />
+    <state x="549" y="163" key="FileChooserDialogImpl/0.0.1536.816@0.0.1536.816" timestamp="1680464733673" />
   </component>
 </project>

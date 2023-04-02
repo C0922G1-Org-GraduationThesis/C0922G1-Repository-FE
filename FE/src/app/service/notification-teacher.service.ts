@@ -14,4 +14,9 @@ export class NotificationTeacherService {
   getAllNotificationTeacher(): Observable<NotificationTeacher[]> {
     return this.httpClient.get<NotificationTeacher[]>('http://localhost:8080/api/notification-teachers');
   }
+
+  addNotificationTeacher(notificationTeacher : NotificationTeacher): Observable<any> {
+    return this.httpClient.post<any>('http://localhost:8080/api/notification-teachers/create-notification-teacher',notificationTeacher)
+  }
+
 }

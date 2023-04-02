@@ -34,6 +34,15 @@ const routes: Routes = [
     path: 'topics',
     loadChildren: () => import('./component/topic/topic.module').then(module => module.TopicModule)
   },
+  {
+    path: 'notification-teacher',
+    loadChildren:() => import('./component/notification/notification.module').then(module => module.NotificationModule)
+  },
+  {
+    path: 'document',
+    loadChildren:() => import('./component/document/document.module').then(module => module.DocumentModule)
+  },
+
 ];
 
 @NgModule({
