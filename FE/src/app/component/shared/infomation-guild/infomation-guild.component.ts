@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {NotificationTeacherService} from '../../../service/notification-teacher.service';
+import {NotificationTeacher} from '../../../model/notification-teacher';
 
 @Component({
   selector: 'app-infomation-guild',
@@ -6,10 +8,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./infomation-guild.component.css']
 })
 export class InfomationGuildComponent implements OnInit {
-
-  constructor() { }
+  notificationTeacherList: NotificationTeacher[];
+  constructor(private notificationTeacherService: NotificationTeacherService) {
+  }
 
   ngOnInit(): void {
+    this.notificationTeacherService.getAllNotificationTeacher().subscribe(item => {
+      console.log(item);
+      this.notificationTeacherList = item;
+    });
   }
 
 }
