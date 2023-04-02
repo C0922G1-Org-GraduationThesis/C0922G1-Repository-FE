@@ -1,0 +1,161 @@
+<div class="container-fluid">
+  <div class="row justify-content-center">
+    <h3 class="text-primary mt-3">ĐĂNG KÝ NHÓM SINH VIÊN</h3>
+  </div>
+  <div class="row justify-content-end mb-3">
+    <div class="col-lg-4 col-md-6 col-sm-12">
+      <div class="input-group">
+        <input type="text" class="form-control rounded-pill" placeholder="Tên sinh viên hoặc MSSV" id="groups-search"
+               [(ngModel)]="searchStr">
+        <button class="btn btn-outline-primary rounded-pill" (click)="onSearch()">Tìm kiếm</button>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-4 col-md-4 col-sm-4">
+      <div class="row justify-content-center">
+        <h5 class="text-primary mt-3">Danh sách thành viên của nhóm</h5>
+      </div>
+      <div class="row mb-3">
+        <div class="col">
+          <table class="table table-striped table-shadow">
+            <thead>
+            <tr>
+              <th scope="col">STT</th>
+              <th scope="col">Tên sinh viên</th>
+              <th scope="col">MSSV</th>
+              <th scope="col">Ngày sinh</th>
+              <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody *ngIf="listTeam.length > 0; else noMembers">
+            <tr *ngFor="let student of listTeam; let i = index">
+              <th scope="row">{{i + 1}}</th>
+              <td>{{student.studentName}}</td>
+              <td>{{student.studentCode}}</td>
+              <td>{{student.studentDateOfBirth}}</td>
+              <td>
+                <button type="button" class="btn btn-outline-danger" (click)="delete(student.studentId)">Hủy</button>
+              </td>
+            </tr>
+            </tbody>
+            <ng-template #noMembers>
+              <tbody>
+              <tr style="text-align: center">
+                <td colspan="5">Hiện tại nhóm của bạn chưa có thành viên nào.</td>
+              </tr>
+              </tbody>
+            </ng-template>
+          </table>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <button type="button" class="btn btn-outline-secondary" [disabled]="listTeam.length === 0" (click)="onSubmit()">Tạo nhóm</button>
+      </div>
+    </div>
+    <div class="col-lg-8 col-md-8 col-sm-8">
+      <div class="row fixed-height">
+        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-3 " *ngFor="let student of listSearchStudent">
+          <div class="card">
+            <img src="https://smilemedia.vn/wp-content/uploads/2022/09/cach-chup-anh-the-dep-e1664379835782.jpg"
+                 class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">{{student.studentName}}</h5>
+              <p class="card-text">{{student.studentCode}}</p>
+              <p class="card-text">{{student.studentDateOfBirth}}</p>
+            </div>
+            <div class="card-body d-flex justify-content-center">
+              <button type="button" class="btn btn-outline-success" (click)="addStudent(student.studentId)">Đăng ký</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex justify-content-center mg pagination-ellipsis">
+        <div class="div-paginable">
+          <div *ngIf="teamPage" class="d-flex justify-content-center" id="last-row">
+            <nav aria-label="Page navigation example">
+              <ul class="pagination">
+                <li class="page-item" [ngClass]="teamPage.first ? 'disabled': ''">
+                  <a role="button" class="page-link" (click)="changePage(0)">Trang đầu</a>
+                </li>
+                <li class="page-item" [ngClass]="teamPage.first ? 'disabled': ''">
+                  <a role="button" class="page-link" (click)="changePage(teamPage.number - 1)"><</a>
+                </li>
+                <li class="page-item" *ngIf="teamPage.number - 3 > 0">
+                  <a role="button" class="page-link"
+                     (click)="changePage(teamPage.number - 4)">{{teamPage.number - 3}}</a>
+                </li>
+                <li class="page-item" *ngIf="teamPage.number - 2 > 0">
+                  <a role="button" class="page-link"
+                     (click)="changePage(teamPage.number - 3)">{{teamPage.number - 2}}</a>
+                </li>
+                <li class="page-item" *ngIf="teamPage.number - 1 > 0">
+                  <a role="button" class="page-link"
+                     (click)="changePage(teamPage.number - 2)">{{teamPage.number - 1}}</a>
+                </li>
+                <li class="page-item" *ngIf="teamPage.number > 0">
+                  <a role="button" class="page-link"
+                     (click)="changePage(teamPage.number - 1)">{{teamPage.number}}</a>
+                </li>
+                <li class="page-item active"><a class="page-link">{{teamPage.number + 1}}</a></li>
+                <li class="page-item" *ngIf="teamPage.number + 2 <= teamPage.totalPages">
+                  <a role="button" class="page-link"
+                     (click)="changePage(teamPage.number + 1)">{{teamPage.number + 2}}</a>
+                </li>
+                <li class="page-item" *ngIf="teamPage.number + 3 <= teamPage.totalPages">
+                  <a role="button" class="page-link"
+                     (click)="changePage(teamPage.number + 2)">{{teamPage.number + 3}}</a>
+                </li>
+                <li class="page-item" *ngIf="teamPage.number + 4 <= teamPage.totalPages">
+                  <a role="button" class="page-link"
+                     (click)="changePage(teamPage.number + 3)">{{teamPage.number + 4}}</a>
+                </li>
+                <li class="page-item" *ngIf="teamPage.number + 5 <= teamPage.totalPages">
+                  <a role="button" class="page-link"
+                     (click)="changePage(teamPage.number + 4)">{{teamPage.number + 5}}</a>
+                </li>
+                <li class="page-item" [ngClass]="teamPage.last ? 'disabled': ''">
+                  <a role="button" class="page-link"
+                     (click)="changePage(teamPage.number + 1)">></a>
+                </li>
+                <li class="page-item" [ngClass]="teamPage.last ? 'disabled': ''">
+                  <a role="button" class="page-link"
+                     (click)="changePage(teamPage.totalPages - 1)">
+                    Trang cuối
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  const cards = document.querySelectorAll('.card');
+
+  cards.forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const cardX = card.offsetLeft;
+      const cardY = card.offsetTop;
+      const mouseX = e.pageX;
+      const mouseY = e.pageY;
+      const cardWidth = card.offsetWidth;
+      const cardHeight = card.offsetHeight;
+      const centerX = cardX + cardWidth / 2;
+      const centerY = cardY + cardHeight / 2;
+      const deltaX = mouseX - centerX;
+      const deltaY = mouseY - centerY;
+      const rotateX = deltaY / 10;
+      const rotateY = deltaX / -10;
+      card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    });
+
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = `rotateX(0deg) rotateY(0deg)`;
+    });
+  });
+</script>

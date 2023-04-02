@@ -1,0 +1,61 @@
+<div class="container-fluid">
+  <div class="row justify-content-center">
+    <h3 class="text-primary mt-3">THÔNG TIN NHÓM</h3>
+  </div>
+  <div class="row fixed-height" *ngIf="listStudent.length > 0">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <div class="row">
+        <div class="col-xl-2 col-lg-4 col-md-6 col-sm-12 mb-3 " *ngFor="let student of listStudent">
+          <div class="card">
+            <img src="https://smilemedia.vn/wp-content/uploads/2022/09/cach-chup-anh-the-dep-e1664379835782.jpg"
+                 class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">{{student.studentName}}</h5>
+              <p class="card-text">{{student.studentCode}}</p>
+              <p class="card-text">{{student.studentDateOfBirth}}</p>
+            </div>
+            <div class="card-body d-flex justify-content-center">
+              <button type="button" class="btn btn-outline-success">Đã tham gia</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center fixed-height" *ngIf="listStudent.length === 0">
+    <h3 class="text-danger mt-3">Chưa có thành viên tham gia.</h3>
+  </div>
+  <div class="row justify-content-center">
+    <h3 class="text-danger mt-3">Hiện tại nhóm của bạn chưa đăng ký đề tài.</h3>
+  </div>
+  <div class="row justify-content-center mg">
+    <button type="button" class="btn btn-outline-secondary" (click)="onSubmit()">Đăng ký đề tài</button>
+  </div>
+</div>
+
+
+<script>
+  const cards = document.querySelectorAll('.card');
+
+  cards.forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const cardX = card.offsetLeft;
+      const cardY = card.offsetTop;
+      const mouseX = e.pageX;
+      const mouseY = e.pageY;
+      const cardWidth = card.offsetWidth;
+      const cardHeight = card.offsetHeight;
+      const centerX = cardX + cardWidth / 2;
+      const centerY = cardY + cardHeight / 2;
+      const deltaX = mouseX - centerX;
+      const deltaY = mouseY - centerY;
+      const rotateX = deltaY / 10;
+      const rotateY = deltaX / -10;
+      card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    });
+
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = `rotateX(0deg) rotateY(0deg)`;
+    });
+  });
+</script>
