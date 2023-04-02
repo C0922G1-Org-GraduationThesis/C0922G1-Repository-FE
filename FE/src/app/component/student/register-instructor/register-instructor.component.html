@@ -1,0 +1,245 @@
+<div class="d-flex text-center mt-4">
+  <div class="container">
+    <div class="row">
+      <h2 style="color:#17a2b8">ĐĂNG KÝ GIÁO VIÊN HƯỚNG DẪN</h2>
+    </div>
+    <form *ngIf="editForm" [formGroup]="editForm">
+      <span class="h5">Giáo viên hướng dẫn: </span>
+      <input type="text" formControlName="teacherName" disabled style="color: #17a2b8;">
+    </form>
+
+    <!--Bảng danh sách giáo viên-->
+    <div class="mt-3">
+      <table class="table table-bordered table-hover" style="background-color: white;
+              box-shadow: 0 0 20px 0 #253365;">
+        <thead class="table-info">
+        <th style="background: white;text-align: left" class="fs-5" colspan="5">Danh sách giáo viên
+        </th>
+        <tr>
+          <th scope="col">Stt</th>
+          <th scope="col">Tên giáo viên</th>
+          <th scope="col">Tình trạng đăng ký</th>
+          <th scope="col">Xem</th>
+          <th scope="col">Chọn</th>
+        </tr>
+        </thead>
+        <tbody style="vertical-align: middle">
+        <tr *ngFor="let it of instructorList, index as i">
+          <th scope="row">{{i + 1}}</th>
+          <td style="text-align: left">{{it.teacherName}}</td>
+          <td>{{it.total}}/{{default}}</td>
+
+          <td>
+            <div style="display: flex; justify-content: center;">
+              <button class="btn btn-outline-success"
+                      style="border-radius: 5px;"
+                      data-bs-toggle="modal" data-bs-target="#detail1" (click)="getTeacherById(it.teacherId)">
+                Chi tiết
+              </button>
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center;">
+              <div *ngIf="it.total === default">
+                <ng-container
+                  *ngIf="instructorId === it.teacherId || team.teacherId === it.teacherId; else cancelButton">
+                  <button class="btn btn-outline-primary btn-custom"
+                          style="border-radius: 5px;"
+                          data-bs-toggle="modal" data-bs-target="#cancelModal">
+                    Hủy đăng ký
+                  </button>
+                </ng-container>
+                <ng-template #cancelButton>
+                  <button class="btn btn-outline-primary btn-custom"
+                          style="border-radius: 5px;"
+                          data-bs-toggle="modal" data-bs-target="#registerModal"
+                          (click)="register(it.teacherId, it.teacherName)"
+                          disabled>
+                    Đăng ký
+                  </button>
+                </ng-template>
+              </div>
+              <div *ngIf="it.total!==default">
+                <button *ngIf="instructorId === it.teacherId && isRegistered ; else registerButton"
+                        class="btn btn-outline-primary btn-custom"
+                        style="border-radius: 5px;"
+                        data-bs-toggle="modal" data-bs-target="#cancelModal">
+                  Hủy đăng ký
+                </button>
+                <ng-template #registerButton>
+                  <button class="btn btn-outline-primary btn-custom"
+                          style="border-radius: 5px;"
+                          data-bs-toggle="modal" data-bs-target="#registerModal"
+                          (click)="register(it.teacherId, it.teacherName)"
+                          [disabled]="isRegistered ">
+                    Đăng ký
+                  </button>
+                </ng-template>
+              </div>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!--Phân trang-->
+<nav *ngIf="teamPage" class="d-flex justify-content-center align-items-center mt-4"
+     aria-label="Page navigation example">
+  <ul class="pagination">
+    <li class="page-item" [ngClass]="teamPage.first ? 'disabled': ''">
+      <a role="button" class="page-link" (click)="changePage(0)">Trang đầu</a>
+    </li>
+    <li class="page-item" [ngClass]="teamPage.first ? 'disabled': ''">
+      <a role="button" class="page-link" (click)="changePage(teamPage.number - 1)"><</a>
+    </li>
+    <li class="page-item" *ngIf="teamPage.number - 3 > 0">
+      <a role="button" class="page-link"
+         (click)="changePage(teamPage.number - 4)">{{teamPage.number - 3}}</a>
+    </li>
+    <li class="page-item" *ngIf="teamPage.number - 2 > 0">
+      <a role="button" class="page-link"
+         (click)="changePage(teamPage.number - 3)">{{teamPage.number - 2}}</a>
+    </li>
+    <li class="page-item" *ngIf="teamPage.number - 1 > 0">
+      <a role="button" class="page-link"
+         (click)="changePage(teamPage.number - 2)">{{teamPage.number - 1}}</a>
+    </li>
+    <li class="page-item" *ngIf="teamPage.number > 0">
+      <a role="button" class="page-link"
+         (click)="changePage(teamPage.number - 1)">{{teamPage.number}}</a>
+    </li>
+    <li class="page-item active"><a class="page-link">{{teamPage.number + 1}}</a></li>
+    <li class="page-item" *ngIf="teamPage.number + 2 <= teamPage.totalPages">
+      <a role="button" class="page-link"
+         (click)="changePage(teamPage.number + 1)">{{teamPage.number + 2}}</a>
+    </li>
+    <li class="page-item" *ngIf="teamPage.number + 3 <= teamPage.totalPages">
+      <a role="button" class="page-link"
+         (click)="changePage(teamPage.number + 2)">{{teamPage.number + 3}}</a>
+    </li>
+    <li class="page-item" *ngIf="teamPage.number + 4 <= teamPage.totalPages">
+      <a role="button" class="page-link"
+         (click)="changePage(teamPage.number + 3)">{{teamPage.number + 4}}</a>
+    </li>
+    <li class="page-item" *ngIf="teamPage.number + 5 <= teamPage.totalPages">
+      <a role="button" class="page-link"
+         (click)="changePage(teamPage.number + 4)">{{teamPage.number + 5}}</a>
+    </li>
+    <li class="page-item" [ngClass]="teamPage.last ? 'disabled': ''">
+      <a role="button" class="page-link"
+         (click)="changePage(teamPage.number + 1)">></a>
+    </li>
+    <li class="page-item" [ngClass]="teamPage.last ? 'disabled': ''">
+      <a role="button" class="page-link"
+         (click)="changePage(teamPage.totalPages - 1)">
+        Trang cuối
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<!--Modal chi tiết giáo viên-->
+<div class="modal fade" id="detail1" tabindex="-1" aria-labelledby="detailLabel1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="detailLabel1">Thông tin chi tiết</h5>
+      </div>
+      <div class="modal-body" *ngIf="teacher">
+        <input class="form-control" hidden>
+        <div class="mb-3">
+          <label class="form-label">Tên giảng viên</label>
+          <input type="text" class="form-control" [value]="teacher.teacherName" disabled>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Địa chỉ</label>
+          <input type="text" class="form-control" [value]="teacher.teacherAddress" disabled>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Ngày sinh</label><br>
+          <input type="text" class="form-control" [value]="teacher.teacherDateOfBirth" disabled>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input type="text" class="form-control" [value]="teacher.teacherEmail" disabled>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Giới tính</label>
+          <div *ngIf="teacher.teacherGender === 'true'">
+            <input type="text" class="form-control" value="Nam" disabled>
+          </div>
+          <div *ngIf="teacher.teacherGender === 'false'">
+            <input type="text" class="form-control" value="Nữ" disabled>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Số điện thoại</label>
+          <input type="text" class="form-control" [value]="teacher.teacherPhoneNumber" disabled>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Trình độ</label>
+          <input type="text" class="form-control" [value]="teacher.degree" disabled>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Khoa</label><br>
+          <input type="text" class="form-control" [value]="teacher.faculty" disabled>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Đóng</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Đăng Ký-->
+<div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Đăng ký</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form *ngIf="editForm" [formGroup]="editForm" (ngSubmit)="submit(instructorId,instructorName)" id="editForm">
+        </form>
+        <span>Đăng ký giáo viên </span><span
+        class="text-danger">{{instructorName}} </span><span>làm giáo viên hướng dẫn</span>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Đóng</button>
+        <button type="submit" class="btn btn-outline-primary btn-custom" data-bs-dismiss="modal" form="editForm">Xác
+          nhận
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Hủy Đăng Ký-->
+<div class="modal fade" id="cancelModal" tabindex="-1" aria-labelledby="cancelModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="cancelModalLabel">Hủy đăng ký</h5>
+      </div>
+      <div class="modal-body">
+        <form *ngIf="editForm" [formGroup]="editForm" (ngSubmit)="cancelRegistration()" id="cancelForm">
+        </form>
+        <span>Hủy đăng ký giáo viên </span><span
+        class="text-danger">{{instructorName}}</span><span>làm giáo viên hướng dẫn</span>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Đóng</button>
+        <button type="submit" class="btn btn-outline-primary btn-custom" data-bs-dismiss="modal" form="cancelForm">Xác
+          nhận
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
