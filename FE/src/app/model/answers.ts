@@ -4,6 +4,6 @@ import {Teacher} from './teacher';
 export interface Answers {
   answerId?: number;
   answerContent?: string;
-  questionId?: Question;
-  teacherId?: Teacher;
+  question?: Question;
+  teacher?: Teacher;
 }

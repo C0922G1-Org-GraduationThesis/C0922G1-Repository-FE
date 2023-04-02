@@ -4,14 +4,14 @@
 
 export const environment = {
   production: false,
-  firebaseConfig: {
-    apiKey: 'AIzaSyDWpw-lM4vnWTMnQoEwnq8jQyLQOu_nvJ0',
-    authDomain: 'fibare4.firebaseapp.com',
-    projectId: 'fibare4',
-    storageBucket: 'fibare4.appspot.com',
-    messagingSenderId: '817980281926',
-    appId: '1:817980281926:web:1c4cb1f6a4e031def8a647',
-    measurementId: 'G-2Q5LHRKKL7'
+  firebaseConfig : {
+    apiKey : 'AIzaSyAybGnI8nYrUxnlnkqpd-MJpz4F2A3G0_E' ,
+    authDomain : 'uploadfirebase-408b4.firebaseapp.com' ,
+    projectId : 'uploadfirebase-408b4' ,
+    storageBucket : 'uploadfirebase-408b4.appspot.com' ,
+    messagingSenderId : '495779286451' ,
+    appId : '1:495779286451:web:4d2a3b63e77bc4971b0fc6' ,
+    measurementId : 'G-GHGT7L5CN5'
   }
 };
 

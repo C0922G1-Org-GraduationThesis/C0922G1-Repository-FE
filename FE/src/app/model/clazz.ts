@@ -4,6 +4,6 @@ import {Faculty} from './faculty';
 export interface Clazz {
   clazzId?: number;
   clazzName?: string;
-  teacherId?: Teacher;
-  facultyId?: Faculty;
+  teacher?: Teacher;
+  faculty?: Faculty;
 }

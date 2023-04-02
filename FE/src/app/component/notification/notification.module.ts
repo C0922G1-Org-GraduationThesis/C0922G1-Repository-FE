@@ -1,7 +1,6 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
-import { NotificationRoutingModule } from './notification-routing.module';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {NotificationRoutingModule} from './notification-routing.module';
 
 
 @NgModule({
@@ -11,4 +10,5 @@ import { NotificationRoutingModule } from './notification-routing.module';
     NotificationRoutingModule
   ]
 })
-export class NotificationModule { }
+export class NotificationModule {
+}

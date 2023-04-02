@@ -24,10 +24,13 @@
               "src/assets"
             ],
             "styles": [
+
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
+
+
             ],
             "scripts": [
-              "src/assets/bootstrap-5.1.3-dist/js/bootstrap.min.js"
             ]
           },
           "configurations": {
@@ -90,6 +93,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -125,6 +129,7 @@
   },
   "defaultProject": "graduation-thesis-angular",
   "cli": {
-    "analytics": "3e45750f-7d34-4ea1-aaff-05d699d9b00c"
+    "analytics": "86154399-c9c9-4db5-9400-ec1b8e446df3"
   }
 }
+

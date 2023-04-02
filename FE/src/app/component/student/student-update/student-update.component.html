@@ -1,0 +1,76 @@
+<h2 style="color: #14a2b8;text-align: center">CHÍNH SỬA SINH VIÊN</h2>
+<br>
+<form [formGroup]="studentForm"  (ngSubmit)="updateStudent()">
+  <div class="row">
+    <div class="col-2"></div>
+    <div class="col-9 row">
+      <div class="col-4">
+        <img [src]="arrayPicture" style="width: 80%;height: 80%" >
+<!--        <p>{{arrayPicture}}</p>-->
+        <br>
+        <input type="file" #uploadFile (change)="uploadFileImg()" style="text-align: center" >
+      </div>
+      <div class="col-4">
+        <div class="mb-3">
+          <label  class="form-label">Tên sinh viên(<span style="color: red">*</span>)</label>
+          <input type="email" class="form-control"   formControlName="studentName">
+        </div>
+
+        <div class="mb-3">
+          <label  class="form-label">Ngày sinh(<span style="color: red">*</span>)</label>
+          <input type="date" class="form-control"  formControlName="studentDateOfBirth" >
+        </div>
+
+        <div class="mb-3">
+          <label  class="form-label">Lớp(<span style="color: red">*</span>)</label>
+          <select formControlName="clazz" [compareWith]="comparaFn">
+<!--            <option [ngValue]="null" >Chọn lớp</option>-->
+            <option *ngFor="let clazz of clazz" [ngValue]="clazz" >{{clazz.clazzName}}</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label  class="form-label"> Email(<span style="color: red">*</span>)</label>
+          <input type="text" class="form-control" formControlName="studentEmail">
+        </div>
+
+        <div class="mb-3" style="text-align: center">
+          <button  type="button" class="btn btn-outline-secondary ">Thoát</button>
+          &ensp;&ensp;&ensp;&ensp;
+          <button type="submit" class="btn btn-outline-info">Lưu</button>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="mb-3">
+          <label  class="form-label">Số điện thoại(<span style="color: red">*</span>)</label>
+          <input type="text" class="form-control" formControlName="studentPhoneNumber">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Địa chỉ(<span style="color: red">*</span>)</label>
+          <input type="text" class="form-control"  formControlName="studentAddress">
+        </div>
+
+        <div class="mb-3">
+          <label  class="form-label">Giới tính(<span style="color: red">*</span>)</label>
+          <select formControlName="studentGender">
+            <option [ngValue]="null" >Lựa chọn</option>
+            <option [ngValue]="true">Nam</option>
+            <option [ngValue]="false" >Nữ</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Mã sinh viên(<span style="color: red">*</span>)</label>
+          <input type="text" class="form-control"  formControlName="studentCode">
+        </div>
+      </div>
+    </div>
+    <div class="col-1"></div>
+  </div>
+</form>
+
+
+
+
+

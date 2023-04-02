@@ -6,5 +6,5 @@ export interface Document {
   documentDescribe?: string;
   documentFile?: string;
   flagDelete?: boolean;
-  teacherId?: Teacher;
+  teacher?: Teacher;
 }
