@@ -4,5 +4,5 @@ export interface Team {
   teamId?: number;
   memberOfTeam?: number;
   teamName?: string;
-  teacherId?: Teacher;
+  teacher?: Teacher;
 }
