@@ -7,6 +7,6 @@ export interface ProgressReview {
   progressReviewContent?: string;
   progressReviewPercent?: number;
   progressReviewDateCreate?: string;
-  projectId?: Project;
-  teacherId?: Teacher;
+  project?: Project;
+  teacher?: Teacher;
 }

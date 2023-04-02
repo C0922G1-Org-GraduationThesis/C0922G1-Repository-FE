@@ -1,0 +1,75 @@
+
+#content1 {
+  flex-basis: 100%;
+}
+
+#img {
+  width: 200px;
+  height: 250px;
+}
+
+#content2 {
+  flex-basis: 100%;
+}
+
+#content3 {
+  flex-basis: 100%;
+}
+
+#mg-top {
+  margin-top: 5%;
+}
+
+.custom-file-input input[type="file"] {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  z-index: 2;
+}
+
+.custom-file-input label {
+  background-color: #2196F3;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+}
+
+.custom-file-input label::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  transform: translateY(-50%);
+  font-size: 14px;
+  color: #555;
+}
+
+.custom-file-input input[type="file"]:focus + label::after {
+  content: attr(data-file-name);
+}
+
+@media (min-width: 800px) {
+  #content1 {
+    flex-basis: 30%;
+    text-align: center;
+  }
+
+  #content2 {
+    flex-basis: 30%;
+  }
+
+  #content3 {
+    flex-basis: 30%;
+  }
+
+  #mg-top {
+
+  }
+}

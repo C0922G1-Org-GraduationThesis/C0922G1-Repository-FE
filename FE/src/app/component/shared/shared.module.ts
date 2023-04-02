@@ -16,7 +16,7 @@ import { ErrorUrlComponent } from './error-url/error-url.component';
     HeaderComponent,
     BannerComponent,
     FooterComponent,
-    InfomationGuildComponent
+    InfomationGuildComponent,
   ],
     imports: [
         CommonModule,

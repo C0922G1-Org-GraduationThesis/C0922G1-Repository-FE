@@ -1,0 +1,72 @@
+/**
+create by :HungPV
+date create : 02/04/2023
+screen : css
+ */
+.text--info {
+  text-align: center;
+  height: 80px;
+  text-shadow: 0px 1px 1px #ffffff,
+  0px -1px 1px #000000
+}
+
+h2 {
+
+  font-size: 40px;
+  color: #17a2b8;
+}
+
+.card {
+  width: 16rem;
+  box-shadow: 3px 4px 8px rgba(0, 0, 0, .5);
+  background-color: #f8f9fa;
+}
+
+.card-margin {
+  margin: 0px;
+}
+
+.card-title {
+  text-align: center;
+  color: green;
+}
+
+.card-text {
+  font-size: 14px;
+  margin: 0px;
+}
+
+.row {
+  padding-top: 15px;
+}
+
+.container {
+  padding-top: 30px;
+}
+
+img {
+  object-fit: cover;
+}
+
+h4 {
+  color: red;
+  text-align: center;
+}
+
+.button-create {
+  margin: 30px;
+}
+
+.button-search {
+  width: 130px;
+}
+
+.div-paginable {
+  margin-top: 30px;
+
+}
+
+.button-modal-delete {
+  width: 90px;
+}
+
