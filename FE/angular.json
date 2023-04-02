@@ -24,6 +24,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
             ],
             "scripts": [
@@ -90,6 +91,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -121,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "graduation-thesis-angular"
+    }
+  },
+  "defaultProject": "graduation-thesis-angular",
+  "cli": {
+    "analytics": "86154399-c9c9-4db5-9400-ec1b8e446df3"
+  }
 }
