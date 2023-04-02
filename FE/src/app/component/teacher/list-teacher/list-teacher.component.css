@@ -1,3 +1,8 @@
+/**
+create by :HungPV
+date create : 02/04/2023
+screen : css
+ */
 .text--info {
   text-align: center;
   height: 80px;
@@ -6,6 +11,7 @@
 }
 
 h2 {
+
   font-size: 40px;
   color: #17a2b8;
 }
@@ -56,7 +62,8 @@ h4 {
 }
 
 .div-paginable {
-  margin-top: 10px;
+  margin-top: 30px;
+
 }
 
 .button-modal-delete {
