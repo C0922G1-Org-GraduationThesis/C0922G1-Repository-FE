@@ -12,8 +12,8 @@ export interface Teacher {
   teacherGender?: boolean;
   teacherAddress?: string;
   teacherImg?: string;
-  facultyId?: Faculty;
-  degreeId?: Degree;
-  accountId?: Account;
+  faculty?: Faculty;
+  degree?: Degree;
+  account?: Account;
   flagDelete?: boolean;
 }
