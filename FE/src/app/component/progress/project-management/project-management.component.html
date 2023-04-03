@@ -1,0 +1,65 @@
+<div style="text-align: center; background-color: white; height: 150vh">
+
+  <div class="container">
+    <div>
+      <div class="row">
+        <h2 class="mt-3 ">QUẢN LÝ ĐỀ TÀI</h2>
+      </div>
+
+      <div class="row mt-3">
+        <table class="table table-bordered table-hover table-sortable" style="background-color: white;
+              box-shadow: 0 0 20px 0 #253365;">
+          <thead class="table table-info">
+          <tr>
+            <th scope="col">STT</th>
+            <th scope="col">Nhóm</th>
+            <th scope="col">Tên đề tài</th>
+            <th scope="col">Số thành viên</th>
+            <th scope="col">Trạng thái</th>
+            <th scope="col">Quản lý tiến độ</th>
+          </tr>
+          </thead>
+          <tbody class="table-group-divider">
+          <tr *ngFor="let progress of progressDtos , index as i">
+            <ng-container *ngIf="progress.status !=null">
+            <th>{{i + 1}}</th>
+            <td>{{progress.teamName}}</td>
+            <td>{{progress.projectName}}</td>
+            <td>{{progress.memberTotal}}</td>
+            <td>
+              <ng-container *ngIf="progress.status === false ">Hoàn thành</ng-container>
+              <ng-container *ngIf="progress.status === true ">Đang thực hiện</ng-container>
+            </td>
+            <td>
+              <button routerLink="/progress/progress-detail/{{progress.projectId}}" class="btn btn-outline-info">Chi tiết</button>
+            </td>
+            </ng-container>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="d-flex justify-content-center">
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-end">
+            <li class="page-item"><a class="page-link text-info text-info" href="#">Trang
+              đầu</a></li>
+            <li class="page-item"><a class="page-link text-info text-info" href="#">< </a></li>
+            <li class="page-item active text-info"><a class="page-link text-info" href="#"
+                                                      style="font-weight: bold; background-color: #CFF4FC; border: 1px solid #DEE2E6">1</a>
+            </li>
+            <li class="page-item"><a class="page-link text-info text-info" href="#">2</a></li>
+            <li class="page-item"><a class="page-link text-info text-info" href="#">3</a></li>
+            <li class="page-item"><a class="page-link text-info text-info" href="#">> </a></li>
+            <li class="page-item"><a class="page-link text-info text-info" href="#">Trang
+              cuối</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
+
