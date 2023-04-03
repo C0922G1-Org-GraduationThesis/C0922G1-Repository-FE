@@ -19,6 +19,7 @@ export class ProgressReviewService {
   getProgressReviewByRecord(projectId: number, record: number): Observable<ProgressReview[]> {
     return this.http.get<ProgressReview[]>('http://localhost:8080/api/progressReview/list/' + projectId + '/' + record);
   }
+
   getMaxSizeOfProgressReview(projectId: number): Observable<number> {
     return this.http.get<number>('http://localhost:8080/api/progressReview/size/' + projectId);
   }
@@ -29,5 +30,9 @@ export class ProgressReviewService {
 
   getProjectByProjectId(projectId: number): Observable<ProjectDto> {
     return this.http.get<ProjectDto>('http://localhost:8080/api/progressReview/project/' + projectId);
+  }
+
+  findMaxPercentProgressReport(projectId: number, stageId: number): Observable<number> {
+    return this.http.get<number>('http://localhost:8080/api/progress-reviews' + '/' + projectId + '/' + stageId);
   }
 }

@@ -5,22 +5,25 @@ import {ProgressRoutingModule} from './progress-routing.module';
 import {ProjectManagementComponent} from './project-management/project-management.component';
 import {HttpClientModule} from '@angular/common/http';
 import {ProgressDetailComponent} from './progress-detail/progress-detail.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CKEditorModule} from 'ckeditor4-angular';
+import { ProgressReportComponent } from './progress-report/progress-report.component';
 
 
 
 @NgModule({
   declarations: [
     ProjectManagementComponent,
-    ProgressDetailComponent
+    ProgressDetailComponent,
+    ProgressReportComponent
   ],
   imports: [
     CommonModule,
     ProgressRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    CKEditorModule
+    CKEditorModule,
+    FormsModule
   ]
 })
 export class ProgressModule {

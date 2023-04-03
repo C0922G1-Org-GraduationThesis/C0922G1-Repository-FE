@@ -11,6 +11,8 @@ import {ProjectDto} from '../../../model/dto/project-dto';
 import {TeacherDto} from '../../../model/dto/teacher-dto';
 import Swal from 'sweetalert2';
 import {templateJitUrl} from '@angular/compiler';
+import {StudentProgressReport} from '../../../model/student-progress-report';
+import {StudentProgressReportService} from '../../../service/student-progress-report.service';
 
 @Component({
   selector: 'app-progress-detail',
@@ -26,15 +28,21 @@ export class ProgressDetailComponent implements OnInit {
   teacherDto?: TeacherDto;
   checkShowMore = true;
   checkHideMore = true;
-  private projectId: number;
+   projectId: number;
   private maxSizeProgressReview: number;
   private record = 2;
   progressDetails: ProgressDetail[];
   progressReviewForm: FormGroup;
+  // SyVT
+  studentProgressReports: StudentProgressReport[];
+  totalElement = 3;
+  maxElement = 0;
+  flagSyVT = true;
 
   constructor(private progressDetailService: ProgressDetailService,
               private progressReviewService: ProgressReviewService,
-              private activatedRoute: ActivatedRoute) {
+              private activatedRoute: ActivatedRoute,
+              private studentProgressReportService: StudentProgressReportService) {
   }
 
   ngOnInit(): void {
@@ -48,6 +56,8 @@ export class ProgressDetailComponent implements OnInit {
       this.addNewProgressReview();
       this.getMaxSizeOfProgressReview(this.projectId);
       this.getProgressReviewWithRecord(this.projectId, 2);
+      this.getAllStudentProgressReport();
+      this.getLengthStudentProgressReport();
     });
   }
 
@@ -156,6 +166,52 @@ export class ProgressDetailComponent implements OnInit {
     this.progressReviewService.getProgressReviewByRecord(this.projectId, this.record).subscribe(item => {
       this.progressReviewsRecords = item;
     });
+  }
+// SyVT
+  private getLengthStudentProgressReport() {
+    this.studentProgressReportService.getStudentProgressReport(this.projectId).subscribe(item =>{
+      this.maxElement = item.length;
+      console.log(this.maxElement);
+    });
+  }
+
+  private getAllStudentProgressReport() {
+    this.studentProgressReportService.getAllStudentProgressReport(this.projectId,this.totalElement).subscribe(
+      (data) => {
+        this.studentProgressReports = data;
+        console.log(data.length);
+      }
+    );
+  }
+
+  hiddenLess() {
+    if (this.totalElement > 1) {
+      this.totalElement--;
+      this.flagSyVT = true;
+    }
+    this.studentProgressReportService.getAllStudentProgressReport(this.projectId,this.totalElement).subscribe(
+      (data) => {
+        this.studentProgressReports = data;
+        console.log(data.length);
+        console.log(this.totalElement);
+      }
+    );
+  }
+
+  loadMore() {
+    if (this.totalElement < this.maxElement) {
+      this.totalElement++;
+    }
+    if (this.totalElement === this.maxElement) {
+      this.flagSyVT = false;
+    }
+    this.studentProgressReportService.getAllStudentProgressReport(this.projectId,this.totalElement).subscribe(
+      (data) => {
+        this.studentProgressReports = data;
+        console.log(data);
+        console.log(data.length);
+      }
+    );
   }
 
 }

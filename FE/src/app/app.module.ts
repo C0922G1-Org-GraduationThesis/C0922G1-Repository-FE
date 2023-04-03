@@ -15,11 +15,17 @@ import {TopicModule} from './component/topic/topic.module';
 import {HttpClientModule} from '@angular/common/http';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {CKEditorModule} from 'ckeditor4-angular';
+import { ProgressReportHistoryComponent } from './component/progress/progress-report-history/progress-report-history.component';
+import {AngularFireStorageModule} from '@angular/fire/storage';
+import {AngularFireModule} from '@angular/fire';
+import {environment} from '../environments/environment';
+import {FormsModule} from '@angular/forms';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ProgressReportHistoryComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +41,11 @@ import {CKEditorModule} from 'ckeditor4-angular';
     TopicModule,
     HttpClientModule,
     NgxPaginationModule,
-    CKEditorModule
+    CKEditorModule,
+    AngularFireStorageModule,
+    AngularFireModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

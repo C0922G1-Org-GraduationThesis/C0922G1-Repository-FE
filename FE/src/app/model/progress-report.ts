@@ -6,6 +6,7 @@ export interface ProgressReport {
   progressReportContent?: string;
   progressReportTime?: string;
   progressReportFile?: string;
-  projectId?: Project;
-  stageId?: Stage;
+  progressReportFileName?: string;
+  project?: Project;
+  stage?: Stage;
 }

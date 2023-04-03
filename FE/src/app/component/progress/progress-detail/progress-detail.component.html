@@ -54,9 +54,9 @@
       <h5 style="text-decoration: underline">Tiến độ</h5>
       <div class="row mt-2" *ngFor="let progressDetail of progressDetails">
         <div class="col-md-2">
-          <button [disabled]="!progressDetail.progressStatus" type="button" class="btn btn-outline-info"
-                  style="background: #14a2b8;"><span
-            style="color: white">{{progressDetail.progressDetailName}}</span></button>
+          <a routerLink="/progress/report/{{projectId}}/{{progressDetail.stage.stageId}}"><button [disabled]="!progressDetail.progressStatus" type="button" class="btn btn-outline-info"
+                                                                                                  style="background: #14a2b8;"><span
+            style="color: white">{{progressDetail.progressDetailName}}</span></button></a>
         </div>
         <div class="col-md-8">
           <span>{{progressDetail.stage.stageName}}: {{progressDetail.progressDateStart |date: "dd-MM-yyyy"}}
@@ -343,72 +343,61 @@
           <div class="w-50 border border-2 border-info p-3 rounded">
             <h5 class="text-center">Báo cáo tiến độ của sinh viên</h5>
             <div class="row">
-              <div class="card">
-                <div class="card-body">
-                  <!--                  <form>-->
-                  <div class="row">
-                    <div class="col-md-2">
-                      <div class="d-flex justify-content-start mb-2 align-items-center">
-                        <img style="width: 50px; " class="rounded-circle"
-                             src="https://trello-members.s3.amazonaws.com/6419258324eb7de7ddbc2717/171c559d6c162cdfbb5ac71cc6826acb/original.png">
-                      </div>
-                    </div>
-                    <div class="col-md-10">
-                      <div class="row">
-                        <span><b>Văn Tiến Sỹ</b></span>
-                      </div>
-                      <span class="badge bg-success">Tiến độ 1</span>
-                      <p>Test nội dung</p>
-                      <p>Báo cáo tiến độ <img
-                        src="../../assets/icons8-google-docs-30.png"
-                        alt=""></p>
-                      <div class="row">
-                        <div class="col-md-9">
-                        </div>
-                        <div class="col-md-3">
-                          <p style="font-size: 12px">29/03/2021 15:32:27</p>
+              <div>
+                <div class="card" *ngFor="let studentProgressReport of studentProgressReports">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-2" style="margin-left: 0">
+                        <div class="d-flex justify-content-start mb-2 align-items-center">
+                          <img style="width: 50px; height: 50px; text-align: right; "
+                               class="rounded-circle"
+                               [src]="studentProgressReport.studentImg"
+                               alt="">
                         </div>
                       </div>
-                    </div>
-                  </div>
-                  <!--                  </form>-->
-                </div>
-
-              </div>
-              <div class="card">
-                <div class="card-body">
-                  <!--                  <form>-->
-                  <div class="row">
-                    <div class="col-md-2">
-                      <div class="d-flex justify-content-start mb-2 align-items-center">
-                        <img style="width: 50px; " class="rounded-circle"
-                             src="https://trello-members.s3.amazonaws.com/6419258324eb7de7ddbc2717/171c559d6c162cdfbb5ac71cc6826acb/original.png">
-                      </div>
-                    </div>
-                    <div class="col-md-10">
-                      <div class="row">
-                        <span><b>Văn Tiến Sỹ</b></span>
-                      </div>
-                      <span class="badge bg-success">Tiến độ 1</span>
-                      <p>Test nội dung</p>
-                      <p>Báo cáo tiến độ <img
-                        src="../../assets/icons8-google-docs-30.png"
-                        alt=""></p>
-                      <div class="row">
-                        <div class="col-md-9">
+                      <div class="col-md-10">
+                        <div class="row">
+                          <span><b>{{studentProgressReport.studentName}}</b></span>
                         </div>
-                        <div class="col-md-3">
-                          <p style="font-size: 12px">29/03/2021 15:32:27</p>
+                        <p class="badge bg-info">{{studentProgressReport.stageName}}</p>
+                        <p>{{studentProgressReport.progressReportContent}}</p>
+                        <p>
+                          <span>File báo cáo : </span><strong><span>{{studentProgressReport.progressReportFileName}}</span></strong>
+                          <span>
+                    <input hidden type="text" [(ngModel)]="studentProgressReport.progressReportFile">
+                      <a [href]="studentProgressReport.progressReportFile" download="" target="_blank"><span>&nbsp;&nbsp;&nbsp;</span><img
+                        class="mx-auto" width="30px"
+                        height="30px"
+                        src="../../../../assets/img/progress_report_icon_img/file_download_icon.png"
+                        alt=""></a></span>
+                        </p>
+                        <div class="row">
+                          <div class="col-md-7">
+                          </div>
+                          <div class="col-md-5">
+                            <p style="font-size: 12px">{{studentProgressReport.progressReportTime}}</p>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <!--                  </form>-->
                 </div>
 
+                <div class="row" style="margin-top: 3%">
+                  <div class="col-md-3"></div>
+                  <div class="col-md-3"> <span> <a style="text-align: left; color: #0a58ca" role="button"
+                                                   (click)="loadMore()"
+                                                   *ngIf="flagSyVT">Xem thêm...</a></span>
+                  </div>
+                  <div class="col-md-2"></div>
+                  <div class="col-md-3">
+              <span *ngIf="totalElement > 1"> <a style="text-align: center; color: #0a58ca" role="button"
+                                                 (click)="hiddenLess()">Ẩn báo cáo...</a></span>
+                  </div>
+                  <div class="col-md-1"></div>
+                </div>
               </div>
             </div>
-
           </div>
         </div>
       </div>
