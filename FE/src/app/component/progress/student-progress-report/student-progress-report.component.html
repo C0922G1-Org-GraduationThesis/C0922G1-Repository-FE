@@ -4,7 +4,7 @@
       <h5 class="text-center">Báo cáo tiến độ của sinh viên</h5>
       <div class="row">
         <div>
-          <div class="card" *ngFor="let studentProgressReport of studentProgressReportHistory">
+          <div class="card" *ngFor="let studentProgressReport of studentProgressReports">
             <div class="card-body">
               <div class="row">
                 <div class="col-md-2" style="margin-left: 0">
@@ -21,13 +21,23 @@
                   </div>
                   <p class="badge bg-info">{{studentProgressReport.stageName}}</p>
                   <p>{{studentProgressReport.progressReportContent}}</p>
-                  <p><span>File báo cáo tiến độ </span><span><img class="mx-auto" width="25px" height="40px"
-                                                                  src="../../../../assets/img/progress_report_icon_img/file_download_icon.png"
-                                                                  alt=""></span>
+                  <p><span>File báo cáo tiến độ </span><span></span>
                     <span>
-                    <input hidden type="text" [(ngModel)]="studentProgressReport.progressReportFile"><button
-                      class="btn btn-outline-info" style="height: 10%"
-                      (click)="dowFile(studentProgressReport.progressReportFile)">Download</button></span>
+                    <input hidden type="text" [(ngModel)]="studentProgressReport.progressReportFile">
+                      <a [href]="studentProgressReport.progressReportFile" download="" target="_blank"><button
+                        class="btn btn-outline-info"
+                      ><img class="mx-auto" width="20px"
+                            height="30px"
+                            src="../../../../assets/img/progress_report_icon_img/file_download_icon.png"
+                            alt=""></button></a>
+
+                      <!--                      <button-->
+                      <!--                      class="btn btn-outline-info"-->
+                      <!--                      (click)="dowFile(studentProgressReport.progressReportFile)"><img class="mx-auto" width="20px"-->
+                      <!--                                                                                       height="30px"-->
+                      <!--                                                                                       src="../../../../assets/img/progress_report_icon_img/file_download_icon.png"-->
+                      <!--                                                                                       alt=""></button>-->
+                    </span>
                   </p>
                   <div class="row">
                     <div class="col-md-7">
@@ -40,15 +50,17 @@
               </div>
             </div>
           </div>
-        </div>
-        <div class="see-more">
-          <div class="row">
-            <div class="col-md-1"></div>
-            <div class="col-md-5" style="display: flex; justify-content: center">
-              <a href="" style="text-decoration: none">Xem thêm...</a>
+
+          <div class="row" style="margin-top: 3%">
+            <div class="col-md-3"></div>
+            <div class="col-md-3"> <span> <a style="text-align: left; color: #0a58ca" role="button"
+                                             (click)="loadMore()"
+                                             *ngIf="flag">Xem thêm...</a></span>
             </div>
-            <div class="col-md-5" style="display: flex; justify-content: center">
-              <a href="" style="text-decoration: none">Ẩn báo cáo...</a>
+            <div class="col-md-2"></div>
+            <div class="col-md-3">
+              <span *ngIf="totalElement > 1"> <a style="text-align: center; color: #0a58ca" role="button"
+                                                 (click)="hiddenLess()">Ẩn báo cáo...</a></span>
             </div>
             <div class="col-md-1"></div>
           </div>
@@ -57,3 +69,5 @@
     </div>
   </div>
 </div>
+
+

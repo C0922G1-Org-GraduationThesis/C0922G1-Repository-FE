@@ -1,11 +1,10 @@
 import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
-import {StudentProgressReport} from "../../../model/student-progress-report";
-import {ActivatedRoute, Route, Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {ProgressReportService} from "../../../service/progress-reprort.service";
 import {ProgressReviewService} from "../../../service/progress-review.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import Swal from 'sweetalert2';
 
-import {ProgressReport} from "../../../model/progress-report";
 
 import {finalize} from "rxjs/operators";
 import {AngularFireStorage} from '@angular/fire/storage';
@@ -18,27 +17,25 @@ import {DatePipe} from '@angular/common';
   styleUrls: ['./progress-report.component.css']
 })
 export class ProgressReportComponent implements OnInit {
-
   @ViewChild('uploadFile', {static: true}) public avatarDom: ElementRef | undefined;
-
   selectedFile: any = null;
-  fileUrl = '';
 
-  progressReportForm: FormGroup;
+  progressReportForm?: FormGroup;
   projectId: number;
   stageId: number;
   maxStagePercent: number;
   // maxStagePercent=50;
 
   projectName: string
-  stageName: String;
+  stageName: string;
   currentDate: Date = new Date();
   formattedDate: string;
 
   @Input() backgroundColor = '#D9D9D9';
   @Input() progressColor = 'rgba(219,17,47,0.82)';
-  progress : number;
-  value : number;
+  progress: number;
+  value: number;
+  fileUrl: string;
 
 
   constructor(private activatedRoute: ActivatedRoute,
@@ -46,7 +43,7 @@ export class ProgressReportComponent implements OnInit {
               private progressReviewService: ProgressReviewService,
               private storage: AngularFireStorage,
               private router: Router,
-              private datePipe : DatePipe) {
+              private datePipe: DatePipe) {
     this.activatedRoute.paramMap.subscribe((paramMap) => {
       this.projectId = +paramMap.get('1');
       this.stageId = +paramMap.get('2');
@@ -55,7 +52,6 @@ export class ProgressReportComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.uploadFileImg() ;
     this.progressReviewService.findMaxPercentProgressReport(this.projectId, this.stageId).subscribe(maxStagePercent => {
       this.maxStagePercent = maxStagePercent;
       this.progress = this.maxStagePercent;
@@ -70,7 +66,6 @@ export class ProgressReportComponent implements OnInit {
 
   }
 
-
   getProgressReport(projectId: number, stageId: number) {
     this.progressReportService.findProgressReportMaxPercentByProjectIdAndStageId(projectId, stageId).subscribe(item => {
       this.progressReportForm = new FormGroup({
@@ -84,16 +79,7 @@ export class ProgressReportComponent implements OnInit {
   }
 
   save() {
-     this.formattedDate = this.datePipe.transform(this.currentDate, 'yyyy-MM-dd HH:mm:ss');
-    console.log(this.formattedDate)
-    this.progressReportForm.value.progressReportTime = this.formattedDate;
-    this.progressReportService.saveProgressReport(this.progressReportForm.value).subscribe(() => {
-      alert("Cập nhất tiến độ thành công !")
-      this.router.navigateByUrl("/progress")
-    })
-  }
 
-  submit() {
     if (this.selectedFile != null) {
       const filePath = this.selectedFile.name;
       const fileRef = this.storage.ref(filePath);
@@ -103,21 +89,29 @@ export class ProgressReportComponent implements OnInit {
         finalize(() => {
           fileRef.getDownloadURL().toPromise().then(url => {
             this.fileUrl = url;
-            console.log(url);
+            console.log(this.fileUrl);
           });
         })
       ).subscribe();
     }
-  }
+    this.progressReportForm.value.progressReportFile = this.fileUrl;
+    this.formattedDate = this.datePipe.transform(this.currentDate, 'yyyy-MM-dd HH:mm:ss');
+    this.progressReportForm.value.progressReportTime = this.formattedDate;
 
+    this.progressReportService.saveProgressReport(this.progressReportForm.value).subscribe(() => {
+      Swal.fire({
+        title: 'Success!',
+        text: 'Do you want to continue',
+        icon: 'success',
+        confirmButtonText: 'Ok'
+      });
+      this.router.navigateByUrl("/progress")
+    })
+  }
 
   uploadFileImg() {
     this.selectedFile = this.avatarDom?.nativeElement.files[0];
-    // this.firebaseService.uploadFile(this.selectedImage).then(url => {
-    //   this.arrayPicture.push(url);
-    //   this.picture = this.arrayPicture.join(',');
-    // });
-    this.submit();
+    this.save();
   }
 
 }

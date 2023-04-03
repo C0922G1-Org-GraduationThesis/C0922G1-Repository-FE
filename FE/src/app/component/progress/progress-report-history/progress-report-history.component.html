@@ -1,33 +1,48 @@
-<h3>{{projectName}} -  {{stageName}}</h3>
+<h3>Lịch sử file báo cáo</h3>
+<div style="margin-bottom: 2%"></div>
 <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-  <div class="w-80 border border-2 border-info p-3 rounded">
-    <h5 class="text-center" style="font-size: xx-large">Lịch sử file báo cáo</h5>
 
-    <div class="d-flex justify-content-center ">
+  <div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+      <div style="margin-bottom: 2%"><a routerLink="/progress/report/{{projectId}}/{{stageId}}"
+                                        style="text-decoration: none">
+        <button type="button" class="btn btn-outline-info  mx-auto"
+                style="border-radius: 15px; width: 7%">Trở lại
+        </button>
+      </a>
+      </div>
+      <div class="d-flex justify-content-center ">
 
-      <table class="table">
-        <tr>
-          <td>STT</td>
-          <td>File link</td>
-          <td></td>
-          <td>Time report</td>
-        </tr>
-        <tr *ngFor="let progressReport of progressReportHistory; index as i">
-          <td>{{i + 1}}</td>
-          <td>{{progressReport.progressReportFile}}</td>
-          <td><a (click)="dowFile(progressReport.progressReportFile)">
-            <button class="btn btn-outline-info">Download file</button>
-          </a></td>
-          <td>{{progressReport.progressReportTime}}</td>
-        </tr>
-        <tr></tr>
-      </table>
-
+        <table class="table border-info">
+          <tr>
+            <th style="text-align: center">STT</th>
+            <th style="text-align: center">File link</th>
+            <th style="text-align: center"></th>
+            <th style="text-align: center">Time report</th>
+          </tr>
+          <tr
+            *ngFor="let progressReport of progressReportHistory | paginate: { itemsPerPage: 4, currentPage: page}; index as i">
+            <td style="text-align: center">{{i + 1}}</td>
+            <td >{{progressReport.progressReportFile}}</td>
+            <td style="text-align: center"><a [href]="progressReport.progressReportFile" download="" target="_blank">
+              <button class="btn btn-outline-info">Download</button>
+            </a></td>
+<!--            <td><a (click)="dowFile(progressReport.progressReportFile)">-->
+<!--              <button class="btn btn-outline-info">Download file</button>-->
+<!--            </a></td>-->
+            <td >{{progressReport.progressReportTime}}</td>
+          </tr>
+          <tr></tr>
+        </table>
+      </div>
+      <pagination-controls style="display: flex; justify-content: center"
+                           (pageChange)="page = $event"></pagination-controls>
     </div>
-    <div><a routerLink="/progress/report/{{projectId}}/{{stageId}}">
-      <button type="button" class="btn btn-outline-secondary btn-block mx-auto"
-              style="border-radius: 15px; width: 10%;color: #100e0e">Thoát
-      </button>
-    </a></div>
+    <div class="row"></div>
+    <br>
   </div>
+  <div class="col-md-1"></div>
 </div>
+
+

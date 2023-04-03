@@ -7,6 +7,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ProgressReportHistoryComponent} from './progress-report-history/progress-report-history.component';
 import {StudentProgressReportComponent} from './student-progress-report/student-progress-report.component';
 import {HttpClientModule} from "@angular/common/http";
+import {NgxPaginationModule} from "ngx-pagination";
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import {HttpClientModule} from "@angular/common/http";
     ProgressRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    NgxPaginationModule
   ]
 })
 export class ProgressModule {
