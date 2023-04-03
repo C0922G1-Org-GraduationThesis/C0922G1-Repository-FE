@@ -12,6 +12,7 @@ import {ITeamDto} from '../model/iteam-dto';
 })
 export class TeamService {
   private URL = 'http://localhost:8080/api/teams';
+  API_URL = `http://localhost:8080/api/teams/`;
 
   constructor(private http: HttpClient) {
   }
@@ -30,5 +31,13 @@ export class TeamService {
 
   getTeamById(id: number): Observable<ITeamDto> {
     return this.http.get<ITeamDto>(`${this.URL}/detail/${id}`);
+  }
+
+  saveTeam(team: Team): Observable<any> {
+    return this.http.post<Team>(this.API_URL + 'save/' + team.teamName + '/' + team.memberOfTeam, team);
+  }
+
+  findById(id: number): Observable<Team> {
+    return this.http.get<Team>(this.API_URL + 'detail/' + id);
   }
 }

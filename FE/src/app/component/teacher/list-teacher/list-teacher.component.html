@@ -8,16 +8,16 @@
     <h2>QUẢN LÝ GIÁO VIÊN</h2>
   </div>
   <div class="row button-create">
-    <div class="col-lg-8 col-xs-12">
+    <div class="col-lg-7 col-xs-12">
       <a routerLink="/teachers/create">
-        <button type="button" class="btn btn-outline-info">Thêm Mới Giáo Viên</button>
+        <button type="button" class="btn btn-outline-info">Thêm mới giáo viên</button>
       </a>
     </div>
-    <div class="col-lg-4 col-xs-12">
+    <div class="col-lg-5 col-xs-12">
       <form class="d-flex">
-        <input id="searchTerm" #searchName class="form-control me-2" type="search" placeholder="nhập tên muốn tìm ..."
+        <input id="searchTerm" #searchName class="form-control rounded-pill" type="search" placeholder="nhập tên muốn tìm ..."
                aria-label="Search">
-        <button class="btn btn-outline-info button-search" type="submit" (click)="search(searchName.value)">Tìm
+        <button class="btn btn-outline-info button-search  rounded-pill" type="submit" (click)="search(searchName.value)">Tìm
           Kiếm
         </button>
       </form>
@@ -31,13 +31,13 @@
     <div class="row">
       <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 card-margin" *ngFor="let teachers of teacherPage">
         <div class="card">
-          <img src="{{teachers.teacherImg}}" height="260px"
+          <img src="{{teachers.teacherImg}}" style="max-width: 100%; height: 45vh"
                class="card-img-top">
           <div class="card-body">
-            <h5 class="card-title">{{teachers.teacherName}}</h5>
+            <h5 class="card-title text-primary">{{teachers.teacherName}}</h5>
             <p class="card-text">
               <label><img src="../../../../assets/img/icons8-class-48.png" width="28px" height="28px"></label>
-              <label>&ensp;Mã Giảng Viên :</label>
+              <label>&ensp;Mã giảng viên :</label>
               <label >{{teachers.teacherCode}}</label>
             </p>
             <p class="card-text ">
@@ -47,7 +47,7 @@
             </p>
             <p class="card-text">
               <label><img src="../../../../assets/img/icons8-phone-24.png" width="15px" height="17px"></label>
-              <label>&ensp;Điện Thoại :</label>
+              <label>&ensp;Điện thoại :</label>
               <label style="font-size: 13px">{{teachers.teacherPhoneNumber}}</label>
             </p>
             <p class="card-text">
@@ -147,9 +147,9 @@
           <p style="color:red;">Lưu ý : hành động này không thể hoàn tác.</p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary button-modal-delete" data-bs-dismiss="modal">Quay Lại
+          <button type="button" class="btn btn-outline-primary button-modal-delete" data-bs-dismiss="modal">Quay Lại
           </button>
-          <button type="submit" (click)="deleteTeacherById()" class="btn btn-danger button-modal-delete"
+          <button type="submit" (click)="deleteTeacherById()" class="btn btn-outline-danger button-modal-delete"
                   data-bs-dismiss="modal"
                   style="width: 90px">Xóa
           </button>
@@ -158,3 +158,4 @@
     </div>
   </div>
 </div>
+

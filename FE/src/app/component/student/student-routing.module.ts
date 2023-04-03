@@ -22,7 +22,7 @@ const routes: Routes = [
     component: InfoTeamComponent
   },
   {
-    path: 'register-topic',
+    path: 'register-topic/:teamId',
     component: RegisterTopicComponent
   },
   {

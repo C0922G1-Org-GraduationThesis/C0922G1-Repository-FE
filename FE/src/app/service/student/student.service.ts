@@ -7,9 +7,11 @@ import {Student} from '../../model/student';
   providedIn: 'root'
 })
 export class StudentService {
-
+  API_URL = `http://localhost:8080/api/students/`;
 
   private API = 'http://localhost:8080/students';
+
+  private URL_API_STUDENT = 'http://localhost:8080';
 
   constructor(private  httpClient: HttpClient) {
   }
@@ -19,12 +21,31 @@ export class StudentService {
     return this.httpClient.post<any>(this.API + '/create', student);
   }
 
-  findById(studentId: number): Observable<Student[]> {
-    return this.httpClient.get<Student[]>(this.API + '/' + studentId);
-  }
+  // findById(studentId: number): Observable<Student[]> {
+  //   return this.httpClient.get<Student[]>(this.API + '/' + studentId);
+  // }
 
 
   updateStudent(studentId: number, student: Student): Observable<Student> {
     return this.httpClient.patch<Student>(this.API + '/update/' + studentId, student);
+  }
+
+  findAll(searchStr: string, page: number, size: number): Observable<any> {
+    return this.httpClient.get<any>(
+      this.API_URL + '?searchStr=' + searchStr + '&page=' + page + '&size=' + size);
+  }
+
+  findById(id: number): Observable<Student> {
+    return this.httpClient.get<Student>(this.API_URL + 'detail/' + id);
+  }
+
+  findByTeamId(page: number, size: number, teamId: number): Observable<any> {
+    return this.httpClient.get<any>(
+      this.API_URL + 'team/' + teamId + '/' + page + '/' + size);
+  }
+
+  findAllStudent(nameSearch: any, pageNumber: any): Observable<any> {
+
+    return this.httpClient.get<any>(this.URL_API_STUDENT + '/api/students?nameSearch=' + nameSearch + '&page=' + pageNumber);
   }
 }

@@ -6,9 +6,9 @@ import {ListTeacherComponent} from './list-teacher/list-teacher.component';
 
 
 const routes: Routes = [
-  {path: 'teachers/create', component: CreateTeacherComponent},
-  {path: 'teachers/update/:id', component: UpdateTeacherComponent},
-  {path: 'teachers/list', component: ListTeacherComponent}
+  {path: 'create', component: CreateTeacherComponent},
+  {path: 'update/:id', component: UpdateTeacherComponent},
+  {path: 'list', component: ListTeacherComponent}
 ];
 
 @NgModule({

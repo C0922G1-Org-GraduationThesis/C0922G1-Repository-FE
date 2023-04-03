@@ -42,7 +42,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     AngularFireStorageModule,
     AngularFireModule,
     AngularFireModule.initializeApp(environment.firebaseConfig)
-
   ],
   providers: [],
   bootstrap: [AppComponent]

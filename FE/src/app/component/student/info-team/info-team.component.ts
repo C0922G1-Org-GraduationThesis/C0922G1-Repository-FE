@@ -45,6 +45,6 @@ export class InfoTeamComponent implements OnInit {
   }
 
   onSubmit() {
-    this.route.navigateByUrl('students/register-topic');
+    this.route.navigateByUrl('students/register-topic/' + this.teamId);
   }
 }

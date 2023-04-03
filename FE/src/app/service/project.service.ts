@@ -7,6 +7,8 @@ import {Project} from '../model/project';
   providedIn: 'root'
 })
 export class ProjectService {
+  API_URL = `http://localhost:8080/api/projects/`;
+
 
   constructor(private httpClient: HttpClient) {
   }
@@ -16,6 +18,10 @@ export class ProjectService {
 
   getProjectDetail(id: number): Observable<Project> {
     return this.httpClient.get<Project>('http://localhost:8080/api/projects/detail/' + id);
+  }
+
+  findAll(searchName: string, page: number, size: number): Observable<any> {
+    return this.httpClient.get<any>(this.API_URL + '?searchName=' + searchName + '&size=' + size + '&page=' + page);
   }
 
 }

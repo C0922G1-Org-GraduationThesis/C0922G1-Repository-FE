@@ -2,6 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {Project} from '../../../model/project';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ProjectService} from '../../../service/project.service';
+import {ActivatedRoute} from "@angular/router";
+import {TeamService} from "../../../service/team.service";
+import {Team} from "../../../model/team";
 
 @Component({
   selector: 'app-register-topic',
@@ -15,8 +18,18 @@ export class RegisterTopicComponent implements OnInit {
   size = 5;
   currentPage = 0;
   formCreate: FormGroup;
+  teamId: number;
+  team: Team;
 
-  constructor(private projectService: ProjectService) {
+  constructor(private projectService: ProjectService,
+              private activatedRoute: ActivatedRoute,
+              private teamService: TeamService) {
+    this.activatedRoute.paramMap.subscribe(paramMap => {
+      this.teamId = +paramMap.get('teamId');
+      this.teamService.findById(this.teamId).subscribe(team => {
+        this.team = team;
+      });
+    });
   }
 
   ngOnInit(): void {
