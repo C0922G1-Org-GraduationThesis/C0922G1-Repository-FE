@@ -14,7 +14,7 @@ import { InfomationGuildComponent } from './infomation-guild/infomation-guild.co
     HeaderComponent,
     BannerComponent,
     FooterComponent,
-    InfomationGuildComponent
+    InfomationGuildComponent,
   ],
     imports: [
         CommonModule,

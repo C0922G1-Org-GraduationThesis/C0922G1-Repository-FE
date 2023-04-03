@@ -1,6 +1,6 @@
-import {Team} from './team';
+import {Team} from '../team';
 
-export interface Project {
+export interface ProjectDto {
   projectId?: number;
   projectName?: string;
   projectContent?: string;

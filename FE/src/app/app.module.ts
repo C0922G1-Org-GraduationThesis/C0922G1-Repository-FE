@@ -12,6 +12,10 @@ import {SharedModule} from './component/shared/shared.module';
 import {StudentModule} from './component/student/student.module';
 import {TeacherModule} from './component/teacher/teacher.module';
 import {TopicModule} from './component/topic/topic.module';
+import {HttpClientModule} from '@angular/common/http';
+import {NgxPaginationModule} from 'ngx-pagination';
+import {CKEditorModule} from 'ckeditor4-angular';
+
 
 @NgModule({
   declarations: [
@@ -28,7 +32,10 @@ import {TopicModule} from './component/topic/topic.module';
     SharedModule,
     StudentModule,
     TeacherModule,
-    TopicModule
+    TopicModule,
+    HttpClientModule,
+    NgxPaginationModule,
+    CKEditorModule
   ],
   providers: [],
   bootstrap: [AppComponent]
