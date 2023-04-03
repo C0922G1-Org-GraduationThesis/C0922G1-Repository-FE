@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 
 
 import {finalize} from 'rxjs/operators';
+// @ts-ignore
 import {AngularFireStorage} from '@angular/fire/storage';
 import {DatePipe} from '@angular/common';
 import {ProgressReportService} from '../../../service/progress-report.service';
