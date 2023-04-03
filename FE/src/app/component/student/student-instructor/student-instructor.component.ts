@@ -28,6 +28,12 @@ export class StudentInstructorComponent implements OnInit {
 
   }
 
+  /**
+   * create by VinhLD
+   * date create 2/4/2023
+   * function:  show the instructor's list of students
+   *
+   */
   getAllStudentAndSearch(id, page, nameSearch) {
     this.studentService.getAllStudentByIdTeacher(id, page, nameSearch).subscribe(item => {
       this.studentInfoList = item.content;
