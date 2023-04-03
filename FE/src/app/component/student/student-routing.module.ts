@@ -11,7 +11,7 @@ const routes: Routes = [
     component: RegisterTeamComponent
   },
   {
-    path: 'info-team',
+    path: 'info-team/:teamId',
     component: InfoTeamComponent
   },
   {

@@ -36,6 +36,22 @@ export class RegisterTeamComponent implements OnInit {
         .some(teamStudent => teamStudent.studentId === student.studentId));
       this.totalPages = data.totalPages;
       this.teamPage = data;
+    }, error => {
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer);
+          toast.addEventListener('mouseleave', Swal.resumeTimer);
+        }
+      });
+      Toast.fire({
+        icon: 'error',
+        title: 'Tên hoặc MSSV không tồn tại'
+      });
     });
   }
 
@@ -92,7 +108,8 @@ export class RegisterTeamComponent implements OnInit {
             memberOfTeam: 0
           };
           // Tên nhóm hợp lệ
-          this.teamService.saveTeam(newTeam).subscribe(result => {
+          this.teamService.saveTeam(newTeam).subscribe(team => {
+            console.log(team);
             const Toast = Swal.mixin({
               toast: true,
               position: 'top-end',
@@ -104,7 +121,7 @@ export class RegisterTeamComponent implements OnInit {
                 toast.addEventListener('mouseleave', Swal.resumeTimer);
               }
             });
-            this.route.navigateByUrl('/students/info-team');
+            this.route.navigateByUrl('/students/info-team/' + team.teamId);
             Toast.fire({
               icon: 'success',
               title: 'Đăng ký nhóm thành công'

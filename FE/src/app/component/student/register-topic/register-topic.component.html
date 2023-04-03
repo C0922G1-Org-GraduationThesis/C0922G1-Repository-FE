@@ -12,45 +12,102 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-lg-4 col-md-4 col-sm-4 shadow">
-      <div class="row justify-content-center">
-        <h5 class="text-primary mt-3">Đăng ký đề tài</h5>
-      </div>
-      <div class="row mb-3">
-        <div class="col">
+    <div class="col-lg-4 col-md-6 col-sm-12">
+      <div class="card shadow">
+        <div class="card-body">
+          <h5 class="card-title text-primary d-flex justify-content-center">Đăng ký đề tài</h5>
+          <form [formGroup]="formCreate" (ngSubmit)="onSubmit()">
             <div class="mb-3">
-              <label for="nameTopic" class="form-label text-color">Tên đề tài</label>
-              <input type="text" class="form-control" id="nameTopic" placeholder="">
+              <label for="nameTopic" class="form-label text-color">Tên đề tài(<span class="text-danger">*</span>)</label>
+              <input type="text" class="form-control" id="nameTopic" placeholder="" formControlName="projectName">
+              <span
+                class="text-danger"
+                *ngIf="
+                    formCreate.controls.projectName?.touched &&
+                    formCreate.controls.projectName?.errors?.required">
+                    Phải nhập trường này.
+                </span>
+              <span class="text-danger"
+                    *ngIf="
+                    formCreate.controls.projectName?.touched &&
+                    formCreate.controls.projectName?.errors?.pattern">
+                    Tên đề tài không đúng định dạng.
+                </span>
+              <span class="text-danger"
+                    *ngIf="
+              formCreate.controls.projectName?.dirty &&
+              formCreate.controls.projectName?.errors?.minlength">
+                    Tên đề tài phải nhiều hơn 15 kí tự
+              </span>
+              <span class="text-danger"
+                    *ngIf="
+              formCreate.controls.projectName?.dirty &&
+              formCreate.controls.projectName?.errors?.maxlength">
+                    Tên đề tài phải nhỏ hơn 250 kí tự
+              </span>
             </div>
             <div class="mb-3">
-              <label for="contentTopic" class="form-label text-color">Nội dung đề tài</label>
-              <textarea class="form-control" id="contentTopic" rows="3"></textarea>
+              <label for="contentTopic" class="form-label text-color">Nội dung đề tài(<span class="text-danger">*</span>)</label>
+              <textarea class="form-control" id="contentTopic" rows="3" formControlName="projectContent"></textarea>
+              <span
+                class="text-danger"
+                *ngIf="
+                    formCreate.controls.projectContent?.touched &&
+                    formCreate.controls.projectContent?.errors?.required">
+                    Phải nhập trường này.
+                </span>
+              <span class="text-danger"
+                    *ngIf="
+              formCreate.controls.projectContent?.dirty &&
+              formCreate.controls.projectContent?.errors?.minlength">
+                    Nội dung đề tài phải nhiều hơn 50 kí tự
+              </span>
+              <span class="text-danger"
+                    *ngIf="
+              formCreate.controls.projectContent?.dirty &&
+              formCreate.controls.projectContent?.errors?.maxlength">
+                   Nội dung đề tài phải nhỏ hơn 10000 kí tự
+              </span>
             </div>
             <div class="mb-3">
-              <div class="mb-3">
-                <label for="description" class="form-label text-color">Mô tả</label>
-                <input class="form-control" type="file" id="description">
-              </div>
+              <label for="description" class="form-label text-color">Mô tả(<span class="text-danger">*</span>)</label>
+              <input class="form-control" type="file" id="description" formControlName="projectDescription">
+              <span
+                class="text-danger"
+                *ngIf="
+                    formCreate.controls.projectDescription?.touched &&
+                    formCreate.controls.projectDescription?.errors?.required">
+                    Phải nhập trường này.
+                </span>
             </div>
             <div class="mb-3">
-              <div class="mb-3">
-                <label for="img" class="form-label text-color">Hình ảnh</label>
-                <input class="form-control" type="file" id="img">
-              </div>
+              <label for="img" class="form-label text-color">Hình ảnh(<span class="text-danger">*</span>)</label>
+              <input class="form-control" type="file" id="img" formControlName="projectImg">
+              <span
+                class="text-danger"
+                *ngIf="
+                    formCreate.controls.projectImg?.touched &&
+                    formCreate.controls.projectImg?.errors?.required">
+                    Phải nhập trường này.
+                </span>
             </div>
+            <div class="d-grid gap-2 d-flex justify-content-center">
+              <button type="submit" class="btn btn-outline-secondary mt-3 "
+                      [disabled]="formCreate.invalid">Đăng ký đề tài
+              </button>
+            </div>
+          </form>
         </div>
       </div>
-      <div class="row justify-content-center">
-        <button type="button" class="btn btn-outline-secondary mg-bottom">Đăng ký đề tài</button>
-      </div>
     </div>
-    <div class="col-lg-8 col-md-8 col-sm-8">
+
+    <div class="col-lg-8 col-md-12 col-sm-12 table-shadow">
       <div class="row justify-content-center">
         <h5 class="text-primary mt-3">Danh sách đề tài</h5>
       </div>
-      <div class="row mb-3">
+      <div class="row mb-3 fixed-height">
         <div class="col">
-          <table class="table table-striped table-shadow">
+          <table class="table table-striped">
             <thead>
             <tr>
               <th scope="col">STT</th>

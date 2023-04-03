@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { StudentRoutingModule } from './student-routing.module';
 import { RegisterTeamComponent } from './register-team/register-team.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { InfoTeamComponent } from './info-team/info-team.component';
 import { RegisterTopicComponent } from './register-topic/register-topic.component';
 
@@ -13,7 +13,8 @@ import { RegisterTopicComponent } from './register-topic/register-topic.componen
   imports: [
     CommonModule,
     StudentRoutingModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class StudentModule { }

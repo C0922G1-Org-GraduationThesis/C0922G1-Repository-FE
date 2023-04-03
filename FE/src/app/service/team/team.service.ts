@@ -15,4 +15,8 @@ export class TeamService {
   saveTeam(team: Team): Observable<any> {
     return this.http.post<Team>(this.API_URL + 'save/' + team.teamName + '/' + team.memberOfTeam, team);
   }
+
+  findById(id: number): Observable<Team> {
+    return this.http.get<Team>(this.API_URL + 'detail/' + id);
+  }
 }

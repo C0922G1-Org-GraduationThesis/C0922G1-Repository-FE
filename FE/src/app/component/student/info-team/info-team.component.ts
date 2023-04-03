@@ -1,7 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {Student} from '../../../model/student';
 import {StudentService} from '../../../service/student/student.service';
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from '@angular/router';
+import {Team} from '../../../model/team';
+import {TeamService} from '../../../service/team/team.service';
 
 @Component({
   selector: 'app-info-team',
@@ -9,16 +11,24 @@ import {Router} from "@angular/router";
   styleUrls: ['./info-team.component.css']
 })
 export class InfoTeamComponent implements OnInit {
-  searchStr = '';
   totalPages: number;
   size = 100;
   currentPage = 0;
   listStudent: Student[] = [];
   teamPage: any;
-  teamId = 2;
+  teamId: number;
+  team: Team;
 
   constructor(private studentService: StudentService,
-              private route: Router) {
+              private route: Router,
+              private activatedRoute: ActivatedRoute,
+              private teamService: TeamService) {
+    this.activatedRoute.paramMap.subscribe(paramMap => {
+      this.teamId = +paramMap.get('teamId');
+      this.teamService.findById(this.teamId).subscribe(team => {
+        this.team = team;
+      });
+    });
   }
 
   ngOnInit(): void {
@@ -32,11 +42,6 @@ export class InfoTeamComponent implements OnInit {
       this.totalPages = data.totalPages;
       this.teamPage = data;
     });
-  }
-
-  changePage(pageNumber: number) {
-    this.currentPage = pageNumber;
-    this.onSearch();
   }
 
   onSubmit() {

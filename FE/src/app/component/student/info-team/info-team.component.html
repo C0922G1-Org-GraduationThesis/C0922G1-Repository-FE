@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <div class="row justify-content-center">
-    <h3 class="text-primary mt-3">THÔNG TIN NHÓM</h3>
+    <h3 class="text-primary mt-3">THÔNG TIN NHÓM<span *ngIf="team" class="text-black">: {{team.teamName}}</span></h3>
   </div>
   <div class="row fixed-height" *ngIf="listStudent.length > 0">
     <div class="col-lg-12 col-md-12 col-sm-12">
@@ -26,10 +26,11 @@
     <h3 class="text-danger mt-3">Chưa có thành viên tham gia.</h3>
   </div>
   <div class="row justify-content-center">
-    <h3 class="text-danger mt-3">Hiện tại nhóm của bạn chưa đăng ký đề tài.</h3>
+    <h3 class="text-danger mt-3" *ngIf="listStudent.length !== 0">Hiện tại nhóm của bạn chưa đăng ký đề tài.</h3>
   </div>
   <div class="row justify-content-center mg">
-    <button type="button" class="btn btn-outline-secondary" (click)="onSubmit()">Đăng ký đề tài</button>
+    <button type="button" class="btn btn-outline-secondary" [disabled]="listStudent.length === 0" (click)="onSubmit()">
+      Đăng ký đề tài</button>
   </div>
 </div>
 
