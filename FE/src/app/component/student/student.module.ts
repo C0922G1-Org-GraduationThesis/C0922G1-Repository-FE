@@ -7,12 +7,21 @@ import {RegisterInstructorComponent} from './register-instructor/register-instru
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {StudentUpdateComponent} from './student-update/student-update.component';
 import {StudentCreateComponent} from './student-create/student-create.component';
+import {RegisterTopicComponent} from './register-topic/register-topic.component';
+import {RegisterTeamComponent} from './register-team/register-team.component';
+import {InfoTeamComponent} from './info-team/info-team.component';
+import { StudentListComponent } from './student-list/student-list.component';
 
 
 @NgModule({
   declarations: [RegisterInstructorComponent,
     StudentUpdateComponent,
-    StudentCreateComponent],
+    StudentCreateComponent,
+    RegisterTeamComponent,
+    RegisterTopicComponent,
+    RegisterTeamComponent,
+    InfoTeamComponent,
+    StudentListComponent],
   imports: [
     CommonModule,
     StudentRoutingModule,
