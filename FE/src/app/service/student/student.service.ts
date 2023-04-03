@@ -48,4 +48,16 @@ export class StudentService {
 
     return this.httpClient.get<any>(this.URL_API_STUDENT + '/api/students?nameSearch=' + nameSearch + '&page=' + pageNumber);
   }
+
+  /**
+   * create by VinhLD
+   * date create 2/4/2023
+   * Function: show the instructor's list of students
+   *
+   */
+
+  getAllStudentByIdTeacher(id: any, pageNumber: any, nameSearch: any): Observable<any> {
+    return this.httpClient.get<any>(this.URL_API_STUDENT + '/api/students/list-id-teacher/' + id + '?nameSearch='
+      + nameSearch + '&page=' + pageNumber);
+  }
 }

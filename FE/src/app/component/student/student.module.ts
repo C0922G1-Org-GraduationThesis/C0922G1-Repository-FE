@@ -11,6 +11,7 @@ import {RegisterTopicComponent} from './register-topic/register-topic.component'
 import {RegisterTeamComponent} from './register-team/register-team.component';
 import {InfoTeamComponent} from './info-team/info-team.component';
 import { StudentListComponent } from './student-list/student-list.component';
+import { StudentInstructorComponent } from './student-instructor/student-instructor.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { StudentListComponent } from './student-list/student-list.component';
     RegisterTopicComponent,
     RegisterTeamComponent,
     InfoTeamComponent,
-    StudentListComponent],
+    StudentListComponent,
+    StudentInstructorComponent],
   imports: [
     CommonModule,
     StudentRoutingModule,

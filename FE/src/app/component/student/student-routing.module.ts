@@ -7,6 +7,7 @@ import {RegisterTeamComponent} from './register-team/register-team.component';
 import {InfoTeamComponent} from './info-team/info-team.component';
 import {RegisterTopicComponent} from './register-topic/register-topic.component';
 import {StudentListComponent} from './student-list/student-list.component';
+import {StudentInstructorComponent} from "./student-instructor/student-instructor.component";
 
 
 const routes: Routes = [
@@ -28,7 +29,9 @@ const routes: Routes = [
   {
     path: 'list',
     component: StudentListComponent
-  }
+  },
+  {path: 'instructor',
+    component: StudentInstructorComponent}
 ];
 
 @NgModule({

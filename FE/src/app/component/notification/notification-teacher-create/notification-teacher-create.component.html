@@ -1,0 +1,40 @@
+<div style="margin: 0;padding: 0; overflow: hidden">
+  <div>
+    <h2 style="size:32px; margin-top: 50px; margin-bottom: 50px; text-align: center; margin-top: 3%">THÔNG BÁO CỦA GIÁO VIÊN</h2>
+  </div>
+  <div style="  display: flex;justify-content: center;">
+    <div style="width: 70%; margin-top: 0">
+      <form [formGroup]="formNotificationTeacher">
+        <div class="form-group">
+          <label for="exampleInputEmail1" style="margin-bottom: 3%; font-weight: bold">Chủ đề (<span style="color: red">*</span>)</label>
+          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" formControlName="notificationTeacherTopic"
+                 style="border-color: #ced4da;"
+                 onfocus="this.style.borderColor='#CFF4FC';this.style.boxShadow='none';this.style.outline='2px solid #CFF4FC';"
+                 onblur="this.style.borderColor='#ced4da';this.style.outline='none';">
+          <p style="color: red" *ngIf="formNotificationTeacher.controls.notificationTeacherTopic?.touched && formNotificationTeacher.controls.notificationTeacherTopic?.errors?.required">Không được để trống !</p>
+          <p style="color: red">{{errCreate.notificationTeacherTopic}}</p>
+        </div>
+        <div class="form-group">
+          <label for="exampleFormControlTextarea1" style="margin-bottom: 3%; margin-top: 3%; font-weight: bold">Nội
+            dung thông báo</label>
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="12" formControlName="notificationTeacherContent"
+                    style="border-color: #ced4da;"
+                    onfocus="this.style.borderColor='#CFF4FC';this.style.boxShadow='none';this.style.outline='2px solid #CFF4FC';"
+                    onblur="this.style.borderColor='#ced4da';this.style.outline='none';"></textarea>
+          <p style="color: red" *ngIf="formNotificationTeacher.controls.notificationTeacherContent?.touched && formNotificationTeacher.controls.notificationTeacherContent?.errors?.required ">Không được để trống !</p>
+          <!--          <p style="color: red" *ngIf="formNotificationTeacher.controls.notificationTeacherContent?.touched && formNotificationTeacher.controls.notificationTeacherContent?.errors?.pattern ">Chưa đúng định dạng</p>-->
+          <p style="color: red">{{errCreate.notificationTeacherContent}}</p>
+
+        </div>
+
+        <button (click)="createNotificationTeacher()" type="submit" class="btn"
+                style="border: 1px solid #CFF4FC;margin-bottom: 3%; margin-top: 3%;font-weight: bold; float: right; width: 20%;color:black;background-color: white;"
+                onmouseover="this.style.backgroundColor='#CFF4FC'" onmouseout="this.style.backgroundColor='white';"
+                onfocus="this.style.borderColor='#CFF4FC';this.style.boxShadow='none';this.style.outline='2px solid #CFF4FC';"
+                onblur="this.style.borderColor='#ced4da';this.style.outline='none';">
+          Đăng Thông Báo
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

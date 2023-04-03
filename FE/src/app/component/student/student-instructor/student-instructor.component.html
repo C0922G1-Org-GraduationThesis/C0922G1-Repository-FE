@@ -1,0 +1,153 @@
+<<h2 class="text-center fw-bold my-3" style="color: #17a2b8">DANH SÁCH SINH VIÊN </h2>
+<div class="p-3 " style="min-height: 58vh">
+  <div class="row mt-3">
+    <div style="margin-left: 50px" class="col-2 ">
+
+    </div>
+    <div class="col-4"></div>
+    <div class="col-4 col-sm-4">
+      <input style="margin-bottom: 15px; margin-left: 10px" formControlName="nameStudent" type="text"
+             #studentName
+             class="form-control rounded-0 mt-2" id="title"
+             placeholder="Nhập tên sinh viên cần tìm..."
+             onfocus="this.style.borderColor='#14a2b8';this.style.boxShadow='none';this.style.outline='2px solid #14a2b8';"
+             onblur="this.style.borderColor='#ced4da';this.style.outline='none';">
+    </div>
+    <div class="col-1">
+      <button class="btn btn-outline-primary w-100 mt-2 "
+              style=" margin-left: 16px; border: 1px solid #14a2b8;color: #14a2b8"
+              (click)="searchStudent(studentName.value,this.page)"
+              onmouseover="this.style.backgroundColor='#14a2b8'" onmouseout="this.style.backgroundColor='white';"
+              onfocus="this.style.borderColor='#14a2b8';this.style.boxShadow='none';this.style.outline='2px solid #14a2b8';"
+              onblur="this.style.borderColor='#ced4da';this.style.outline='none';">
+        Tìm kiếm
+      </button>
+
+    </div>
+
+
+  </div>
+
+
+  <div class="row row-cols-1 row-cols-md-4 g-4" style="margin-left: 40px;margin-right: 30px"
+       *ngIf="studentInfoList.length!=0,else elseBlock">
+    <!--1-->
+    <div class="col" *ngFor="let item of studentInfoList">
+      <div class="card" style="margin-right: 15px;padding: 10px ">
+        <img style="padding: 10px" src="{{item.imgStudent}}"
+             class="card-img-top" alt="..." height="350px">
+
+
+        <div class="card-body" style="background-color: #ECECEC">
+
+          <h5 class="card-title" style="text-align: center; color: green">{{item.nameStudent}}</h5>
+          <!--
+                   <p class="card-text">This is a longer card with supporting text below as a natural lead-ihfhfhfhfhfhh. This content is a little bit longer.</p>-->
+
+          <div>
+            <!--            <img src="img/icons8-id-verified-24.png" height="24" width="24"/>-->
+            <span style="font-weight:bold;">Mã sinh viên:</span>
+            <span>{{item.codeStudent}}</span>
+          </div>
+          <div>
+
+            <!--            <img src="img/icons8-class-48.png" height="30" width="30"/>-->
+            <span style="font-weight:bold">Lớp:</span>
+            <span>{{item.nameClazz}}</span>
+          </div>
+          <div>
+
+
+            <!--            <img style="margin-left: 2px" src="img/icons8-sign-mail-24.png" height="20" width="20  "/>-->
+            <span style="font-weight: bold;">Email:</span>
+            <span>{{item.emailStudent}}</span>
+          </div>
+          <div>
+
+
+            <!--            <img style="padding-left: 3px" src="img/icons8-phone-24.png" height="20" width="20"/>-->
+            <span style="font-weight:bold;">SĐT:</span>
+            <span>{{item.phoneNumberStudent}}</span>
+
+          </div>
+          <div style="padding-top: 5px;margin-bottom: -15px">
+
+
+
+
+            <!--            <img src="img/icons8-training-24.png" height="24" width="24"/>-->
+            <span style="font-weight: bold;">GV :</span>
+            <span>{{item.nameTeacher}}</span>
+
+
+          </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template #elseBlock><h4 style="text-align: center;color: #ff0000">Không có dữ liệu cần tìm</h4></ng-template>
+
+
+</div>
+
+<div style="margin-left: 40%">
+  <div class="row" style="padding: 0; margin: 0" *ngIf="studentInfoList.length!=0">
+    <div class="col- 8"></div>
+    <div *ngIf="studentInfoPage" class="col- 4">
+      <ul class="pagination">
+        <li class="page-item" [ngClass]="studentInfoPage.first ? 'disabled': ''">
+          <a role="button" class="page-link" (click)="changePage(0)">Trang đầu</a>
+        </li>
+        <li class="page-item" [ngClass]="studentInfoPage.first ? 'disabled': ''">
+          <a role="button" class="page-link" (click)="changePage(studentInfoPage.number - 1)"><</a>
+        </li>
+        <li class="page-item" *ngIf="studentInfoPage.number - 3 > 0">
+          <a role="button" class="page-link"
+             (click)="changePage(studentInfoPage.number - 4)">{{studentInfoPage.number - 3}}</a>
+        </li>
+        <li class="page-item" *ngIf="studentInfoPage.number - 2 > 0">
+          <a role="button" class="page-link"
+             (click)="changePage(studentInfoPage.number - 3)">{{studentInfoPage.number - 2}}</a>
+        </li>
+        <li class="page-item" *ngIf="studentInfoPage.number - 1 > 0">
+          <a role="button" class="page-link"
+             (click)="changePage(studentInfoPage.number - 2)">{{studentInfoPage.number - 1}}</a>
+        </li>
+        <li class="page-item" *ngIf="studentInfoPage.number > 0">
+          <a role="button" class="page-link"
+             (click)="changePage(studentInfoPage.number - 1)">{{studentInfoPage.number}}</a>
+        </li>
+        <li class="page-item active"><a class="page-link">{{studentInfoPage.number + 1}}</a></li>
+        <li class="page-item" *ngIf="studentInfoPage.number + 2 <= studentInfoPage.totalPages">
+          <a role="button" class="page-link"
+             (click)="changePage(studentInfoPage.number + 1)">{{studentInfoPage.number + 2}}</a>
+        </li>
+        <li class="page-item" *ngIf="studentInfoPage.number + 3 <= studentInfoPage.totalPages">
+          <a role="button" class="page-link"
+             (click)="changePage(studentInfoPage.number + 2)">{{studentInfoPage.number + 3}}</a>
+        </li>
+        <li class="page-item" *ngIf="studentInfoPage.number + 4 <= studentInfoPage.totalPages">
+          <a role="button" class="page-link"
+             (click)="changePage(studentInfoPage.number + 3)">{{studentInfoPage.number + 4}}</a>
+        </li>
+        <li class="page-item" *ngIf="studentInfoPage.number + 5 <= studentInfoPage.totalPages">
+          <a role="button" class="page-link"
+             (click)="changePage(studentInfoPage.number + 4)">{{studentInfoPage.number + 5}}</a>
+        </li>
+        <li class="page-item" [ngClass]="studentInfoPage.last ? 'disabled': ''">
+          <a role="button" class="page-link"
+             (click)="changePage(studentInfoPage.number + 1)">></a>
+        </li>
+        <li class="page-item" [ngClass]="studentInfoPage.last ? 'disabled': ''">
+          <a role="button" class="page-link"
+             (click)="changePage(studentInfoPage.totalPages - 1)">
+            Trang cuối
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

@@ -24,6 +24,30 @@ export class ProjectService {
     return this.httpClient.get<any>(this.API_URL + '?searchName=' + searchName + '&size=' + size + '&page=' + page);
   }
 
+  /**
+   * Created by: NuongHT
+   * Date create: 29/03/2023
+   */
+  getPro(page: number): Observable<Project[]> {
+    return this.httpClient.get<Project[]>('http://localhost:8080/api/projects/listPage' + '?page=' + page);
+  }
+
+  /**
+   * Created by: NuongHT
+   * Date create: 29/03/2023
+   */
+  updateBrowser(projectId: number) {
+    // @ts-ignore
+    return this.httpClient.put('http://localhost:8080/api/projects/browser/' + projectId);
+  }
+  /**
+   * Created by: NuongHT
+   * Date create: 29/03/2023
+   */
+  updateCancel(projectId: number) {
+    // @ts-ignore
+    return this.httpClient.put('http://localhost:8080/api/projects/cancel/' + projectId);
+  }
 }
 
 export interface Page<T> {
