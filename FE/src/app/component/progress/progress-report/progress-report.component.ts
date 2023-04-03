@@ -45,8 +45,8 @@ export class ProgressReportComponent implements OnInit {
               private router: Router,
               private datePipe: DatePipe) {
     this.activatedRoute.paramMap.subscribe((paramMap) => {
-      this.projectId = +paramMap.get('projectId');
-      this.stageId = +paramMap.get('stageId');
+      this.projectId = +paramMap.get('1');
+      this.stageId = +paramMap.get('1');
       this.getProgressReport(this.projectId, this.stageId);
     });
   }
@@ -72,6 +72,7 @@ export class ProgressReportComponent implements OnInit {
         progressReportContent: new FormControl('', [Validators.required]),
         progressReportTime: new FormControl('', [Validators.required]),
         progressReportFile: new FormControl('', [Validators.required]),
+        progressReportFileName: new FormControl('', [Validators.required]),
         project: new FormControl(item.project, [Validators.required]),
         stage: new FormControl(item.stage, [Validators.required])
       });

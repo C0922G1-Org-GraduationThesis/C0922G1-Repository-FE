@@ -1,12 +1,15 @@
 <h3>Lịch sử file báo cáo</h3>
 <div style="margin-bottom: 2%"></div>
 <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-
   <div class="row">
-        <div style="margin-bottom: 2%"><a routerLink="/progress/report/{{projectId}}/{{stageId}}"
+    <div class="col-md-1">
+
+    </div>
+    <div class="col-md-10">
+      <div style="margin-bottom: 2%"><a routerLink="/progress/report/{{projectId}}/{{stageId}}"
                                         style="text-decoration: none">
         <button type="button" class="btn btn-outline-info  mx-auto"
-                style="border-radius: 15px; width: 7%">Trở lại
+                style="border-radius: 15px; width: 7%">Quay lại
         </button>
       </a>
       </div>
@@ -25,28 +28,34 @@
           <tr
             *ngFor="let progressReport of progressReportHistory | paginate: { itemsPerPage: 4, currentPage: page}; index as i">
             <td style="text-align: center">{{i + 1}}</td>
-            <td><span>{{progressReport.progressReportFile}}</span><a [href]="progressReport.progressReportFile"
-                                                                     download=""
-                                                                     target="_blank"><img class="mx-auto" width="30px"
-                                                                                          height="20px"
-                                                                                          src="../../../../assets/img/progress_report_icon_img/file_download_icon.png"
-                                                                                          alt="">
+            <td><span>{{progressReport.progressReportFileName}}</span><a [href]="progressReport.progressReportFile"
+                                                                         download=""
+                                                                         target="_blank"><img class="mx-auto"
+                                                                                              width="30px"
+                                                                                              height="20px"
+                                                                                              src="../../../../assets/img/progress_report_icon_img/file_download_icon.png"
+                                                                                              alt="">
 
             </a></td>
             <!--            <td><a (click)="dowFile(progressReport.progressReportFile)">-->
             <!--              <button class="btn btn-outline-info">Download file</button>-->
             <!--            </a></td>-->
-            <td>{{progressReport.progressReportTime}}</td>
+            <td style="text-align: center">{{progressReport.progressReportTime}}</td>
           </tr>
           <tr></tr>
           </tbody>
         </table>
       </div>
-      <pagination-controls style="display: flex; justify-content: center"
-                           (pageChange)="page = $event"></pagination-controls>
     </div>
-    <div class="row"></div>
-    <br>
+    <div class="col-md-1">
+
+    </div>
+
+    <pagination-controls style="display: flex; justify-content: center"
+                         (pageChange)="page = $event"></pagination-controls>
+  </div>
+  <div class="row"></div>
+  <br>
 </div>
 
 

@@ -21,21 +21,15 @@
                   </div>
                   <p class="badge bg-info">{{studentProgressReport.stageName}}</p>
                   <p>{{studentProgressReport.progressReportContent}}</p>
-                  <p><span>File báo cáo tiến độ </span><span></span>
+                  <p>
+                    <span>File báo cáo : </span><strong><span>{{studentProgressReport.progressReportFileName}}</span></strong>
                     <span>
                     <input hidden type="text" [(ngModel)]="studentProgressReport.progressReportFile">
-                      <a [href]="studentProgressReport.progressReportFile" download="" target="_blank"><span>&nbsp;&nbsp;&nbsp;</span><img class="mx-auto" width="30px"
-                            height="30px"
-                            src="../../../../assets/img/progress_report_icon_img/file_download_icon.png"
-                            alt=""></a>
-
-                      <!--                      <button-->
-                      <!--                      class="btn btn-outline-info"-->
-                      <!--                      (click)="dowFile(studentProgressReport.progressReportFile)"><img class="mx-auto" width="20px"-->
-                      <!--                                                                                       height="30px"-->
-                      <!--                                                                                       src="../../../../assets/img/progress_report_icon_img/file_download_icon.png"-->
-                      <!--                                                                                       alt=""></button>-->
-                    </span>
+                      <a [href]="studentProgressReport.progressReportFile" download="" target="_blank"><span>&nbsp;&nbsp;&nbsp;</span><img
+                        class="mx-auto" width="30px"
+                        height="30px"
+                        src="../../../../assets/img/progress_report_icon_img/file_download_icon.png"
+                        alt=""></a></span>
                   </p>
                   <div class="row">
                     <div class="col-md-7">

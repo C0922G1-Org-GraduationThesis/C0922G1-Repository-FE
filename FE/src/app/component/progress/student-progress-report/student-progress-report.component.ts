@@ -23,7 +23,7 @@ export class StudentProgressReportComponent implements OnInit {
               private router: Router,
               private activatedRoute: ActivatedRoute) {
     this.activatedRoute.paramMap.subscribe((paramMap) => {
-      this.projectId = +paramMap.get('projectId')
+      this.projectId = +paramMap.get('1')
     });
   }
 
