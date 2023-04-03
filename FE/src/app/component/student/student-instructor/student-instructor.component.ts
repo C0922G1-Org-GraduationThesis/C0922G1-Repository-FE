@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Student} from '../../../model/student';
 import {StudentInfo} from '../../../dto/student-info';
-import {StudentInfoPage} from '../../../dto/student-info-page';
 import {StudentService} from "../../../service/student/student.service";
+import {StudentInfoPage} from "../../../dto/student-info-page.ts";
 
 @Component({
   selector: 'app-student-instructor',
