@@ -45,8 +45,8 @@ export class ProgressReportComponent implements OnInit {
               private router: Router,
               private datePipe: DatePipe) {
     this.activatedRoute.paramMap.subscribe((paramMap) => {
-      this.projectId = +paramMap.get('1');
-      this.stageId = +paramMap.get('2');
+      this.projectId = +paramMap.get('projectId');
+      this.stageId = +paramMap.get('stageId');
       this.getProgressReport(this.projectId, this.stageId);
     });
   }

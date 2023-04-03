@@ -7,13 +7,13 @@ import {CommonModule, DatePipe} from "@angular/common";
 
 
 const routes: Routes = [{
-  path: "report/:1/:2",
+  path: "report/:projectId/:stageId",
   component: ProgressReportComponent
 }, {
   path: "history/:projectId/:stageId",
   component: ProgressReportHistoryComponent
 }, {
-  path: "student-report/:1",
+  path: "student-report/:projectId",
   component: StudentProgressReportComponent
 },
 ];
