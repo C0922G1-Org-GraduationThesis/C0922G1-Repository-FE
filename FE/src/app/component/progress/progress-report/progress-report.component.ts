@@ -20,15 +20,17 @@ import {ProgressReportService} from '../../../service/progress-report.service';
 export class ProgressReportComponent implements OnInit {
   @ViewChild('uploadFile', {static: true}) public avatarDom: ElementRef | undefined;
   selectedFile: any = null;
+  fileUrl: string;
+  showMessage = true;
 
   progressReportForm?: FormGroup;
   projectId: number;
   stageId: number;
   maxStagePercent: number;
-  // maxStagePercent=50;
 
-  projectName: string;
-  stageName: string;
+
+  projectName?: string;
+  stageName?: string;
   currentDate: Date = new Date();
   formattedDate: string;
 
@@ -36,7 +38,6 @@ export class ProgressReportComponent implements OnInit {
   @Input() progressColor = 'rgba(219,17,47,0.82)';
   progress: number;
   value: number;
-  fileUrl: string;
 
 
   constructor(private activatedRoute: ActivatedRoute,
@@ -72,7 +73,7 @@ export class ProgressReportComponent implements OnInit {
       this.progressReportForm = new FormGroup({
         progressReportContent: new FormControl('', [Validators.required]),
         progressReportTime: new FormControl('', [Validators.required]),
-        progressReportFile: new FormControl('', [Validators.required]),
+        progressReportFile: new FormControl(''),
         progressReportFileName: new FormControl('', [Validators.required]),
         project: new FormControl(item.project, [Validators.required]),
         stage: new FormControl(item.stage, [Validators.required])
@@ -81,17 +82,18 @@ export class ProgressReportComponent implements OnInit {
   }
 
   save() {
-
     if (this.selectedFile != null) {
       const filePath = this.selectedFile.name;
       const fileRef = this.storage.ref(filePath);
       const uploadTask = this.storage.upload(filePath, this.selectedFile);
-
       uploadTask.snapshotChanges().pipe(
         finalize(() => {
           fileRef.getDownloadURL().toPromise().then(url => {
             this.fileUrl = url;
             console.log(this.fileUrl);
+            if (this.fileUrl != null) {
+              this.showMessage = false;
+            }
           });
         })
       ).subscribe();
@@ -102,8 +104,8 @@ export class ProgressReportComponent implements OnInit {
 
     this.progressReportService.saveProgressReport(this.progressReportForm.value).subscribe(() => {
       Swal.fire({
-        title: 'Success!',
-        text: 'Do you want to continue',
+        title: 'Thành Công',
+        text: 'Cập nhật thành công !',
         icon: 'success',
         confirmButtonText: 'Ok'
       });
@@ -114,6 +116,7 @@ export class ProgressReportComponent implements OnInit {
   uploadFileImg() {
     this.selectedFile = this.avatarDom?.nativeElement.files[0];
     this.save();
+
   }
 
 }

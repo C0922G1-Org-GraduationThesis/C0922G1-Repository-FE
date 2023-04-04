@@ -22,8 +22,8 @@ export class ProgressReportService {
     return this.httpClient.get<ProgressReport>(this.URL_API + '/' + id);
   }
 
-  findProgressReportByProjectIdAndStageId(projectId: number, stageId: number): Observable<ProgressReport[]> {
-    return this.httpClient.get<ProgressReport[]>(this.URL_API + '/' + projectId + '/' + stageId);
+  findProgressReportByProjectIdAndStageId(projectId: number, stageId: number, page: number): Observable<ProgressReport[]> {
+    return this.httpClient.get<ProgressReport[]>(this.URL_API + '/' + projectId + '/' + stageId + '?page=' + page);
   }
 
   findProgressReportMaxPercentByProjectIdAndStageId(projectId: number, stageId: number): Observable<ProgressReport> {

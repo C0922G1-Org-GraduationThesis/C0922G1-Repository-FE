@@ -8,5 +8,5 @@ export interface ProgressDetail {
   progressDateEnd: string;
   progressStatus: boolean;
   projectId: number;
-  stage: Stage;
+  stageId: number;
 }

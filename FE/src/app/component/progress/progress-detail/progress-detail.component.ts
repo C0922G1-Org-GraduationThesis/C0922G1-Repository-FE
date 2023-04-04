@@ -39,7 +39,7 @@ export class ProgressDetailComponent implements OnInit {
   progressReviewForm: FormGroup;
   // SyVT
   studentProgressReports: StudentProgressReport[];
-  totalElement = 3;
+  totalElementSyVT = 2;
   maxElement = 0;
   flagSyVT = true;
   // LanTTN
@@ -55,7 +55,6 @@ export class ProgressDetailComponent implements OnInit {
 
   formCreateQuestion: FormGroup = new FormGroup({
     questionContent: new FormControl()
-    // questionTopic: new FormControl()
   });
 
   formCreateAnswer: FormGroup = new FormGroup({
@@ -168,6 +167,9 @@ export class ProgressDetailComponent implements OnInit {
       if (this.maxSizeProgressReview <= 2) {
         this.checkShowMore = false;
         this.checkHideMore = false;
+      } else {
+        this.checkShowMore = true;
+        this.checkHideMore = true;
       }
     });
   }
@@ -201,7 +203,7 @@ export class ProgressDetailComponent implements OnInit {
   }
 
   private getAllStudentProgressReport() {
-    this.studentProgressReportService.getAllStudentProgressReport(this.projectId, this.totalElement).subscribe(
+    this.studentProgressReportService.getAllStudentProgressReport(this.projectId, this.totalElementSyVT).subscribe(
       (data) => {
         this.studentProgressReports = data;
         console.log(data.length);
@@ -210,27 +212,27 @@ export class ProgressDetailComponent implements OnInit {
   }
 
   hiddenLess() {
-    if (this.totalElement > 1) {
-      this.totalElement--;
+    if (this.totalElementSyVT > 1) {
+      this.totalElementSyVT--;
       this.flagSyVT = true;
     }
-    this.studentProgressReportService.getAllStudentProgressReport(this.projectId, this.totalElement).subscribe(
+    this.studentProgressReportService.getAllStudentProgressReport(this.projectId, this.totalElementSyVT).subscribe(
       (data) => {
         this.studentProgressReports = data;
         console.log(data.length);
-        console.log(this.totalElement);
+        console.log(this.totalElementSyVT);
       }
     );
   }
 
   loadMore() {
-    if (this.totalElement < this.maxElement) {
-      this.totalElement++;
+    if (this.totalElementSyVT < this.maxElement) {
+      this.totalElementSyVT++;
     }
-    if (this.totalElement === this.maxElement) {
+    if (this.totalElementSyVT === this.maxElement) {
       this.flagSyVT = false;
     }
-    this.studentProgressReportService.getAllStudentProgressReport(this.projectId, this.totalElement).subscribe(
+    this.studentProgressReportService.getAllStudentProgressReport(this.projectId, this.totalElementSyVT).subscribe(
       (data) => {
         this.studentProgressReports = data;
         console.log(data);
@@ -247,25 +249,25 @@ export class ProgressDetailComponent implements OnInit {
 
   //////////////////////// LanNan
   getAllQuestion() {
-    this.questionService.getAllQuestion(this.totalElement).subscribe(
+    this.questionService.getAllQuestion(this.totalElementLan).subscribe(
       (data) => {
         this.questions = data.content;
-        this.maxElement = data.totalPages;
+        this.maxElementLan = data.totalPages;
         console.log(data.content);
       }
     );
   }
 
   hidden() {
-    if (this.totalElement > 1) {
-      this.totalElement--;
+    if (this.totalElementLan > 1) {
+      this.totalElementLan--;
       this.flag = true;
     }
-    this.questionService.getAllQuestion(this.totalElement).subscribe(
+    this.questionService.getAllQuestion(this.totalElementLan).subscribe(
       (data) => {
         this.questions = data.content;
         console.log(data.content);
-        console.log(this.totalElement);
+        console.log(this.totalElementLan);
       }
     );
   }
@@ -285,6 +287,7 @@ export class ProgressDetailComponent implements OnInit {
       }
     );
   }
+
   getAllAnswer(questionId: number) {
     this.answerFlag = true;
     this.temp = questionId;
@@ -296,13 +299,14 @@ export class ProgressDetailComponent implements OnInit {
       }
     );
   }
+
   createQuestion() {
     this.question = this.formCreateQuestion.value;
     this.question.studentId = 2;
     this.question.questionTopic = 'Giai doan 3';
     this.questionService.create(this.question).subscribe(data => {
       alert('Them moi thac mac thanh cong');
-      this.totalElement++;
+      this.totalElementLan++;
       this.getAllQuestion();
       this.formCreateQuestion.reset();
       this.answerFlag = false;

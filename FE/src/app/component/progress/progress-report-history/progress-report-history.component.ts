@@ -4,6 +4,7 @@ import {ActivatedRoute} from '@angular/router';
 import {ProgressReport} from '../../../model/progress-report';
 import {HttpClient} from '@angular/common/http';
 import {ProgressReportService} from '../../../service/progress-report.service';
+import {PageSy} from '../../../model/page-sy';
 
 
 @Component({
@@ -18,6 +19,8 @@ export class ProgressReportHistoryComponent implements OnInit {
   projectName: string;
   stageName: string;
   page = 0;
+  progressReportPage: ProgressReport[] = [];
+  teamPage!: PageSy;
 
   constructor(private activatedRoute: ActivatedRoute,
               private progressReportService: ProgressReportService,
@@ -25,7 +28,7 @@ export class ProgressReportHistoryComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe((paramMap) => {
       this.projectId = +paramMap.get('projectId'),
         this.stageId = +paramMap.get('stageId'),
-      this.getReportHistory(this.projectId, this.stageId);
+        this.getReportHistory(this.projectId, this.stageId, this.page);
 
     });
   }
@@ -34,9 +37,13 @@ export class ProgressReportHistoryComponent implements OnInit {
     this.getProgressReport();
   }
 
-  private getReportHistory(projectId: number, stageId: number) {
-    this.progressReportService.findProgressReportByProjectIdAndStageId(projectId, stageId).subscribe(data => {
-      this.progressReportHistory = data;
+  private getReportHistory(projectId: number, stageId: number, page: number) {
+    this.progressReportService.findProgressReportByProjectIdAndStageId(projectId, stageId, page).subscribe(data => {
+      // @ts-ignore
+      this.progressReportPage = data.content;
+      // @ts-ignore
+      this.teamPage = data;
+
     });
   }
 
@@ -47,30 +54,8 @@ export class ProgressReportHistoryComponent implements OnInit {
     });
   }
 
-  // exportPdf(url: string) {
-  //   const doc = new jsPDF();
-  //   const width = doc.internal.pageSize.width;
-  //   const height = doc.internal.pageSize.height;
-  //   doc.addImage(url, 'JPEG', 0, 0, width, height);
-  //   const fileName = 'my-document.pdf';
-  //   doc.save(fileName);
-  // }
 
-  // dowFile(url: string) {
-  //   download(url, 'my-document.pdf', 'application/pdf');
-  // }
-  // dowFile(url: string) {
-  //   const firebaseLink = url; // Liên kết Firebase
-  //
-  //   this.httpClient.get(firebaseLink, {responseType: 'blob'}).subscribe(blob => {
-  //     const url = window.URL.createObjectURL(blob);
-  //     const a = document.createElement('a');
-  //     a.href = url;
-  //     a.download = 'file-name'; // Tên tệp được tải xuống
-  //     document.body.appendChild(a);
-  //     a.click();
-  //     document.body.removeChild(a);
-  //     window.URL.revokeObjectURL(url);
-  //   });
-  // }
+  changePage(page: number) {
+    this.getReportHistory(this.projectId, this.stageId, page);
+  }
 }
