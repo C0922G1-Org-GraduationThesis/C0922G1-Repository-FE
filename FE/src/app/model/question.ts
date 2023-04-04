@@ -3,4 +3,6 @@ export interface Question {
   dateTime?: string;
   questionContent?: string;
   questionTopic?: string;
+  studentName?: string;
+  studentId?: number;
 }

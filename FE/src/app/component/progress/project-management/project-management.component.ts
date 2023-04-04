@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ProgressService} from '../../../service/progress.service';
 import {ProgressDto} from '../../../model/dto/progress-dto';
+import {PageProgress} from '../../../model/page-progress';
 
 @Component({
   selector: 'app-project-management',
@@ -14,13 +15,25 @@ export class ProjectManagementComponent implements OnInit {
 
   progressDtos: ProgressDto[] = [];
 
+  teamPage!: PageProgress;
+
   ngOnInit(): void {
-    this.getAll();
+    this.getAll(0);
   }
 
-  getAll() {
-    this.progressService.getAll().subscribe(result => {
-        this.progressDtos = result;
-      });
+  getAll(page) {
+    this.progressService.getAll(page).subscribe(result => {
+      // @ts-ignore
+      this.progressDtos = result.content;
+      // @ts-ignore
+      this.teamPage = result;
+      console.log(result);
+    });
   }
+
+  changePage(page: number) {
+    // @ts-ignore
+    this.getAll(page);
+  }
+
 }

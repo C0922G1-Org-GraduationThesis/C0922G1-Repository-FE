@@ -35,4 +35,8 @@ export class ProgressReviewService {
   findMaxPercentProgressReport(projectId: number, stageId: number): Observable<number> {
     return this.http.get<number>('http://localhost:8080/api/progress-reviews' + '/' + projectId + '/' + stageId);
   }
+
+  saveAutoProgressDetailProgress(projectId: number): Observable<void> {
+    return this.http.get<void>('http://localhost:8080/api/progressReview/saveAuto/' + projectId);
+  }
 }

@@ -13,6 +13,10 @@ import Swal from 'sweetalert2';
 import {templateJitUrl} from '@angular/compiler';
 import {StudentProgressReport} from '../../../model/student-progress-report';
 import {StudentProgressReportService} from '../../../service/student-progress-report.service';
+import {Question} from '../../../model/question';
+import {Answers} from '../../../model/answers';
+import {AnswerService} from '../../../service/answer.service';
+import {QuestionService} from '../../../service/question.service';
 
 @Component({
   selector: 'app-progress-detail',
@@ -28,7 +32,7 @@ export class ProgressDetailComponent implements OnInit {
   teacherDto?: TeacherDto;
   checkShowMore = true;
   checkHideMore = true;
-   projectId: number;
+  projectId: number;
   private maxSizeProgressReview: number;
   private record = 2;
   progressDetails: ProgressDetail[];
@@ -38,11 +42,32 @@ export class ProgressDetailComponent implements OnInit {
   totalElement = 3;
   maxElement = 0;
   flagSyVT = true;
+  // LanTTN
+  questions: Question[] = [];
+  answers: Answers[] = [];
+  totalElementLan = 1;
+  maxElementLan = 0;
+  flag = true;
+  question: Question;
+  answer: Answers;
+  temp: number;
+  answerFlag = false;
+
+  formCreateQuestion: FormGroup = new FormGroup({
+    questionContent: new FormControl()
+    // questionTopic: new FormControl()
+  });
+
+  formCreateAnswer: FormGroup = new FormGroup({
+    answerContent: new FormControl()
+  });
 
   constructor(private progressDetailService: ProgressDetailService,
               private progressReviewService: ProgressReviewService,
               private activatedRoute: ActivatedRoute,
-              private studentProgressReportService: StudentProgressReportService) {
+              private studentProgressReportService: StudentProgressReportService,
+              private questionService: QuestionService,
+              private answerService: AnswerService) {
   }
 
   ngOnInit(): void {
@@ -58,6 +83,8 @@ export class ProgressDetailComponent implements OnInit {
       this.getProgressReviewWithRecord(this.projectId, 2);
       this.getAllStudentProgressReport();
       this.getLengthStudentProgressReport();
+      this.saveAutoProgressDetail(this.projectId);
+      this.getAllQuestion();
     });
   }
 
@@ -86,9 +113,6 @@ export class ProgressDetailComponent implements OnInit {
     if (this.maxSizeProgressReview <= 2) {
       this.checkShowMore = false;
       this.checkHideMore = false;
-      console.log(this.maxSizeProgressReview);
-      console.log(this.checkShowMore);
-      console.log(this.checkHideMore);
     }
     this.progressReviewService.getProgressReviewByRecord(projectId, record).subscribe(progressReviews => {
       this.progressReviewsRecords = progressReviews;
@@ -167,16 +191,17 @@ export class ProgressDetailComponent implements OnInit {
       this.progressReviewsRecords = item;
     });
   }
+
 // SyVT
   private getLengthStudentProgressReport() {
-    this.studentProgressReportService.getStudentProgressReport(this.projectId).subscribe(item =>{
+    this.studentProgressReportService.getStudentProgressReport(this.projectId).subscribe(item => {
       this.maxElement = item.length;
       console.log(this.maxElement);
     });
   }
 
   private getAllStudentProgressReport() {
-    this.studentProgressReportService.getAllStudentProgressReport(this.projectId,this.totalElement).subscribe(
+    this.studentProgressReportService.getAllStudentProgressReport(this.projectId, this.totalElement).subscribe(
       (data) => {
         this.studentProgressReports = data;
         console.log(data.length);
@@ -189,7 +214,7 @@ export class ProgressDetailComponent implements OnInit {
       this.totalElement--;
       this.flagSyVT = true;
     }
-    this.studentProgressReportService.getAllStudentProgressReport(this.projectId,this.totalElement).subscribe(
+    this.studentProgressReportService.getAllStudentProgressReport(this.projectId, this.totalElement).subscribe(
       (data) => {
         this.studentProgressReports = data;
         console.log(data.length);
@@ -205,7 +230,7 @@ export class ProgressDetailComponent implements OnInit {
     if (this.totalElement === this.maxElement) {
       this.flagSyVT = false;
     }
-    this.studentProgressReportService.getAllStudentProgressReport(this.projectId,this.totalElement).subscribe(
+    this.studentProgressReportService.getAllStudentProgressReport(this.projectId, this.totalElement).subscribe(
       (data) => {
         this.studentProgressReports = data;
         console.log(data);
@@ -214,4 +239,89 @@ export class ProgressDetailComponent implements OnInit {
     );
   }
 
+  // VuLX
+  saveAutoProgressDetail(projectId: number) {
+    this.progressReviewService.saveAutoProgressDetailProgress(this.projectId).subscribe(() => {
+    });
+  }
+
+  //////////////////////// LanNan
+  getAllQuestion() {
+    this.questionService.getAllQuestion(this.totalElement).subscribe(
+      (data) => {
+        this.questions = data.content;
+        this.maxElement = data.totalPages;
+        console.log(data.content);
+      }
+    );
+  }
+
+  hidden() {
+    if (this.totalElement > 1) {
+      this.totalElement--;
+      this.flag = true;
+    }
+    this.questionService.getAllQuestion(this.totalElement).subscribe(
+      (data) => {
+        this.questions = data.content;
+        console.log(data.content);
+        console.log(this.totalElement);
+      }
+    );
+  }
+
+  loadMoreLan() {
+    if (this.totalElementLan < this.maxElementLan) {
+      this.totalElementLan++;
+    }
+    if (this.totalElementLan === this.maxElementLan) {
+      this.flag = false;
+    }
+    this.questionService.getAllQuestion(this.totalElementLan).subscribe(
+      (data) => {
+        this.questions = data.content;
+        console.log(data.content);
+        // console.log(data.totalPages);
+      }
+    );
+  }
+  getAllAnswer(questionId: number) {
+    this.answerFlag = true;
+    this.temp = questionId;
+    console.log('abc ' + questionId);
+    this.answerService.getAllAnswer(questionId).subscribe(
+      (data) => {
+        this.answers = data;
+        console.log(this.answers);
+      }
+    );
+  }
+  createQuestion() {
+    this.question = this.formCreateQuestion.value;
+    this.question.studentId = 2;
+    this.question.questionTopic = 'Giai doan 3';
+    this.questionService.create(this.question).subscribe(data => {
+      alert('Them moi thac mac thanh cong');
+      this.totalElement++;
+      this.getAllQuestion();
+      this.formCreateQuestion.reset();
+      this.answerFlag = false;
+    });
+  }
+
+  createAnswer() {
+    this.answer = this.formCreateAnswer.value;
+    this.answer.teacherId = 1;
+    this.answer.questionId = this.temp;
+    console.log(this.answer.questionId);
+    this.answerService.create(this.answer).subscribe(data => {
+      alert('Them moi cau tra loi thanh cong');
+      this.getAllAnswer(this.temp);
+      this.formCreateAnswer.reset();
+    });
+  }
+
+  hideFormAnswer() {
+    this.answerFlag = false;
+  }
 }

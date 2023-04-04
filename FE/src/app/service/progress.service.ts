@@ -12,7 +12,8 @@ export class ProgressService {
   }
 
   private URI_API = 'http://localhost:8080/api/progress/list';
-  getAll(): Observable<ProgressDto[]> {
-    return this.http.get<ProgressDto[]>(this.URI_API);
+
+  getAll(page: number): Observable<ProgressDto[]> {
+    return this.http.get<ProgressDto[]>(this.URI_API  + '?page=' + page);
   }
 }
