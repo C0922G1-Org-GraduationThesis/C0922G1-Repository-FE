@@ -1,52 +1,77 @@
-<h2 style="color: #14a2b8; margin-top: 1%; display: flex; justify-content: center">Lịch Sử File Báo Cáo</h2>
+<h2 style="color: #14a2b8; margin-top: 1%; display: flex; justify-content: center">LỊCH SỬ FILE BÁO CÁO</h2>
 <div style="font-size: large" class="tab-pane container-fluid" id="profile" role="tabpanel"
      aria-labelledby="profile-tab">
+
   <div class="row">
     <div class="col-md-1">
-
     </div>
     <div class="col-md-10">
-      <div style="margin-bottom: 2%"><a routerLink="/progress/report/{{projectId}}/{{stageId}}"
-                                        style="text-decoration: none">
-        <button type="button" class="btn btn-outline-info  mx-auto"
-                style="border-radius: 15px; width: 10%">Quay lại
-        </button>
-      </a>
+      <div class="row mt-2" style="margin-bottom: 2%">
+        <div class="col-md-2">
+          <div class="row-action" style="margin-bottom: 2%">
+            <div class="row">
+              <a routerLink="/progress/report/{{projectId}}/{{stageId}}"
+                 style="text-decoration: none">
+                <button type="button" class="btn btn-outline-info  mx-auto"
+                        style="border-radius: 15px; width: 100%">Quay lại
+                </button>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6"></div>
+        <div class="col-md-4">
+          <div class="row">
+            <div class="col-md-8">
+              <input id="searchTerm" #searchFileName class="form-control rounded-pill" type="search"
+                     placeholder="Nhập tên file muốn tìm..."
+                     aria-label="Search">
+            </div>
+            <div class="col-md-4">
+              <button class="btn btn-outline-info button-search rounded-pill form-control" type="button"
+                      (click)="search(searchFileName.value)">Tìm kiếm
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="d-flex justify-content-center ">
+      <div class="row-table">
+        <div class="d-flex justify-content-center ">
 
-        <table class="table table-bordered table-hover" style="background-color: white;
+          <table class="table table-bordered table-hover" style="background-color: white;
               box-shadow: 0 0 20px 0 #253365;">
-          <thead class="table-info">
-          <tr>
-            <th scope="col" style="text-align: center">STT</th>
-            <th scope="col" style="text-align: center">Tên file</th>
-            <th scope="col" style="text-align: center">Thời gian báo cáo</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr
-            *ngFor="let progressReport of progressReportPage ; index as i">
-            <td style="text-align: center">{{i + 1}}</td>
-            <td><span>{{progressReport.progressReportFileName}}</span><a [href]="progressReport.progressReportFile"
-                                                                         download=""
-                                                                         target="_blank"><img class="mx-2"
-                                                                                              width="30px"
-                                                                                              height="30px"
-                                                                                              src="../../../../assets/img/progress_report_icon_img/file_download_icon.png"
-                                                                                              alt="">
+            <thead class="table-info">
+            <tr>
+              <th scope="col" style="text-align: center">STT</th>
+              <th scope="col" style="text-align: center">Tên file</th>
+              <th scope="col" style="text-align: center">Thời gian báo cáo</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngIf="flag">
+              <td colspan="3"><h5 class="text-danger text-center">Danh sách file báo cáo trống </h5></td>
+            </tr>
+            <tr
+              *ngFor="let progressReport of progressReportPage ; index as i">
+              <td style="text-align: center">{{i + 1}}</td>
+              <td><span>{{progressReport.progressReportFileName}}</span><a [href]="progressReport.progressReportFile"
+                                                                           download=""
+                                                                           target="_blank"><img class="mx-2"
+                                                                                                width="30px"
+                                                                                                height="30px"
+                                                                                                src="../../../../assets/img/progress_report_icon_img/file_download_icon.png"
+                                                                                                alt="">
 
-            </a></td>
-            <td style="text-align: center">{{progressReport.progressReportTime}}</td>
-          </tr>
-          <tr></tr>
-          </tbody>
-        </table>
+              </a></td>
+              <td style="text-align: center">{{progressReport.progressReportTime}}</td>
+            </tr>
+            <tr></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
-    <div class="col-md-1">
-
-    </div>
+    <div class="col-md-1"></div>
   </div>
   <div class="row"></div>
   <br>

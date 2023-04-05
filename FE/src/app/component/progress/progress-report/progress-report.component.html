@@ -1,30 +1,36 @@
 <div class="row container-fluid ">
-  <h2 style="color: #14a2b8; margin-top: 1%; display: flex; justify-content: center">Báo Cáo Tiến Độ</h2>
+  <h2 style="color: #14a2b8; margin-top: 1%; display: flex; justify-content: center">BÁO CÁO TIẾN ĐỘ</h2>
 </div>
 <div class="container bd-shadown">
   <br>
-  <div>
-    <form [formGroup]="progressReportForm" (ngSubmit)="save()">
+  <div style="margin: 2%">
+    <form [formGroup]="progressReportForm" (ngSubmit)="save()" >
       <div class="row-input-project" ><input hidden style="font-size: x-large" formControlName="project"></div>
       <div class="row topic-name form-group" style="margin-bottom: 4%; margin-top: 1%">
         <div class="col-md-2 "><span><img style="width: 20%; height: 90%;"
                                           src="../../../../assets/img/progress_report_icon_img/book_icon.png"
                                           alt=""></span><span>Tên đề tài</span>
         </div>
-        <div class="col-md-10 "><p style="font-size: x-large">{{projectName}}</p></div>
+        <div class="col-md-10 "><p  style="font-size: x-large">{{projectName}}</p></div>
       </div>
       <div class="row stage-process" style="margin-bottom: 4%">
         <div class="col-md-2 "><span><img style="width:20%; height: 80%"
                                           src="../../../../assets/img/progress_report_icon_img/wave_icon.png"
-                                          alt=""></span><span>{{stageName}}</span><input hidden formControlName="stage">
+                                          alt=""></span><span >{{stageName}}</span><input hidden formControlName="stage">
         </div>
         <div class="col-md-10 ">
           <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
                [style.backgroundColor]="backgroundColor">
-            <div class="progress-bar progress-bar-striped progress-bar-animated" style="display: flex ; justify-content: center; text-align:center; color: aliceblue"
+            <div *ngIf="maxStagePercent" class="progress" style="display: flex ; justify-content: center; text-align:center; color: aliceblue"
                  [style]="{
   backgroundColor: progressColor,
-  width: progress + '%'}" aria-valuemin="0" aria-valuemax="100"><span >{{maxStagePercent}}
+  width: progress + '%'}" aria-valuemin="0" aria-valuemax="100"><span style="margin-top: 10px">{{maxStagePercent}}
+              %</span>
+            </div>
+            <div *ngIf="!maxStagePercent" class="progress" style="display: flex ; justify-content: center; text-align:center; color: aliceblue"
+                 [style]="{
+  backgroundColor: progressColor,
+  width: 0 + '%'}" aria-valuemin="0" aria-valuemax="100"><span  style="margin-top: 10px">0
               %</span>
             </div>
           </div>
@@ -39,18 +45,15 @@
           <div class="row">
             <div class="col-md-5">
 
-              <input class="form-control btn-outline" type="file" #uploadFile
+              <input class="form-control btn-outline" type="file" #uploadFile formControlName="progressReportFile"
                      (change)="uploadFileImg()" >
-
-              <!--            <input type="file" #uploadFile (change)="uploadFileImg()"   class="btn btn-outline" style="background: lightslategrey; color: white;"-->
-              <!--                   onfocus="this.style.borderColor='#CFF4FC';this.style.boxShadow='none';this.style.outline='2px solid #CFF4FC';"-->
-              <!--                   onblur="this.style.borderColor='#ced4da';this.style.outline='none';"-->
-              <!--            />-->
+              <span style="color: red"
+                    *ngIf="progressReportForm.controls.progressReportFile?.touched && progressReportForm.controls.progressReportFile?.errors?.required">Chưa chọn file !</span>
 
             </div>
 
             <div class="col-md-3"><input class="form-control btn-outline" type="text"
-                                         placeholder="Nhập tên file báo cáo" formControlName="progressReportFileName">
+                                         placeholder="Nhập tên file báo cáo"  formControlName="progressReportFileName">
               <span style="color: red"
                     *ngIf="progressReportForm.controls.progressReportFileName?.touched && progressReportForm.controls.progressReportFileName?.errors?.required">Chưa nhập tên file !</span>
 
@@ -77,7 +80,7 @@
         </div>
         <div class="col-md-10 ">
           <div class="content-area">
-                <textarea class="form-control btn-outline" id="" style="width: 100%" rows="7" formControlName="progressReportContent"
+                <textarea class="form-control btn-outline" id="" style="width: 100%" rows="7"  formControlName="progressReportContent"
                           placeholder="Nội dung báo cáo..."></textarea>
             <span style="color: red"
                   *ngIf="progressReportForm.controls.progressReportContent?.touched && progressReportForm.controls.progressReportContent?.errors?.required">Chưa nhập nội dung báo cáo !</span>
@@ -97,7 +100,7 @@
               </a>
             </div>
             <div class="col-md-2">
-              <button class="btn btn-outline-info btn-block mx-auto" [disabled]="showMessage && progressReportForm.controls.progressReportContent?.errors?.required && progressReportForm.controls.progressReportFileName?.errors?.required"
+              <button class="btn btn-outline-info btn-block mx-auto" [disabled]="showMessage && fileNameValue && contentValue"
                       style="border-radius: 15px; width: 89%;color: #100e0e">
                 Gửi
               </button>
@@ -110,4 +113,3 @@
     </form>
   </div>
 </div >
-

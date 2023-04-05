@@ -162,38 +162,6 @@
                 <form *ngIf="progressReviewForm" [formGroup]="progressReviewForm" (ngSubmit)="onSubmit()"
                       [hidden]="projectDto?.projectStatus === false">
                   <input type="text" formControlName="progressReviewId" hidden>
-                  <label class="col-form-label">(<span style="color: red">*</span>)Tiêu đề:</label>
-                  <div class="input-group  mb-2 ">
-                    <input type="text" class="form-control" formControlName="progressReviewTitle"
-                           placeholder="Nhập tiêu đề ở đây" aria-label="Username">
-                  </div>
-                  <p class="text-danger"
-                     *ngIf="progressReviewForm.controls.progressReviewTitle.touched && progressReviewForm.controls.progressReviewTitle?.errors?.required">
-                    Bạn không được bỏ trống ô này</p>
-                  <p class="text-danger"
-                     *ngIf="progressReviewForm.controls.progressReviewTitle.dirty && progressReviewForm.controls.progressReviewTitle?.errors?.minLength">
-                    Bận phài nhập trên 5 kí tự</p>
-                  <p class="text-danger"
-                     *ngIf="progressReviewForm.controls.progressReviewTitle.dirty && progressReviewForm.controls.progressReviewTitle?.errors?.maxLength">
-                    Bận phài nhập dưới 100 kí tự</p>
-                  <div class="form-group">
-                    <label for="exampleFormControlTextarea1">(<span style="color: red">*</span>)Nội dung:
-                    </label><textarea ckeditor  placeholder="Nhập nội dung ở đây"
-                                      formControlName="progressReviewContent"
-                                      class="form-control"
-                                      id="exampleFormControlTextarea1"
-                                      rows="3"></textarea>
-                    <p class="text-danger"
-                       *ngIf="progressReviewForm.controls.progressReviewContent.touched && progressReviewForm.controls.progressReviewContent?.errors?.required">
-                      Bạn không được bỏ trống ô này</p>
-                    <p class="text-danger"
-                       *ngIf="progressReviewForm.controls.progressReviewContent.dirty && progressReviewForm.controls.progressReviewContent?.errors?.minLength">
-                      Bận phài nhập trên 5 kí tự</p>
-                    <p class="text-danger"
-                       *ngIf="progressReviewForm.controls.progressReviewContent.dirty && progressReviewForm.controls.progressReviewContent?.errors?.maxLength">
-                      Bạn phài nhập dưới 100 kí tự</p>
-
-                  </div>
                   <div class="row">
             <span>(<span style="color: red">*</span>)Đánh giá tiến độ: <div class="form-check-inline">
   <input class="form-check-input" type="radio" name="progressReviewPercent" formControlName="progressReviewPercent"
@@ -234,6 +202,39 @@
 </div>
             </span>
                   </div>
+                  <label class="col-form-label">(<span style="color: red">*</span>)Tiêu đề:</label>
+                  <div class="input-group  mb-2 ">
+                    <input type="text" class="form-control" formControlName="progressReviewTitle"
+                           placeholder="Nhập tiêu đề ở đây" aria-label="Username">
+                  </div>
+                  <p class="text-danger"
+                     *ngIf="progressReviewForm.controls.progressReviewTitle.touched && progressReviewForm.controls.progressReviewTitle?.errors?.required">
+                    Bạn không được bỏ trống ô này</p>
+                  <p class="text-danger"
+                     *ngIf="progressReviewForm.controls.progressReviewTitle.dirty && progressReviewForm.controls.progressReviewTitle?.errors?.minLength">
+                    Bận phài nhập trên 5 kí tự</p>
+                  <p class="text-danger"
+                     *ngIf="progressReviewForm.controls.progressReviewTitle.dirty && progressReviewForm.controls.progressReviewTitle?.errors?.maxLength">
+                    Bận phài nhập dưới 100 kí tự</p>
+                  <div class="form-group">
+                    <label for="exampleFormControlTextarea1">(<span style="color: red">*</span>)Nội dung:
+                    </label><textarea   placeholder="Nhập nội dung ở đây"
+                                      formControlName="progressReviewContent"
+                                      class="form-control"
+                                      id="exampleFormControlTextarea1"
+                                      rows="3"></textarea>
+                    <p class="text-danger"
+                       *ngIf="progressReviewForm.controls.progressReviewContent.touched && progressReviewForm.controls.progressReviewContent?.errors?.required">
+                      Bạn không được bỏ trống ô này</p>
+                    <p class="text-danger"
+                       *ngIf="progressReviewForm.controls.progressReviewContent.dirty && progressReviewForm.controls.progressReviewContent?.errors?.minLength">
+                      Bận phài nhập trên 5 kí tự</p>
+                    <p class="text-danger"
+                       *ngIf="progressReviewForm.controls.progressReviewContent.dirty && progressReviewForm.controls.progressReviewContent?.errors?.maxLength">
+                      Bạn phài nhập dưới 100 kí tự</p>
+
+                  </div>
+
                   <div style="text-align: right">
                     <button class="btn btn-outline-info" type="submit"
                             [disabled]="progressReviewForm.invalid || projectDto?.projectStatus === false">Đánh
