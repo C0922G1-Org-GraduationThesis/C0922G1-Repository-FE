@@ -6,13 +6,17 @@ import {ListTeacherComponent} from './list-teacher/list-teacher.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {UpdateTeacherComponent} from './update-teacher/update-teacher.component';
 import {CreateTeacherComponent} from './create-teacher/create-teacher.component';
+import { TeacherAdminDetailComponent } from './teacher-admin-detail/teacher-admin-detail.component';
+import { TeacherAdminUpdateComponent } from './teacher-admin-update/teacher-admin-update.component';
 
 
 @NgModule({
   declarations: [
     ListTeacherComponent,
     UpdateTeacherComponent,
-    CreateTeacherComponent
+    CreateTeacherComponent,
+    TeacherAdminDetailComponent,
+    TeacherAdminUpdateComponent
   ],
   imports: [
     CommonModule,

@@ -12,13 +12,15 @@ import {SharedModule} from './component/shared/shared.module';
 import {StudentModule} from './component/student/student.module';
 import {TeacherModule} from './component/teacher/teacher.module';
 import {TopicModule} from './component/topic/topic.module';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 
 import {ReactiveFormsModule} from '@angular/forms';
 import {environment} from '../environments/environment';
-import { AngularFireModule } from '@angular/fire';
-import { AngularFireStorageModule } from '@angular/fire/storage';
+import {AngularFireModule} from '@angular/fire';
+import {AngularFireStorageModule} from '@angular/fire/storage';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {AuthInterceptor} from "./component/security/auth.interceptor";
+import {Http403Interceptor} from "./component/security/http403.interceptor";
 
 
 @NgModule({
@@ -43,7 +45,18 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     AngularFireModule,
     AngularFireModule.initializeApp(environment.firebaseConfig)
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: Http403Interceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -41,6 +41,14 @@ const routes: Routes = [
   {
     path: 'notification-teacher',
     loadChildren:() => import('./component/notification/notification.module').then(module => module.NotificationModule)
+  },
+  {
+    path: '',
+    loadChildren: () => import('./component/login/login.module').then(module => module.LoginModule)
+  },
+  {
+    path: 'error-page',
+    loadChildren: () => import('./component/error-page/error-page.module').then(module => module.ErrorPageModule)
   }
 ];
 

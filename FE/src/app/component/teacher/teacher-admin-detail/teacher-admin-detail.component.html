@@ -1,0 +1,43 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+      <div class="card my-3">
+        <div class="card-body">
+          <h2 class="card-title text-isLoggedIncenter"> THÔNG TIN CHI TIẾT</h2>
+          <img src="{{teacherAdmin.teacherImg}}" class="card-img-top w100"  style="height: 40%;width: 40%; float: left" alt="...">
+          <div class="mb-2 card-text">
+            <span><label class="form-label">Họ và tên:</label></span>
+            <span *ngIf="teacherAdmin">{{teacherAdmin.teacherName}}</span>
+          </div>
+          <div class="mb-2">
+            <span><label class="form-label">Ngày sinh:</label></span>
+            <span *ngIf="teacherAdmin">{{teacherAdmin.teacherDateOfBirth}}</span>
+          </div>
+          <div class="mb-2">
+            <span><label class="form-label">Số điện thoại: </label></span>
+            <span *ngIf="teacherAdmin">{{teacherAdmin.teacherPhoneNumber}}</span>
+          </div>
+          <div class="mb-2">
+            <span><label class="form-label">Email:</label></span>
+            <span *ngIf="teacherAdmin">{{teacherAdmin.teacherEmail}}</span>
+          </div>
+
+          <div class="mb-2">
+            <span><label class="form-label"> Địa chỉ:</label></span>
+            <span *ngIf="teacherAdmin">{{teacherAdmin.teacherAddress}}</span>
+          </div><br>
+
+          <div class="mb-2" style="text-align: right">
+            <button *ngIf="teacherAdmin&&role==='ROLE_ADMIN'" type="button" class="btn btn-outline-success"
+                    routerLink="update/{{teacherAdmin.teacherEmail}}">Thay đổi thông tin
+            </button>
+            <button type="button" class="btn btn-outline-secondary" *ngIf="role==='ROLE_TEACHER'"
+                    routerLink="">Thoát
+            </button> &nbsp;
+            <button type="button" class="btn  btn-outline-info" routerLink="change-password">Thay đổi mật khẩu</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

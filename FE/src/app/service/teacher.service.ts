@@ -5,6 +5,7 @@ import {Teacher} from '../model/teacher';
 import {Faculty} from '../model/faculty';
 import {Degree} from '../model/degree';
 import {TeacherDto} from '../dto/teacher-dto';
+import {Admin} from "../model/admin";
 
 @Injectable({
   providedIn: 'root'
@@ -49,6 +50,22 @@ export class TeacherService {
     return this.httpClient.delete('http://localhost:8080/api/teachers/delete/' + idDelete);
   }
 
+  /**
+   * Created by: Phạm Tiến
+   * Date: 29/03/2023
+   * Function: findTeacherByEmail(teacher,bindingResult )
+   */
+  findTeacherByEmail(email: string): Observable<Teacher> {
+    return this.httpClient.get<Teacher>(`http://localhost:8080/api/teachers/detail/${email}`);
+  }
+  /**
+   * Created by: Phạm Tiến
+   * Date: 29/03/2023
+   * Function: findTeacherByEmail(teacher,bindingResult )
+   */
+  updateAdmin(admin: Admin): Observable<Teacher> {
+    return this.httpClient.patch<Admin>('http://localhost:8080/api/teachers/update-user-role-admin', admin);
+  }
 }
 
 // <!--create by :HungPV-->

@@ -7,6 +7,7 @@ import {Student} from '../../model/student';
   providedIn: 'root'
 })
 export class StudentService {
+
   API_URL = `http://localhost:8080/api/students/`;
 
   private API = 'http://localhost:8080/students';
@@ -63,5 +64,14 @@ export class StudentService {
   getAllStudentByIdTeacher(id: any, pageNumber: any, nameSearch: any): Observable<any> {
     return this.httpClient.get<any>(this.URL_API_STUDENT + '/api/students/list-id-teacher/' + id + '?nameSearch='
       + nameSearch + '&page=' + pageNumber);
+  }
+
+  /**
+   * Created by: Phạm Tiến
+   * Date: 29/03/2023
+   * Function: findTeacherByEmail(teacher,bindingResult )
+   */
+  findStudentByEmail(email: string): Observable<Student> {
+    return this.httpClient.get<Student>(`http://localhost:8080/api/students/detail/${email}`);
   }
 }

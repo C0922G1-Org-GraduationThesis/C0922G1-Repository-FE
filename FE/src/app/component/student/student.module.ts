@@ -12,6 +12,7 @@ import {RegisterTeamComponent} from './register-team/register-team.component';
 import {InfoTeamComponent} from './info-team/info-team.component';
 import { StudentListComponent } from './student-list/student-list.component';
 import { StudentInstructorComponent } from './student-instructor/student-instructor.component';
+import { StudentDetailComponent } from './student-detail/student-detail.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { StudentInstructorComponent } from './student-instructor/student-instruc
     RegisterTeamComponent,
     InfoTeamComponent,
     StudentListComponent,
-    StudentInstructorComponent],
+    StudentInstructorComponent,
+    StudentDetailComponent],
   imports: [
     CommonModule,
     StudentRoutingModule,
