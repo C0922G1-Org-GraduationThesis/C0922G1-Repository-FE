@@ -33,6 +33,7 @@
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.8);
   }
 </style>
+
 <div class="d-flex text-center mt-4">
   <div class="container">
     <div class="row">
@@ -42,7 +43,6 @@
       <span class="h5">Giáo viên hướng dẫn: </span>
       <input type="text" formControlName="teacherName" disabled style="color: #17a2b8;">
     </form>
-
     <!--Bảng danh sách giáo viên-->
     <div class="mt-3">
       <table class="table table-bordered table-hover" style="background-color: white;
@@ -63,7 +63,6 @@
           <th scope="row">{{i + 1}}</th>
           <td style="text-align: left">{{it.teacherName}}</td>
           <td>{{it.total}}/{{default}}</td>
-
           <td>
             <div style="display: flex; justify-content: center;">
               <button class="btn btn-outline-success"
@@ -74,44 +73,47 @@
             </div>
           </td>
           <td>
-            <div style="display: flex; justify-content: center;">
-              <div *ngIf="it.total === default">
-                <ng-container
-                  *ngIf="instructorId === it.teacherId || team.teacherId === it.teacherId; else cancelButton">
-                  <button class="btn btn-outline-danger"
-                          style="border-radius: 5px;"
-                          data-bs-toggle="modal" data-bs-target="#cancelModal">
-                    Hủy đăng ký
+            <form *ngIf="editForm" [formGroup]="editForm">
+              <div style="display: flex; justify-content: center;">
+                <div *ngIf="it.total === default">
+                  <ng-container
+                    *ngIf="instructorId === it.teacherId || team.teacherId === it.teacherId ; else cancelButton">
+                    <button class="btn btn-outline-danger "
+                            style="border-radius: 5px;"
+                            data-bs-toggle="modal" data-bs-target="#cancelModal">
+                      Hủy Đăng ký
+                    </button>
+                  </ng-container>
+                  <ng-template #cancelButton>
+                    <button class="btn btn-outline-primary btn-custom"
+                            style="border-radius: 5px;"
+                            data-bs-toggle="modal" data-bs-target="#registerModal"
+                            (click)="register(it.teacherId, it.teacherName)"
+                            disabled>
+                      Đăng ký
+                    </button>
+                  </ng-template>
+                </div>
+                <div *ngIf="it.total!==default">
+                  <button
+                    *ngIf="(instructorId === it.teacherId && isRegistered) || ( team.teacherId === it.teacherId && flag!==1 )  ; else registerButton"
+                    class="btn btn-outline-danger"
+                    style="border-radius: 5px;"
+                    data-bs-toggle="modal" data-bs-target="#cancelModal">
+                    Hủy Đăng ký
                   </button>
-                </ng-container>
-                <ng-template #cancelButton>
-                  <button class="btn btn-outline-primary btn-custom"
-                          style="border-radius: 5px;"
-                          data-bs-toggle="modal" data-bs-target="#registerModal"
-                          (click)="register(it.teacherId, it.teacherName)"
-                          disabled>
-                    Đăng ký
-                  </button>
-                </ng-template>
+                  <ng-template #registerButton>
+                    <button class="btn btn-outline-primary btn-custom"
+                            style="border-radius: 5px;"
+                            data-bs-toggle="modal" data-bs-target="#registerModal"
+                            (click)="register(it.teacherId, it.teacherName)"
+                            [disabled]="isRegistered || flag !==1 && team.teacherId !==null">
+                      Đăng ký
+                    </button>
+                  </ng-template>
+                </div>
               </div>
-              <div *ngIf="it.total!==default">
-                <button *ngIf="instructorId === it.teacherId && isRegistered ; else registerButton"
-                        class="btn btn-outline-danger"
-                        style="border-radius: 5px;"
-                        data-bs-toggle="modal" data-bs-target="#cancelModal">
-                  Hủy đăng ký
-                </button>
-                <ng-template #registerButton>
-                  <button class="btn btn-outline-primary btn-custom"
-                          style="border-radius: 5px;"
-                          data-bs-toggle="modal" data-bs-target="#registerModal"
-                          (click)="register(it.teacherId, it.teacherName)"
-                          [disabled]="isRegistered ">
-                    Đăng ký
-                  </button>
-                </ng-template>
-              </div>
-            </div>
+            </form>
           </td>
         </tr>
         </tbody>
@@ -239,6 +241,7 @@
   </div>
 </div>
 
+
 <!-- Modal Đăng Ký-->
 <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -272,9 +275,9 @@
       </div>
       <div class="modal-body">
         <form *ngIf="editForm" [formGroup]="editForm" (ngSubmit)="cancelRegistration()" id="cancelForm">
+          <span>Hủy đăng ký giáo viên </span><span
+          class="text-danger">{{team.teacherName}} </span><span>làm giáo viên hướng dẫn</span>
         </form>
-        <span>Hủy đăng ký giáo viên </span><span
-        class="text-danger">{{instructorName}}</span><span>làm giáo viên hướng dẫn</span>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Đóng</button>
@@ -285,5 +288,3 @@
     </div>
   </div>
 </div>
-
-

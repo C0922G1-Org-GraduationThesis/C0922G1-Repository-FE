@@ -91,6 +91,7 @@
                     Phải nhập trường này.
                 </span>
             </div>
+            <input hidden type="number" formControlName="teamId">
             <div class="d-grid gap-2 d-flex justify-content-center">
               <button type="submit" class="btn btn-outline-secondary mt-3 "
                       [disabled]="formCreate.invalid">Đăng ký đề tài
@@ -115,7 +116,7 @@
               <th scope="col">Chi tiết</th>
             </tr>
             </thead>
-            <tbody *ngIf="listProject.length > 0; else noProjects">
+            <tbody *ngIf="listProject.length; else noProjects">
             <tr *ngFor="let project of listProject; let i = index">
               <th scope="row">{{i + 1}}</th>
               <td>{{project.projectName}}</td>
@@ -128,7 +129,7 @@
             <ng-template #noProjects>
               <tbody>
               <tr style="text-align: center">
-                <td colspan="3">Hiện tại chưa có đề tài nào được đăng ký</td>
+                <td colspan="3">Không tồn tại đề tài nào.</td>
               </tr>
               </tbody>
             </ng-template>

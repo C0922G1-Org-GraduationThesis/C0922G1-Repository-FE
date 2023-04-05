@@ -2,11 +2,12 @@ import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
 import {Project} from '../../../model/project';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ProjectService} from '../../../service/project.service';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {TeamService} from "../../../service/team.service";
 import {Team} from "../../../model/team";
 import {finalize} from "rxjs/operators";
 import {AngularFireStorage} from "@angular/fire/storage";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-register-topic',
@@ -32,7 +33,8 @@ export class RegisterTopicComponent implements OnInit {
   constructor(private projectService: ProjectService,
               private activatedRoute: ActivatedRoute,
               private teamService: TeamService,
-              @Inject(AngularFireStorage) private storage: AngularFireStorage) {
+              @Inject(AngularFireStorage) private storage: AngularFireStorage,
+              private route: Router) {
     this.activatedRoute.paramMap.subscribe(paramMap => {
       this.teamId = +paramMap.get('teamId');
       this.teamService.findById(this.teamId).subscribe(team => {
@@ -56,7 +58,8 @@ export class RegisterTopicComponent implements OnInit {
         Validators.maxLength(10000),
         Validators.minLength(50)]),
       projectDescription: new FormControl('', [Validators.required]),
-      projectImg: new FormControl('', [Validators.required])
+      projectImg: new FormControl('', [Validators.required]),
+      teamId: new FormControl(this.teamId)
     });
   }
 
@@ -65,12 +68,16 @@ export class RegisterTopicComponent implements OnInit {
       console.log(data);
       this.listProject = data.content;
       this.teamPage = data;
+    }, error => {
+      console.log(error)
+      this.listProject = [];
     });
   }
 
   changePage(pageNumber: number) {
     this.currentPage = pageNumber;
     this.onSearch();
+    this.currentPage = 0;
   }
 
   onSubmit() {
@@ -106,6 +113,21 @@ export class RegisterTopicComponent implements OnInit {
     this.formCreate.value.projectImg = this.fileUrl;
     const project = this.formCreate.value;
     console.log(project);
+    this.projectService.save(project).subscribe(project => {
+      console.log(project);
+      Swal.fire({
+        title: 'Thông báo',
+        text: 'Đăng ký đề tài thành công!',
+        icon: 'success'
+      });
+      this.route.navigateByUrl('projects/detail/' + project.projectId);
+    }, error => {
+      Swal.fire({
+        title: 'Lỗi',
+        text: 'Đăng ký đề tài thất bại!',
+        icon: 'error'
+      });
+    })
   }
 
   uploadFileImg() {

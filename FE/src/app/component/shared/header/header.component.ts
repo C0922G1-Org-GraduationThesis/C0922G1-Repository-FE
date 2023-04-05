@@ -11,6 +11,7 @@ import {StudentService} from "../../../service/student/student.service";
 })
 export class HeaderComponent implements OnInit {
   username?: string;
+  img?:string;
   name?: string;
   role?: string;
   isLoggedIn = false;
@@ -40,10 +41,12 @@ export class HeaderComponent implements OnInit {
     if (this.role === 'ROLE_ADMIN' || this.role === 'ROLE_TEACHER') {
       this.teacherService.findTeacherByEmail(this.username).subscribe(next => {
         this.name = next.teacherName;
+        this.img=next.teacherImg;
       });
     } else {
       this.studentService.findStudentByEmail(this.username).subscribe(next => {
         this.name = next.studentName;
+        this.img=next.studentImg;
       });
     }
   }

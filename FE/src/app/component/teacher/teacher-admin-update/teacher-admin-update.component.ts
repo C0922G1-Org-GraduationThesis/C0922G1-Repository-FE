@@ -56,6 +56,7 @@ export class TeacherAdminUpdateComponent implements OnInit {
     console.log(this.admin);
     this.teacherService.updateAdmin(this.admin).subscribe(
       next => {
+        this.router.navigateByUrl("teachers/admin-detail")
         const Toast = Swal.mixin({
           toast: true,
           position: 'top-end',

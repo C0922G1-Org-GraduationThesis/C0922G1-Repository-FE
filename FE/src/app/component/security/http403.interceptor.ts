@@ -19,7 +19,7 @@ export class Http403Interceptor implements HttpInterceptor {
       catchError((error: HttpErrorResponse) => {
         if (error.status === 403) {
           // Redirect to a 403 error page or login page, or display a notification
-          this.router.navigateByUrl('error-page/error');
+          this.router.navigateByUrl('login');
         }
         return throwError(error);
       })

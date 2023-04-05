@@ -72,6 +72,6 @@ export class StudentService {
    * Function: findTeacherByEmail(teacher,bindingResult )
    */
   findStudentByEmail(email: string): Observable<Student> {
-    return this.httpClient.get<Student>(`http://localhost:8080/api/students/detail/${email}`);
+    return this.httpClient.get<Student>(`http://localhost:8080/api/students/details/${email}`);
   }
 }

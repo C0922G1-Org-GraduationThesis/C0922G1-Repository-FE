@@ -31,14 +31,19 @@ export class RegisterTeamComponent implements OnInit {
 
   onSearch() {
     this.studentService.findAll(this.searchStr, this.currentPage, this.size).subscribe(data => {
-      console.log(data);
       this.listSearchStudent = data.content.filter(student => !this.listTeam
         .some(teamStudent => teamStudent.studentId === student.studentId));
       this.totalPages = data.totalPages;
       this.teamPage = data;
     }, error => {
+      Swal.fire({
+        title: 'Lỗi',
+        text: 'Không tìm thấy sinh viên!',
+        icon: 'error'
+      });
     });
   }
+
   addStudent(id: number) {
     if (this.listTeam.length === 7) {
       Swal.fire({
@@ -98,7 +103,7 @@ export class RegisterTeamComponent implements OnInit {
         } else {
           const newTeam: Team = {
             teamName: groupName,
-            memberOfTeam: 0
+            memberOfTeam: this.listTeam.length
           };
           // Tên nhóm hợp lệ
           this.teamService.saveTeam(newTeam).subscribe(team => {

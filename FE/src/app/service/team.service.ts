@@ -25,12 +25,12 @@ export class TeamService {
     return this.http.get<TeacherDto[]>(`${this.URL}?page=${page}`);
   }
 
-  editInstructor(id: number, team: Team): Observable<Team> {
+  editInstructor(id: number, team: ITeamDto): Observable<Team> {
     return this.http.patch<Team>(`${this.URL}/edit/${id}`, team);
   }
 
   getTeamById(id: number): Observable<ITeamDto> {
-    return this.http.get<ITeamDto>(`${this.URL}/detail/${id}`);
+    return this.http.get<ITeamDto>(`${this.URL}/detail/team/${id}`);
   }
 
   saveTeam(team: Team): Observable<any> {

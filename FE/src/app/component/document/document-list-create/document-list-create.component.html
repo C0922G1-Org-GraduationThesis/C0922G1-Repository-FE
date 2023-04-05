@@ -39,7 +39,7 @@
               <th scope="col" style="width: 30%">Tên tài liệu</th>
               <th scope="col" style="width: 30%">Mô tả</th>
               <th scope="col" style="width: 10%">Tải về</th>
-              <th scope="col" style="width: 10%">Xóa</th>
+              <th scope="col" style="width: 10%"*ngIf="roleUser==='ROLE_ADMIN'||roleUser==='ROLE_TEACHER'">Xóa</th>
             </tr>
             </thead>
             <tbody *ngIf="documentDtoList.length > 0; else noMembers" class="fixed-height">
@@ -47,7 +47,7 @@
               <td style="text-align: center;vertical-align: middle;">{{item + 1}}</td>
               <td style="text-align: center;vertical-align: middle;text-align: left; max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; word-break: break-all;">{{documentDto.documentName}}</td>
               <td style="text-align: center;vertical-align: middle;text-align: left; max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; word-break: break-all;">{{documentDto.documentDescribe}}</td>
-              <td>
+              <td style="text-align: center;vertical-align: middle;">
                 <div style="display: flex; justify-content: center;">
                   <a href="{{documentDto.documentFile}}" download="">
                     <button  class="btn btn-outline-success"
@@ -59,7 +59,7 @@
                   </a>
                 </div>
               </td>
-              <td>
+              <td *ngIf="roleUser==='ROLE_ADMIN'||roleUser==='ROLE_TEACHER'" style="text-align: center;vertical-align: middle;">
                 <div style="display: flex; justify-content: center;">
                   <button class="btn btn-outline-danger"
                           style="border: 1px #CFF4FC;text-align: center; display: flex; justify-content: center; align-items: center;width: 50px;height: 50px;padding: 0;border-radius: 5px;" (click)="documentList=documentDto">
@@ -121,7 +121,8 @@
       </div>
     </div>
   </div>
-  <form [formGroup]="formDocument" (ngSubmit)="createDocument()">
+  <form [formGroup]="formDocument" (ngSubmit)="createDocument()"
+            *ngIf="roleUser==='ROLE_ADMIN'||roleUser==='ROLE_TEACHER'">
     <div class="row">
       <div class="col-1" style="margin: 0; padding: 0">
         <span style="border: 1px solid #DEE2E6;font-weight: bold; display: block;width: 120%; margin-left: 203.5%; background-color:#CFF4FC">Tải lên</span>
@@ -143,17 +144,14 @@
                     style="width: 43%;margin-left: 3%;border-color: #ced4da;"
                     onfocus="this.style.borderColor='#CFF4FC';this.style.boxShadow='none';this.style.outline='2px solid #CFF4FC';"
                     onblur="this.style.borderColor='#ced4da';this.style.outline='none';">
-            <div style="margin: -0.2%; display: inline-grid;width: 11%; margin-left: 3%" >
-              <label style="cursor: pointer;height: 79%" for="upfile" class="btn-upload" >Chọn tệp</label>
-              <input style="height: 0" type="file" #uploadFile (change)="uploadFileImg()"  id="upfile" name="upfile" />
-            </div>
-            <!--              <label for="exampleInputEmail1"-->
-            <!--                     style=" font-weight: bold; text-align: left;display: block; float: left;margin-left: 3%">-->
-            <!--                <input type="file" #uploadFile (change)="uploadFileImg()"   class="btn btn-outline" style="background: lightslategrey; color: white;"-->
-            <!--                       onfocus="this.style.borderColor='#CFF4FC';this.style.boxShadow='none';this.style.outline='2px solid #CFF4FC';"-->
-            <!--                       onblur="this.style.borderColor='#ced4da';this.style.outline='none';"-->
-            <!--                />-->
-            <!--              </label>-->
+            <!--            <div style="margin: -0.2%; display: inline-grid;width: 11%; margin-left: 3%" >-->
+            <!--              <label style="cursor: pointer;height: 79%" for="upfile" class="btn-upload" >Chọn tệp</label>-->
+            <!--              <input style="height: 0" type="file" #uploadFile (change)="uploadFileImg()"  id="upfile" name="upfile" />-->
+            <!--            </div>-->
+            <label for="exampleInputEmail1"
+                   style=" font-weight: bold; text-align: left;display: block; float: left;margin-left: 3%">
+              <input type="file" #uploadFile (change)="uploadFileImg()"   class="form-control rounded-pill" style="max-height: 100%"/>
+            </label>
 
             <input class="form-control"  aria-describedby="emailHelp"  hidden formControlName="documentFile"
                    style="width: 43%;margin-left: 3%;border-color: #ced4da;"

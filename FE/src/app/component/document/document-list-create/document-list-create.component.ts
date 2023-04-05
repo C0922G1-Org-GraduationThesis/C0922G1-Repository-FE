@@ -10,6 +10,7 @@ import {finalize} from "rxjs/operators";
 import Swal from "sweetalert2";
 import {FileService} from "../../../service/file.service";
 import {DocumentService} from "../../../service/document.service";
+import {TokenStorageService} from "../../../service/token-storage.service";
 
 @Component({
   selector: 'app-document-list-create',
@@ -17,6 +18,7 @@ import {DocumentService} from "../../../service/document.service";
   styleUrls: ['./document-list-create.component.css']
 })
 export class DocumentListCreateComponent implements OnInit {
+  roleUser:string;
   @ViewChild('uploadFile', {static: true}) public avatarDom: ElementRef | undefined;
   teamPage: any = null;
   selectedFile: any = null;
@@ -44,6 +46,7 @@ export class DocumentListCreateComponent implements OnInit {
 
   constructor(private fileService: FileService,
               private documentService: DocumentService,
+              private tokenStorageService: TokenStorageService,
               @Inject(AngularFireStorage) private storage: AngularFireStorage,
   ) {
     this.formGroup = new FormGroup({
@@ -157,6 +160,8 @@ export class DocumentListCreateComponent implements OnInit {
   ngOnInit(): void {
     this.getAll(this.p);
     this.createPageList();
+    this.roleUser=this.tokenStorageService.getUser().roles[0];
+
   }
 
   createDocument() {

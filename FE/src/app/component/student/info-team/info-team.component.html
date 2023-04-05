@@ -3,6 +3,9 @@
     <h2 class="text-primary mt-3 text-center">THÔNG TIN NHÓM:<span *ngIf="team"
                                                                    class="text-black"> {{team.teamName}}</span></h2>
   </div>
+  <div class="row">
+    <h5 class="bg mt-3 text-center">Thành viên đã tham gia: {{listStudent.length}}/{{team.memberOfTeam}}.</h5>
+  </div>
   <div class="row justify-content-end mb-3">
     <div class="col-lg-4 col-md-6 col-sm-12">
       <div class="input-group">
@@ -27,7 +30,7 @@
               <h5 class="card-title text-center text-primary text-truncate">{{student.studentName}}</h5>
               <p class="card-text">
                 <label><img src="../../../../assets/img/icons8-class-48.png" width="28px" height="28px"></label>
-                <label><b>&ensp;Mã sinh viên: </b></label>
+                <label><b>&ensp;MSSV: </b></label>
                 <label>&ensp;{{student.studentCode}}</label>
               </p>
               <p class="card-text">
@@ -114,14 +117,12 @@
               <table class="table">
                 <thead class="table-info">
                 <tr>
-                  <th scope="col">STT</th>
                   <th scope="col">Tên đề tài</th>
                   <th scope="col">Chi tiết</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
-                  <th scope="row">1</th>
                   <td>{{project.projectName}}</td>
                   <td>
                     <button type="button"

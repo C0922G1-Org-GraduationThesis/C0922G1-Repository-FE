@@ -22,6 +22,8 @@ export class InfoTeamComponent implements OnInit {
   team: Team;
   searchStr = '';
   project: Project = null;
+  totalElement = 0;
+  memberNotJoin = 0;
 
   constructor(private studentService: StudentService,
               private route: Router,
@@ -36,12 +38,12 @@ export class InfoTeamComponent implements OnInit {
       });
       this.projectService.getProjectDetail(this.teamId).subscribe(projet =>{
         this.project = projet;
-      })
+      });
     });
+    this.onSearch();
   }
 
   ngOnInit(): void {
-    this.onSearch();
   }
 
   onSearch() {
@@ -49,7 +51,12 @@ export class InfoTeamComponent implements OnInit {
       console.log(data);
       this.listStudent = data.content;
       this.totalPages = data.totalPages;
+      this.totalElement = data.totalElements;
       this.teamPage = data;
+      console.log(this.listStudent.length)
+      this.memberNotJoin = this.team.memberOfTeam - this.listStudent.length;
+    }, error => {
+      this.memberNotJoin = this.team.memberOfTeam;
     });
   }
 

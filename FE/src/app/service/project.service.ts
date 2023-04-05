@@ -27,10 +27,6 @@ export class ProjectService {
     return this.httpClient.get<Project>('http://localhost:8080/api/projects/detail/' + id);
   }
 
-  findAll(searchName: string, page: number, size: number): Observable<any> {
-    return this.httpClient.get<any>(this.API_URL + '?searchName=' + searchName + '&size=' + size + '&page=' + page);
-  }
-
   /**
    * Created by: NuongHT
    * Date create: 29/03/2023
@@ -54,6 +50,22 @@ export class ProjectService {
   updateCancel(projectId: number) {
     // @ts-ignore
     return this.httpClient.put('http://localhost:8080/api/projects/cancel/' + projectId);
+  }
+
+  /**
+   * Created by: HauNN
+   * Date create: 29/03/2023
+   */
+  findAll(searchName: string, page: number, size: number): Observable<any> {
+    return this.httpClient.get<any>(this.API_URL + '?searchName=' + searchName + '&size=' + size + '&page=' + page);
+  }
+
+  /**
+   * Created by: HauNN
+   * Date create: 29/03/2023
+   */
+  save(project: Project): Observable<Project> {
+    return this.httpClient.post(this.API_URL + 'save', project);
   }
 }
 
