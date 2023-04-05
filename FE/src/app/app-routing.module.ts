@@ -1,6 +1,9 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {HomeComponent} from './component/shared/home/home.component';
+import {AdminGuard} from './component/login/security/admin.guard';
+import {TeacherGuard} from './component/login/security/teacher.guard';
+import {StudentGuard} from './component/login/security/student.guard';
 
 
 const routes: Routes = [
@@ -23,10 +26,12 @@ const routes: Routes = [
     loadChildren: () => import('./component/project/project.module').then(module => module.ProjectModule)
   },
   {
+    canActivate: [StudentGuard],
     path: 'students',
     loadChildren: () => import('./component/student/student.module').then(module => module.StudentModule)
   },
   {
+    canActivate: [TeacherGuard],
     path: 'teachers',
     loadChildren: () => import('./component/teacher/teacher.module').then(module => module.TeacherModule)
   },
@@ -34,6 +39,14 @@ const routes: Routes = [
     path: 'topics',
     loadChildren: () => import('./component/topic/topic.module').then(module => module.TopicModule)
   },
+  {
+    path: 'login',
+    loadChildren: () => import('./component/login/login.module').then(module => module.LoginModule)
+  },
+  {
+    path: 'error-page',
+    loadChildren: () => import('./component/error-page/error-page.module').then(module => module.ErrorPageModule)
+  }
 ];
 
 @NgModule({

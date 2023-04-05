@@ -1,8 +1,8 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
 import {AccountModule} from './component/account/account.module';
 import {DocumentModule} from './component/document/document.module';
 import {NotificationModule} from './component/notification/notification.module';
@@ -12,6 +12,11 @@ import {SharedModule} from './component/shared/shared.module';
 import {StudentModule} from './component/student/student.module';
 import {TeacherModule} from './component/teacher/teacher.module';
 import {TopicModule} from './component/topic/topic.module';
+import {LoginRoutingModule} from './component/login/login-routing.module';
+import {FormBuilder, ReactiveFormsModule} from '@angular/forms';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {AuthInterceptor} from './component/login/security/auth.interceptor';
+import {Http403Interceptor} from './component/login/security/http403.interceptor';
 
 @NgModule({
   declarations: [
@@ -28,9 +33,23 @@ import {TopicModule} from './component/topic/topic.module';
     SharedModule,
     StudentModule,
     TeacherModule,
-    TopicModule
+    TopicModule,
+    LoginRoutingModule,
+    ReactiveFormsModule,
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true
+  },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: Http403Interceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
