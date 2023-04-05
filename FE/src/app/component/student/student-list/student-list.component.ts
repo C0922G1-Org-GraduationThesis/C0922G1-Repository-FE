@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {StudentDto} from '../../../dto/student-dto';
 import {StudentPage} from '../../../dto/student-page';
 import {StudentService} from '../../../service/student/student.service';
+import {Student} from "../../../model/student";
 
 @Component({
   selector: 'app-student-list',
@@ -13,16 +14,15 @@ export class StudentListComponent implements OnInit {
   nameSearch = '';
   studentDtos: StudentDto[] = [];
   studentPage!: StudentPage;
-
+  student: Student
   page = 0;
 
 
-  constructor(private studentService: StudentService) {
-
+  constructor(private studentService: StudentService,) {
+    this.searchStudent();
   }
 
   ngOnInit(): void {
-    this.searchStudent('', this.page);
   }
 
   /**
@@ -31,9 +31,9 @@ export class StudentListComponent implements OnInit {
    * function: show list student
    *
    */
-  // tslint:disable-next-line:typedef
-  searchStudent(nameSearch: string, page: number) {
-    this.studentService.findAllStudent(nameSearch.trim(), page).subscribe(data => {
+  searchStudent() {
+    this.studentService.findAllStudent(this.nameSearch, this.page).subscribe(data => {
+      console.log(this.nameSearch);
       console.log(data);
 
       this.studentDtos = data.content;
@@ -45,11 +45,17 @@ export class StudentListComponent implements OnInit {
 
   }
 
-  // tslint:disable-next-line:typedef
   changePage(page: number) {
     this.page = page;
-    this.searchStudent(this.nameSearch, page);
+    this.searchStudent();
+    this.page =0;
   }
 
 
+  getStudentById(studentId: any) {
+    this.studentService.findById(studentId).subscribe(item => {
+      this.student = item;
+    });
+
+  }
 }

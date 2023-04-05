@@ -19,12 +19,13 @@ export class StudentInstructorComponent implements OnInit {
   nameSearch = '';
 
 
-  constructor(private studentService: StudentService) {
+  constructor(private studentService: StudentService,
+  ) {
   }
 
   ngOnInit(): void {
-    this.getAllStudentAndSearch(this.id, this.page, this.nameSearch);
-    this.searchStudent('', this.page);
+    this.getAllStudentAndSearch();
+    this.searchStudent();
 
   }
 
@@ -34,8 +35,9 @@ export class StudentInstructorComponent implements OnInit {
    * function:  show the instructor's list of students
    *
    */
-  getAllStudentAndSearch(id, page, nameSearch) {
-    this.studentService.getAllStudentByIdTeacher(id, page, nameSearch).subscribe(item => {
+  getAllStudentAndSearch() {
+
+    this.studentService.getAllStudentByIdTeacher(this.id, this.page, this.nameSearch).subscribe(item => {
       this.studentInfoList = item.content;
       this.studentInfoPage = item;
     }, error => {
@@ -44,16 +46,15 @@ export class StudentInstructorComponent implements OnInit {
     });
   }
 
-  searchStudent(value: string, page: number) {
-    if (value != "") {
-      page = 0;
-    }
-    this.getAllStudentAndSearch(this.id, page, value.trim());
+  searchStudent() {
+    this.getAllStudentAndSearch();
 
   }
 
   changePage(page: number) {
     this.page = page;
-    this.getAllStudentAndSearch(this.id, this.page, this.nameSearch);
+    this.getAllStudentAndSearch();
+    this.page = 0;
   }
+
 }
