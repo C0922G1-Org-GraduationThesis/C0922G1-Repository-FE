@@ -88,7 +88,7 @@
   }
 </style>
 
-<div class="row" style="margin: 0;padding: 0">
+<div class="row" style="margin: 0;padding: 0;overflow: hidden">
   <div><h2 style="padding-top: 20px;color: #17a2b8" class="text-center">THÊM MỚI GIÁO VIÊN</h2></div>
   <div class="col-1">
   </div>
@@ -101,7 +101,7 @@
         </div>
         <div style="margin: 10%" class="parent-div">
           <label style="cursor: pointer" for="upfile" class="btn-upload">Chọn ảnh đại diện</label>
-          <input #uploadFile (change)="uploadFileImg()" type="file" id="upfile" name="upfile" />
+          <input #uploadFile (change)="uploadFileImg()" style="height: 0" type="file" id="upfile" name="upfile" />
         </div>
         <div style="color: red; width: 100px; height: 100px"></div>
       </div>
@@ -109,16 +109,16 @@
         <div style="width: 100%; height: 70px" class="mb-3">
           <label for="exampleInputEmail1" class="form-label">Tên giáo viên(<span style="color: red">*</span>)</label>
           <input formControlName="teacherName" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-          <p style="color: red;font-size: 13px;text-align: right" *ngIf="formCreateTeacher.controls.teacherName.hasError('required') && formCreateTeacher.controls.teacherName.touched">Nhập tên giáo viên</p>
-          <p style="color: red;font-size: 13px;text-align: right">{{errorsCreate.teacherName}}</p>
+          <p style="color: red;font-size: 13px;text-align: left" *ngIf="formCreateTeacher.controls.teacherName.hasError('required') && formCreateTeacher.controls.teacherName.touched">Nhập tên giáo viên</p>
+          <p style="color: red;font-size: 13px;text-align: left">{{errorsCreate.teacherName}}</p>
         </div>
 
         <div style="width: 100%; height: 70px" class="mb-3">
           <label for="exampleInputEmail2" class="form-label">Ngày sinh(<span
             style="color: red">*</span>)</label>
           <input formControlName="teacherDateOfBirth" type="date" class="form-control" id="exampleInputEmail2" aria-describedby="emailHelp">
-          <p style="color: red;font-size: 13px;text-align: right" *ngIf="formCreateTeacher.controls.teacherDateOfBirth.hasError('required') && formCreateTeacher.controls.teacherDateOfBirth.touched">Nhập ngày sinh</p>
-          <p style="color: red;font-size: 13px;text-align: right">{{errorsCreate.teacherDateOfBirth}}</p>
+          <p style="color: red;font-size: 13px;text-align: left" *ngIf="formCreateTeacher.controls.teacherDateOfBirth.hasError('required') && formCreateTeacher.controls.teacherDateOfBirth.touched">Nhập ngày sinh</p>
+          <p style="color: red;font-size: 13px;text-align: left">{{errorsCreate.teacherDateOfBirth}}</p>
 
         </div>
 
@@ -128,8 +128,8 @@
             <option value="" selected>---Chọn học vị---</option>
             <option *ngFor="let degree of listDegree" [ngValue]="degree">{{degree.degreeName}}</option>
           </select>
-          <p style="color: red;font-size: 13px;text-align: right" *ngIf="formCreateTeacher.controls.degree.hasError('required') && formCreateTeacher.controls.degree.touched">Chọn học vị</p>
-          <p style="color: red;font-size: 13px;text-align: right">{{errorsCreate.degree}}</p>
+          <p style="color: red;font-size: 13px;text-align: left" *ngIf="formCreateTeacher.controls.degree.hasError('required') && formCreateTeacher.controls.degree.touched">Chọn học vị</p>
+          <p style="color: red;font-size: 13px;text-align: left">{{errorsCreate.degree}}</p>
         </div>
 
         <div style="width: 100%; height: 70px" class="mb-3">
@@ -137,8 +137,8 @@
             style="color: red">*</span>)</label>
           <input formControlName="teacherAddress" type="text" class="form-control" id="exampleInputEmail4"
                  aria-describedby="emailHelp">
-          <p style="color: red;font-size: 13px;text-align: right" *ngIf="formCreateTeacher.controls.teacherAddress.hasError('required') && formCreateTeacher.controls.teacherAddress.touched">Nhập địa chỉ</p>
-          <p style="color: red;font-size: 13px;text-align: right">{{errorsCreate.teacherAddress}}</p>
+          <p style="color: red;font-size: 13px;text-align: left" *ngIf="formCreateTeacher.controls.teacherAddress.hasError('required') && formCreateTeacher.controls.teacherAddress.touched">Nhập địa chỉ</p>
+          <p style="color: red;font-size: 13px;text-align: left">{{errorsCreate.teacherAddress}}</p>
 
         </div>
       </div>
@@ -164,8 +164,8 @@
           <label for="exampleInputEmail5" class="form-label">Số điện thoại(<span style="color: red">*</span>)</label>
           <input formControlName="teacherPhoneNumber" type="text" class="form-control" id="exampleInputEmail5"
                  aria-describedby="emailHelp">
-          <p style="color: red;font-size: 13px;text-align: right" *ngIf="formCreateTeacher.controls.teacherPhoneNumber.hasError('required') && formCreateTeacher.controls.teacherPhoneNumber.touched">Nhập số điện thoại</p>
-          <p style="color: red;font-size: 13px;text-align: right">{{errorsCreate.teacherPhoneNumber}}</p>
+          <p style="color: red;font-size: 13px;text-align: left" *ngIf="formCreateTeacher.controls.teacherPhoneNumber.hasError('required') && formCreateTeacher.controls.teacherPhoneNumber.touched">Nhập số điện thoại</p>
+          <p style="color: red;font-size: 13px;text-align: left">{{errorsCreate.teacherPhoneNumber}}</p>
         </div>
 
         <div style="width: 100%; height: 70px" class="mb-3">
@@ -174,22 +174,22 @@
             <option value="" selected>---Chọn khoa---</option>
             <option *ngFor="let faculty of listFaculty" [ngValue]="faculty">{{faculty.facultyName}}</option>
           </select>
-          <p style="color: red; font-size: 13px;text-align: right" *ngIf="formCreateTeacher.controls.faculty.hasError('required') && formCreateTeacher.controls.faculty.touched">Chọn khoa</p>
-          <p style="color: red;font-size: 13px;text-align: right">{{errorsCreate.faculty}}</p>
+          <p style="color: red; font-size: 13px;text-align: left" *ngIf="formCreateTeacher.controls.faculty.hasError('required') && formCreateTeacher.controls.faculty.touched">Chọn khoa</p>
+          <p style="color: red;font-size: 13px;text-align: left">{{errorsCreate.faculty}}</p>
         </div>
-        <div style="width: 100%; height: 70px"  class="mb-3">
+        <div style="width: 100%; height: 90px;margin-bottom: 80px"  class="mb-3">
           <label for="exampleInputEmail6" class="form-label">Email(<span style="color: red">*</span>)</label>
           <input formControlName="teacherEmail" type="text" class="form-control" id="exampleInputEmail6"
                  aria-describedby="emailHelp">
-          <p style="color: red; font-size: 13px;text-align: right" *ngIf="formCreateTeacher.controls.teacherEmail.hasError('required') && formCreateTeacher.controls.teacherEmail.touched">Nhập email</p>
-          <p style="color: red;font-size: 13px;text-align: right">{{errorsCreate.teacherEmail}}</p>
+          <p style="color: red; font-size: 13px;text-align: left" *ngIf="formCreateTeacher.controls.teacherEmail.hasError('required') && formCreateTeacher.controls.teacherEmail.touched">Nhập email</p>
+          <p style="color: red;font-size: 13px;text-align: left">{{errorsCreate.teacherEmail}}</p>
         </div>
         <div class="mb-3">
           <div class="mg-10">
             <button [disabled]="!formCreateTeacher.valid" (click)="createTeacher()" type="button" class="btn btn-outline-info " style="border-radius: 60px/80px;width: 26%">
               Lưu
             </button>
-            <button type="button" class="btn btn-outline-info" style="margin-left: 2%;right: 0;border-radius: 60px/80px;width: 26%">
+            <button [routerLink]="['/teachers/list']" type="button" class="btn btn-outline-secondary" style="margin-left: 2%;right: 0;border-radius: 60px/80px;width: 26%">
               Thoát
             </button>
           </div>

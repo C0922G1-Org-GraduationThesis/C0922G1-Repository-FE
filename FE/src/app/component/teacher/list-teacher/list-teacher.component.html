@@ -1,9 +1,8 @@
-
 <!--create by :HungPV-->
 <!--date create : 02/04/2023-->
 <!--screen : show list teacher and delete is modal-->
 
-<div class="container">
+<div class="" style=" margin: 0;padding: 0;overflow: hidden">
   <div class="row text--info">
     <h2>QUẢN LÝ GIÁO VIÊN</h2>
   </div>
@@ -15,48 +14,54 @@
     </div>
     <div class="col-lg-5 col-xs-12">
       <form class="d-flex">
-        <input id="searchTerm" #searchName class="form-control rounded-pill" type="search" placeholder="nhập tên muốn tìm ..."
+        <input id="searchTerm" #searchName class="form-control rounded-pill" type="search" placeholder="nhập tên giáo viên muốn tìm ..."
                aria-label="Search">
-        <button class="btn btn-outline-info button-search  rounded-pill" type="submit" (click)="search(searchName.value)">Tìm
-          Kiếm
+        <button class="btn btn-outline-info button-search  rounded-pill"  type="submit" (click)="search(searchName.value)">Tìm
+          kiếm
         </button>
       </form>
     </div>
   </div>
 
-  <div>
-    <div *ngIf="teacherPage.length == 0">
+  <div style="padding-left: 60px;">
+    <div *ngIf="teacherPage.length === 0">
       <h4>Không Có Giáo Viên Nào Trong Danh Sách</h4>
     </div>
     <div class="row">
-      <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 card-margin" *ngFor="let teachers of teacherPage">
+      <div class="col-lg-3 col-sm-6 col-xs-12 card-margin mb-3" *ngFor="let teachers of teacherPage">
         <div class="card">
-          <img src="{{teachers.teacherImg}}" style="max-width: 100%; height: 45vh"
-               class="card-img-top">
+          <div>
+            <img src="{{teachers.teacherImg}}" style="max-width: 100%; height: 45vh"
+                 class="card-img-top">
+          </div>
           <div class="card-body">
-            <h5 class="card-title text-primary">{{teachers.teacherName}}</h5>
+            <h5 class="card-title text-primary " >{{teachers.teacherName}}</h5>
             <p class="card-text">
-              <label><img src="../../../../assets/img/icons8-class-48.png" width="28px" height="28px"></label>
-              <label>&ensp;Mã giảng viên :</label>
-              <label >{{teachers.teacherCode}}</label>
+              <label style="margin-left: -4px"><img src="../../../../assets/img/icons8-class-48.png" width="28px" height="28px"></label>
+              <label style="font-weight: bold">&ensp;Mã giảng viên: </label>
+              <label class="text-truncate">&ensp;{{teachers.teacherCode}}</label>
             </p>
-            <p class="card-text ">
+            <div class="card-text">
               <label><img src="../../../../assets/img/icons8-sign-mail-24.png" width="20px" height="22px"></label>
-              <label>&ensp;Email :</label>
-              <label>{{teachers.teacherEmail}}</label>
-            </p>
+              <label style="font-weight: bold">&ensp;Email: </label>
+              <label class="text-truncate">&ensp;{{teachers.teacherEmail}}</label>
+            </div>
             <p class="card-text">
               <label><img src="../../../../assets/img/icons8-phone-24.png" width="15px" height="17px"></label>
-              <label>&ensp;Điện thoại :</label>
-              <label style="font-size: 13px">{{teachers.teacherPhoneNumber}}</label>
+              <label style="font-weight: bold">&ensp;Điện thoại: </label>
+              <label class="text-truncate" style="font-size: 13px;">&ensp;{{teachers.teacherPhoneNumber}}</label>
             </p>
-            <p class="card-text">
+            <div class="card-text">
               <label><img src="../../../../assets/img/icons8-id-verified-24.png" width="20px" height="23px"></label>
-              <label>&ensp;Khoa :</label>
-              <label style="font-size: 13px">{{teachers.faculty}}</label>
-            </p>
+              <label style="font-weight: bold">&ensp;Khoa: </label>
+              <label class="text-truncate" style="font-size: 13px">&ensp;{{teachers.faculty}}</label>
+            </div>
 
             <div style="float: right">
+              <button style="margin-right: 5px;" type="button" class="btn btn-outline-info " data-bs-toggle="modal" data-bs-target="#detail1"   (click)="getTeacherById(teachers.teacherId)"><img
+                src="https://icon-library.com/images/information-i-icon/information-i-icon-7.jpg"
+                width="20px"
+                height="20px"></button>
               <a routerLink="/teachers/update/{{teachers.teacherId}}">
                 <button style="margin-right: 5px;" type="button" class="btn btn-outline-warning"><img
                   src="../../../../assets/img/pencil--v1.png"
@@ -68,6 +73,7 @@
                 <img src="../../../../assets/img/trash.png"
                      width="20px" height="20px">
               </button>
+
             </div>
           </div>
         </div>
@@ -159,3 +165,65 @@
   </div>
 </div>
 
+<!--Hiển thị chi tiết-->
+<div class="modal fade " id="detail1" tabindex="-1" aria-labelledby="detailLabel1" aria-hidden="true"
+     data-bs-centered="true">
+  <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="detailLabel1">Thông tin chi tiết</h5>
+      </div>
+      <div class="modal-body d-flex flex-wrap justify-content-around align-items-center detail" *ngIf="teacher">
+        <div class="col-lg-4 col-md-12 col-sm-12 d-flex align-items-center justify-content-center pb-2">
+          <div>
+            <img class="img-instructor" [src]="teacher.teacherImg" alt="img" style="height: 380px;width: 100%">
+          </div>
+        </div>
+        <div class="col-lg-5 col-md-6 col-sm-12">
+          <div class="mb-3">
+            <label class="form-label">Tên giảng viên</label>
+            <input type="text" class="form-control" [value]="teacher.teacherName" disabled>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Địa chỉ</label>
+            <input type="text" class="form-control" [value]="teacher.teacherAddress" disabled>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Ngày sinh</label><br>
+            <input type="text" class="form-control" [value]="teacher.teacherDateOfBirth" disabled>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="text" class="form-control" [value]="teacher.teacherEmail" disabled>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12">
+          <div class="mb-3">
+            <label class="form-label">Giới tính</label>
+            <div *ngIf="teacher.teacherGender === 'true'">
+              <input type="text" class="form-control" value="Nam" disabled>
+            </div>
+            <div *ngIf="teacher.teacherGender === 'false'">
+              <input type="text" class="form-control" value="Nữ" disabled>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Số điện thoại</label>
+            <input type="text" class="form-control" [value]="teacher.teacherPhoneNumber" disabled>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Trình độ</label>
+            <input type="text" class="form-control" [value]="teacher.degree" disabled>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Khoa</label><br>
+            <input type="text" class="form-control" [value]="teacher.faculty" disabled>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Đóng</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -27,7 +27,7 @@
             <td style="text-align: left">{{p.projectName}}</td>
             <td style="text-align: center">
               <a
-                (click)="dowFile(p.projectDescription)"
+                href="{{p.projectDescription}}" download="" target="_blank"
                 class="btn btn-black" style="text-align: center;"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -59,7 +59,7 @@
                       (click)="pro=p">Hủy
               </button>
 
-              <button *ngIf="p.projectStatus == false" class="btn btn-outline-warning" disabled
+              <button *ngIf="p.projectStatus == false" class="btn btn-outline-danger" disabled
               >Đã hủy
               </button>
             </td>

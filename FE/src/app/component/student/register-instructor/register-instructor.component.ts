@@ -8,6 +8,7 @@ import {ActivatedRoute} from '@angular/router';
 import {Team} from '../../../model/team';
 import {Teacher} from '../../../model/teacher';
 import {ITeamDto} from '../../../model/iteam-dto';
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-register-instructor',
@@ -28,6 +29,7 @@ export class RegisterInstructorComponent implements OnInit {
   teacher: ITeacherDto;
   // cờ để hiển thị button
   isRegistered: boolean;
+  flag: number;
   team: ITeamDto;
 
   constructor(private teamService: TeamService,
@@ -36,10 +38,11 @@ export class RegisterInstructorComponent implements OnInit {
 
   ngOnInit(): void {
     this.isRegistered = false;
+    this.flag=0;
     this.getAllInstructor(0);
     this.activatedRoute.paramMap.subscribe(paramMap => {
       this.teamId = +paramMap.get('id');
-      this.teamId = 1;
+      this.teamId = 2;
       this.getTeam(this.teamId);
     });
   }
@@ -57,9 +60,11 @@ export class RegisterInstructorComponent implements OnInit {
       // @ts-ignore
       this.teamPage = item;
     });
+
   }
 
   register(teacherId: number, teacher: string) {
+    this.flag=1;
     this.instructorName = teacher;
     this.instructorId = teacherId;
   }
@@ -74,6 +79,7 @@ export class RegisterInstructorComponent implements OnInit {
         teacherId: new FormControl(item.teacherId),
         teacherName: new FormControl(item.teacherName),
       });
+      console.log(this.editForm.value);
     });
   }
 
@@ -85,6 +91,14 @@ export class RegisterInstructorComponent implements OnInit {
     this.teamService.editInstructor(this.teamId, this.editForm.value).subscribe(item => {
       this.getAllInstructor(0);
       this.isRegistered = true;
+      Swal.fire({
+        title: '<span class="animated bounceInDown">Đăng ký thành công!</span>',
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 2000,
+        background: '#fff0e6',
+        iconHtml: '<i class="fas fa-check"></i>',
+      });
     });
   }
 
@@ -93,11 +107,20 @@ export class RegisterInstructorComponent implements OnInit {
   }
 
   cancelRegistration() {
+    this.flag = 1;
     this.editForm.get('teacherId').setValue(null);
     this.editForm.get('teacherName').setValue(null);
     this.teamService.editInstructor(this.teamId, this.editForm.value).subscribe(item => {
       this.getAllInstructor(0);
       this.isRegistered = false;
+      Swal.fire({
+        title: '<span class="animated bounceInDown">Hủy đăng ký thành công!</span>',
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 2000,
+        background: '#fff0e6',
+        iconHtml: '<i class="fas fa-check"></i>',
+      });
     });
   }
 }

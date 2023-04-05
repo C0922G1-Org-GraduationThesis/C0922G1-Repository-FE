@@ -17,13 +17,14 @@ h2 {
 }
 
 .card {
-  width: 16rem;
+  width: 19rem;
   box-shadow: 3px 4px 8px rgba(0, 0, 0, .5);
   background-color: #f8f9fa;
+
 }
 
 .card-margin {
-  margin: 0px;
+  margin: -5px;
 }
 
 .card-title {
@@ -70,4 +71,22 @@ h4 {
   width: 90px;
 }
 
+.rounded-pill {
+  margin-left: 5px;
+}
 
+.card {
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  opacity: 0.9;
+}
+
+.text-truncate {
+  text-align: left;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-break: break-all;
+  margin-bottom: -6px;
+}

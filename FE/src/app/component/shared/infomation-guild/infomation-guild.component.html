@@ -3,25 +3,23 @@
     <h2 class="text-center">XEM THÔNG TIN HƯỚNG DẪN</h2>
   </div>
   <div class="row">
-    <div class="col-8">
+    <div class="col-lg-8 guild" style="height: 400px">
 
       <div *ngFor="let item of notificationTeacherList" class="row mb-3">
-        <div class="col-2">
-          <div class="row"><span class="text-center"
-                                 style="background-color: #14a2b8; border: 1px solid darkgray; color: white">{{item.notificationTeacherTime}}</span>
-          </div>
-<!--          <div class="row"><span class="text-center" style="color: darkgray; border: 1px solid darkgray">2023</span>-->
-<!--          </div>-->
-        </div>
-        <div class="col-8" style="margin-left: 10px">
+        <div class="col-lg-2">
           <div class="row">
-            <a href=""><span style="color: black">{{item.notificationTeacherTopic}}</span></a>
+            <span class="text-center" style="background-color: #14a2b8; border: 1px solid darkgray; color: white">{{item.notificationTeacherTime}}</span>
+          </div>
+        </div>
+        <div class="col-lg-9" style="margin-left: 10px">
+          <div class="row">
+            <span style="color: black">{{item.notificationTeacherTopic}}</span>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="col-4">
+    <div class="col-lg-4">
       <div class="row mb-3">
         <div class="card fontSize">
           <img src="https://major.edu.vn/wp-content/uploads/2021/09/20200818-DSCF2564-Edit-768x512.jpg"
@@ -29,7 +27,7 @@
           <div class="card-body">
 
             <h5 class="card-title" style="text-align: center; color: #14a2b8">
-              <a href="">Tìm hiểu công nghệ AI</a>
+              <span>Tìm hiểu công nghệ AI</span>
             </h5>
           </div>
         </div>

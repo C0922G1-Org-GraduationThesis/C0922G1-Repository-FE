@@ -2,7 +2,7 @@
 <div class="p-3 " style="min-height: 58vh">
   <div class="row mt-3">
     <div style="margin-left: 50px" class="col-2 ">
-      <button class="btn btn-outline-primary w-100 mt-2">
+      <button class="btn btn-outline-primary w-100 mt-2" routerLink="/students/create">
         Thêm mới sinh viên
       </button>
     </div>
@@ -10,18 +10,12 @@
     <div class="col-4 col-sm-4">
       <input style="margin-bottom: 15px; margin-left: 10px" formControlName="nameStudent" type="text"
              #studentName
-             class="form-control rounded-0 mt-2" id="title"
-             placeholder="Nhập tên sinh viên cần tìm..."
-             onfocus="this.style.borderColor='#14a2b8';this.style.boxShadow='none';this.style.outline='2px solid #14a2b8';"
-             onblur="this.style.borderColor='#ced4da';this.style.outline='none';">
+             class="form-control rounded-pill mg-left" id="title"
+             placeholder="Nhập tên sinh viên cần tìm...">
     </div>
     <div class="col-1">
-      <button class="btn btn-outline-primary w-100 mt-2"
-              style=" margin-left: 16px; border: 1px solid #14a2b8;color: #14a2b8"
-              (click)="searchStudent(studentName.value,this.page)"
-              onmouseover="this.style.backgroundColor='#14a2b8'" onmouseout="this.style.backgroundColor='white';"
-              onfocus="this.style.borderColor='#14a2b8';this.style.boxShadow='none';this.style.outline='2px solid #14a2b8';"
-              onblur="this.style.borderColor='#ced4da';this.style.outline='none';">
+      <button class="btn btn-outline-primary rounded-pill"
+              (click)="searchStudent(studentName.value,this.page)">
         Tìm kiếm
       </button>
 
@@ -73,12 +67,13 @@
 
           </div>
           <div style="margin-top: 8px;text-align: right; margin-bottom: -10px ">
-            <button style="border-radius: 50px/60px" class="btn btn-outline-warning btn-sm">
-
-              <img src="../../../../assets/img/pencil--v1.png" height="30" width="30"/></button>
+            <button style="border-radius: 50px/60px" class="btn btn-outline-warning btn-sm"
+                    routerLink="/students/update/{{item.studentId}}">
+              <img src="../../../../assets/img/pencil--v1.png" height="30" width="30"/>
+            </button>
             <button style="border-radius: 50px/60px; margin-left: 5px" class="btn btn-outline-danger btn-sm">
-
-              <img src="../../../../assets/img/trash.png" height="30" width="30"/></button>
+              <img src="../../../../assets/img/trash.png" height="30" width="30"/>
+            </button>
 
           </div>
 

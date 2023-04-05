@@ -4,9 +4,10 @@ import {Faculty} from '../../../model/faculty';
 import {Degree} from '../../../model/degree';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {TeacherService} from '../../../service/teacher.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {AngularFireStorage} from '@angular/fire/storage';
 import {finalize} from 'rxjs/operators';
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-update-teacher',
@@ -53,7 +54,8 @@ export class UpdateTeacherComponent implements OnInit {
 
   constructor(private teacherService: TeacherService,
               private activatedRoute: ActivatedRoute,
-              private storage: AngularFireStorage) {
+              private storage: AngularFireStorage,
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -103,7 +105,14 @@ export class UpdateTeacherComponent implements OnInit {
       const teacher: Teacher = this.formUpdateTeacher.value;
       teacher.teacherImg = this.linkImg;
       this.teacherService.updateTeacher(teacher).subscribe(next => {
-        alert('Chỉnh sửa thành công');
+        Swal.fire({
+          icon: 'success',
+          title: 'Sửa thành công',
+          showConfirmButton: false,
+          timer: 1500
+        });
+        this.router.navigateByUrl("teachers/list");
+
       }, er => {
         console.log(er);
         // tslint:disable-next-line:prefer-for-of

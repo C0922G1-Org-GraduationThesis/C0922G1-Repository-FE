@@ -12,10 +12,17 @@ export class ProjectService {
 
   constructor(private httpClient: HttpClient) {
   }
+  /**
+   * Created by: hoangNNH
+   * Date create: 29/03/2023
+   */
   getAllProject(page: number, name: string): Observable<Page<Project>> {
     return this.httpClient.get<Page<Project>>('http://localhost:8080/api/projects?page=' + page + '&name=' + name);
   }
-
+  /**
+   * Created by: hoangNNH
+   * Date create: 29/03/2023
+   */
   getProjectDetail(id: number): Observable<Project> {
     return this.httpClient.get<Project>('http://localhost:8080/api/projects/detail/' + id);
   }

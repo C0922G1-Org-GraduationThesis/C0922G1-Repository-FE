@@ -20,12 +20,17 @@
 }
 
 .table-shadow {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
 }
+
 
 .mg {
   margin-top: 1rem;
   margin-bottom: -3rem;
+}
+
+.mg-top {
+  margin-top: 2rem;
 }
 
 .pagination-ellipsis {
@@ -33,22 +38,39 @@
 }
 
 .fixed-height {
-  height: 80vh;
+  height: 75vh;
+}
+
+@media (max-width: 768px) {
+  .fixed-height {
+    overflow-y: scroll;
+  }
+}
+
+.fixed-height-table {
+  height: 40vh;
   overflow-y: scroll;
 }
 
-.bg {
-  background-color: #f8f9fa;
+.fix-height {
+  height: 40vh;
 }
 
 
+.bg {
+  background-color: #ECECEC
+}
 
 
+.mg-left {
+  margin-right: 0.5rem;
+}
 
+.scrollable {
+  overflow-y: auto;
+}
 
-
-
-
-
-
-
+.img-card {
+  max-width: 60vh;
+  height: 40vh;
+}

@@ -1,10 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
 import {Project} from '../../../model/project';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ProjectService} from '../../../service/project.service';
 import {ActivatedRoute} from "@angular/router";
 import {TeamService} from "../../../service/team.service";
 import {Team} from "../../../model/team";
+import {finalize} from "rxjs/operators";
+import {AngularFireStorage} from "@angular/fire/storage";
 
 @Component({
   selector: 'app-register-topic',
@@ -12,6 +14,8 @@ import {Team} from "../../../model/team";
   styleUrls: ['./register-topic.component.css']
 })
 export class RegisterTopicComponent implements OnInit {
+  @ViewChild('uploadFile', {static: true}) public avatarDom: ElementRef | undefined;
+  @ViewChild('uploadFile1', {static: true}) public avatarDomDes: ElementRef | undefined;
   searchStr = '';
   teamPage: any;
   listProject: Project[] = [];
@@ -20,10 +24,15 @@ export class RegisterTopicComponent implements OnInit {
   formCreate: FormGroup;
   teamId: number;
   team: Team;
+  selectedFile: any = null;
+  fileUrl: string;
+  fileUrlDes: string;
+  selectedFileDes: any = null;
 
   constructor(private projectService: ProjectService,
               private activatedRoute: ActivatedRoute,
-              private teamService: TeamService) {
+              private teamService: TeamService,
+              @Inject(AngularFireStorage) private storage: AngularFireStorage) {
     this.activatedRoute.paramMap.subscribe(paramMap => {
       this.teamId = +paramMap.get('teamId');
       this.teamService.findById(this.teamId).subscribe(team => {
@@ -65,7 +74,47 @@ export class RegisterTopicComponent implements OnInit {
   }
 
   onSubmit() {
+    if (this.selectedFile != null) {
+      const filePath = this.selectedFile.name;
+      const fileRef = this.storage.ref(filePath);
+      const uploadTask = this.storage.upload(filePath, this.selectedFile);
+
+      uploadTask.snapshotChanges().pipe(
+        finalize(() => {
+          fileRef.getDownloadURL().toPromise().then(url => {
+            this.fileUrl = url;
+            console.log(this.fileUrl);
+          });
+        })
+      ).subscribe();
+    }
+    if (this.selectedFileDes != null) {
+      const filePath = this.selectedFileDes.name;
+      const fileRef = this.storage.ref(filePath);
+      const uploadTask = this.storage.upload(filePath, this.selectedFileDes);
+
+      uploadTask.snapshotChanges().pipe(
+        finalize(() => {
+          fileRef.getDownloadURL().toPromise().then(url => {
+            this.fileUrlDes = url;
+            console.log(this.fileUrlDes);
+          });
+        })
+      ).subscribe();
+    }
+    this.formCreate.value.projectDescription = this.fileUrlDes;
+    this.formCreate.value.projectImg = this.fileUrl;
     const project = this.formCreate.value;
     console.log(project);
+  }
+
+  uploadFileImg() {
+    this.selectedFile = this.avatarDom?.nativeElement.files[0];
+    this.onSubmit();
+  }
+
+  uploadFileDes() {
+    this.selectedFileDes = this.avatarDomDes?.nativeElement.files[0];
+    this.onSubmit();
   }
 }

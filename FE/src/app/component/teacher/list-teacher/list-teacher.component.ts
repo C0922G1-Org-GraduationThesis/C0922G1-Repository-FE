@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {TeacherService} from '../../../service/teacher.service';
 import {TeacherDto} from '../../../dto/teacher-dto';
 import Swal from 'sweetalert2';
+import {TeamService} from "../../../service/team.service";
+import {ITeacherDto} from "../../../model/iteacher-dto";
 
 
 @Component({
@@ -11,39 +13,34 @@ import Swal from 'sweetalert2';
 })
 export class ListTeacherComponent implements OnInit {
   teacherPage: TeacherDto[] = [];
-  totalPage: number;
   currentPage: number;
   searchName: string;
   teamPage: any;
   teacherId: number;
   teacherName: string;
+  teacher: ITeacherDto;
 
 
-  constructor(private teacherService: TeacherService) {
+  constructor(private teacherService: TeacherService,
+              private teamService : TeamService) {
   }
 
   ngOnInit(): void {
-    this.totalPage = 0;
     this.searchName = '';
+    this.currentPage=0;
     this.getTeacher();
+  }
+
+  getTeacherById(id: number) {
+    this.teamService.getTeacherById(id).subscribe(item => {
+      this.teacher = item;
+    });
   }
 
   getTeacher() {
     this.teacherService.getTeacher(this.searchName, this.currentPage).subscribe(item => {
         this.teacherPage = item.content;
-        this.totalPage = item.totalPages;
         this.teamPage = item;
-      }, error => {
-        Swal.fire({
-            title: 'Danh Sách Trống',
-            icon: 'info',
-            showConfirmButton: false,
-            background: '#fff0e6',
-            showCancelButton: true,
-            cancelButtonText: 'Thoát',
-            cancelButtonColor: '#d33'
-          }
-        );
       }
     );
   }
@@ -51,6 +48,7 @@ export class ListTeacherComponent implements OnInit {
   search(searchName: string) {
     this.searchName = searchName;
     this.currentPage = 0;
+    this.teacherPage = [];
     this.getTeacher();
 
   }
@@ -76,7 +74,8 @@ export class ListTeacherComponent implements OnInit {
         background: '#fff0e6',
         iconHtml: '<i class="fas fa-check"></i>',
       });
-      this.getTeacher();
+      debugger
+      this.ngOnInit();
     });
   }
 }

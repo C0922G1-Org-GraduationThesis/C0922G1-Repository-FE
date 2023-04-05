@@ -1,20 +1,23 @@
 <h2 class="mt-4" style="color: #14a2b8;text-align: center">THÊM MỚI SINH VIÊN</h2>
 <br>
-<form [formGroup]="studentForm"  (ngSubmit)="addStudent()">
-  <div class="row" >
-    <div class="col-2"></div>
-    <div class="col-9 row">
+<form  [formGroup]="studentForm"  (ngSubmit)="addStudent()">
+  <div class="row" style="overflow: hidden; margin: 0; padding: 0">
+    <div class="col-1"></div>
+    <div class="col-10 row shadow p-3">
       <div class="col-4">
         <img [src]="arrayPicture" style="width: 80%;height: 80%" >
         <br>
-        <input type="file" #uploadFile (change)="uploadFileImg()" style="text-align: center" formControlName="studentImg">
+        <div style="margin: 10%" class="parent-div">
+          <label  style="cursor: pointer;margin-left: 20px" for="upfile" class="btn-upload">Chọn ảnh đại diện</label>
+          <input type="file" #uploadFile (change)="uploadFileImg()" style="text-align: center" id="upfile" name="upfile">
+        </div>
       </div>
       <div class="col-4">
         <div class="mb-3">
           <label  class="form-label">Tên sinh viên(<span style="color: red">*</span>)</label>
           <input type="email" class="form-control"   formControlName="studentName">
           <p *ngIf="studentForm.controls.studentName.touched && studentForm.controls.studentName?.errors?.required" style="color: red">Bắt buộc nhập</p>
-<!--          <p *ngIf="studentForm.controls.studentName.touched && studentForm.controls.studentName?.errors?.pattern" style="color: red">Tên không đúng định dạng</p>-->
+          <!--          <p *ngIf="studentForm.controls.studentName.touched && studentForm.controls.studentName?.errors?.pattern" style="color: red">Tên không đúng định dạng</p>-->
         </div>
 
         <div class="mb-3">
@@ -25,8 +28,8 @@
 
         <div class="mb-3">
           <label  class="form-label">Lớp(<span style="color: red">*</span>)</label>
-          <select formControlName="clazz">
-            <option [ngValue]="null" >Chọn lớp</option>
+          <select formControlName="clazz" class="form-control">
+            <option value="" selected>Lựa Chọn</option>
             <option *ngFor="let clazz of clazzType" [ngValue]="clazz" >{{clazz.clazzName}}</option>
             <p *ngIf="studentForm.controls.clazz.touched && studentForm.controls.clazz?.errors?.required" style="color: red">Bắt buộc nhập</p>
           </select>
@@ -40,9 +43,10 @@
         </div>
 
         <div class="mb-3" style="text-align: center">
-          <button  type="button" class="btn btn-outline-secondary ">Thoát</button>
+
           &ensp;&ensp;&ensp;&ensp;
           <button type="submit" class="btn btn-outline-info">Lưu</button>
+          <button style="margin-left: 5px" type="button" class="btn btn-outline-secondary ">Thoát</button>
         </div>
       </div>
       <div class="col-4">
@@ -52,7 +56,7 @@
           <p *ngIf="studentForm.controls.studentPhoneNumber.touched && studentForm.controls.studentPhoneNumber?.errors?.required" style="color: red">Bắt buộc nhập</p>
           <p *ngIf="studentForm.controls.studentPhoneNumber.touched && studentForm.controls.studentPhoneNumber?.errors?.minlength" style="color: red">Tối thiểu 10 chữ số</p>
           <p *ngIf="studentForm.controls.studentPhoneNumber.touched && studentForm.controls.studentPhoneNumber?.errors?.maxlength" style="color: red">Tối đa 11 chữ số</p>
-<!--          <p *ngIf="studentForm.controls.studentPhoneNumber.touched && studentForm.controls.studentPhoneNumber?.errors?.pattern" style="color: red">Số điện thoại không chứa chữ hoặc kí tự đặc biệt</p>-->
+          <!--          <p *ngIf="studentForm.controls.studentPhoneNumber.touched && studentForm.controls.studentPhoneNumber?.errors?.pattern" style="color: red">Số điện thoại không chứa chữ hoặc kí tự đặc biệt</p>-->
         </div>
 
         <div class="mb-3">
@@ -63,25 +67,21 @@
 
         <div class="mb-3">
           <label  class="form-label" >Giới tính(<span style="color: red">*</span>)</label>
-          <select formControlName="studentGender" class="form-select" aria-label="Default select example">
-            <option [ngValue]="null" >Lựa chọn</option>
-            <option [ngValue]="true">Nam</option>
-            <option [ngValue]="false" >Nữ</option>
-            <p *ngIf="studentForm.controls.studentGender.touched && studentForm.controls.studentGender?.errors?.required" style="color: red">Bắt buộc nhập</p>
-          </select>
+          <div >
+            <input type="radio" id="contactChoice1" [value]="true" formControlName="studentGender"/>
+            <label for="contactChoice1" style="margin-left: 1%"> Nam</label>
+
+            <input style="margin-left: 10px" type="radio" id="contactChoice2" [value]="false" formControlName="studentGender" />
+            <label for="contactChoice2"  style="margin-left: 1%"> Nữ</label>
+          </div>
         </div>
 
-<!--        <div class="mb-3">-->
-<!--          <label class="form-label">Mã sinh viên(<span style="color: red">*</span>)</label>-->
-<!--          <input type="text" class="form-control"  -->
-<!--        </div>-->
+        <!--        <div class="mb-3">-->
+        <!--          <label class="form-label">Mã sinh viên(<span style="color: red">*</span>)</label>-->
+        <!--          <input type="text" class="form-control"  -->
+        <!--        </div>-->
       </div>
     </div>
     <div class="col-1"></div>
   </div>
 </form>
-
-
-
-
-

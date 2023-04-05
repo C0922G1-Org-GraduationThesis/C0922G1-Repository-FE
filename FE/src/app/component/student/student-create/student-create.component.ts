@@ -6,6 +6,8 @@ import {FormControl, FormGroup, Validator, Validators} from '@angular/forms';
 import {AngularFireStorage} from '@angular/fire/storage';
 import {finalize} from 'rxjs/operators';
 import {Student} from '../../../model/student';
+import Swal from "sweetalert2";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -17,7 +19,8 @@ export class StudentCreateComponent implements OnInit {
 
   constructor(private clazzService: ClazzService,
               private studentService: StudentService,
-              private storage: AngularFireStorage) {
+              private storage: AngularFireStorage,
+              private  router: Router) {
   }
 
 
@@ -33,7 +36,7 @@ export class StudentCreateComponent implements OnInit {
     studentPhoneNumber: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(11) ]),
     studentEmail: new FormControl('', [Validators.required, Validators.pattern('[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}')]),
     studentAddress: new FormControl('', Validators.required),
-    studentImg: new FormControl(this.arrayPicture),
+    studentImg: new FormControl(this.arrayPicture="https://bathanh.com.vn/wp-content/uploads/2017/08/default_avatar.png"),
     clazz: new FormControl('', Validators.required),
   });
 
@@ -69,9 +72,17 @@ export class StudentCreateComponent implements OnInit {
     student.studentImg = this.arrayPicture;
     this.studentService.createStudent(student).subscribe(next => {
       console.log(next);
-      alert('Thêm mới thành công');
+      Swal.fire({
+        icon: 'success',
+        title: 'Thêm mới thành công',
+        showConfirmButton: false,
+        timer: 1500
+      });
       this.studentForm.reset();
+      this.router.navigateByUrl('students/list')
     });
   }
+
+
 
 }

@@ -6,6 +6,8 @@ import {Faculty} from '../../../model/faculty';
 import {TeacherService} from '../../../service/teacher.service';
 import {finalize} from 'rxjs/operators';
 import {Teacher} from '../../../model/teacher';
+import Swal from "sweetalert2";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -50,7 +52,8 @@ export class CreateTeacherComponent implements OnInit {
   };
 
   constructor(private storage: AngularFireStorage,
-              private teacherService: TeacherService) {
+              private teacherService: TeacherService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -97,7 +100,13 @@ export class CreateTeacherComponent implements OnInit {
         this.formCreateTeacher.reset();
         this.createTeacher();
         this.arrayPicture = 'https://bathanh.com.vn/wp-content/uploads/2017/08/default_avatar.png';
-        alert('Thêm mới thành công');
+        Swal.fire({
+          icon: 'success',
+          title: 'Thêm mới thành công',
+          showConfirmButton: false,
+          timer: 1500
+        });
+        this.router.navigateByUrl("teachers/list");
       }, er => {
         console.log(er);
         // tslint:disable-next-line:prefer-for-of

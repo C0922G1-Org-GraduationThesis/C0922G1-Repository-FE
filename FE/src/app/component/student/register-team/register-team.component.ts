@@ -39,8 +39,15 @@ export class RegisterTeamComponent implements OnInit {
     }, error => {
     });
   }
-
   addStudent(id: number) {
+    if (this.listTeam.length === 7) {
+      Swal.fire({
+        title: 'Lỗi',
+        text: 'Mỗi nhóm chỉ được 7 thành viên!',
+        icon: 'error'
+      });
+      return;
+    }
     this.studentService.findById(id).subscribe(student => {
       if (!this.listTeam.some(s => s.studentId === student.studentId)) {
         this.listTeam.push(student);
@@ -48,6 +55,7 @@ export class RegisterTeamComponent implements OnInit {
       }
     });
   }
+
 
 
   delete(id: number) {
@@ -134,4 +142,5 @@ export class RegisterTeamComponent implements OnInit {
       }
     });
   }
+
 }

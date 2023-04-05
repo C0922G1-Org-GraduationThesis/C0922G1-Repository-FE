@@ -1,13 +1,15 @@
 import {HttpErrorResponse, HttpEvent, HttpEventType} from '@angular/common/http';
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
 import {saveAs} from 'file-saver';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {DocumentDto} from '../../../dto/document-dto';
 import {Document} from '../../../model/document';
-import {DocumentService} from '../../../service/document.service';
 import {AngularFireStorage} from '@angular/fire/storage';
 import {NotificationTeacher} from '../../../model/notification-teacher';
+import {finalize} from "rxjs/operators";
+import Swal from "sweetalert2";
 import {FileService} from "../../../service/file.service";
+import {DocumentService} from "../../../service/document.service";
 
 @Component({
   selector: 'app-document-list-create',
@@ -15,17 +17,30 @@ import {FileService} from "../../../service/file.service";
   styleUrls: ['./document-list-create.component.css']
 })
 export class DocumentListCreateComponent implements OnInit {
+  @ViewChild('uploadFile', {static: true}) public avatarDom: ElementRef | undefined;
+  teamPage: any = null;
+  selectedFile: any = null;
   files: File[] = [];
   filenames: string[] = [];
   fileStatus = {status: '', requestType: '', percent: 0};
-  // document: Document;
   selectFile: any | undefined;
   fileName: string = '';
+  documentDtoList: DocumentDto [] = [];
+  totalPage: number = 0;
+  size: number = 0;
+  search: string = '';
+  p: number = 0;
+
+  formGroup: FormGroup;
+  pages: number[] = [];
+  role: string = '';
+  documentList: Document = {};
 
   errCreateDocument: any = {
     documentName: '',
     documentDescribe: ''
   };
+  fileUrl: string;
 
   constructor(private fileService: FileService,
               private documentService: DocumentService,
@@ -90,7 +105,7 @@ export class DocumentListCreateComponent implements OnInit {
           saveAs(new File([httpEvent.body!], httpEvent.headers.get('File-Name')!,
             {type: `${httpEvent.headers.get('Content-Type')};charset=utf-8`}));
           saveAs(new Blob([httpEvent.body!],
-            {type: `${httpEvent.headers.get('Content-Type')};charset=utf-8`}),
+              {type: `${httpEvent.headers.get('Content-Type')};charset=utf-8`}),
             httpEvent.headers.get('File-Name'));
         }
         this.fileStatus.status = 'done';
@@ -114,16 +129,7 @@ export class DocumentListCreateComponent implements OnInit {
     documentName: new FormControl('', [Validators.required])
   });
 
-  documentDtoList: DocumentDto [] = [];
-  totalPage: number = 0;
-  size: number = 0;
-  search: string = '';
-  p: number = 0;
 
-  formGroup: FormGroup;
-  pages: number[] = [];
-  role: string = '';
-  documentList: Document = {};
 
 // Hàm để tạo danh sách các trang
   private createPageList() {
@@ -140,6 +146,7 @@ export class DocumentListCreateComponent implements OnInit {
   }
 
   // Hàm để lấy dữ liệu khi chuyển sang trang mới
+
   private goToPageInternal(page: number) {
     this.p = page;
     this.getAll(this.p);
@@ -153,14 +160,52 @@ export class DocumentListCreateComponent implements OnInit {
   }
 
   createDocument() {
+
+    if (this.selectedFile != null) {
+      const filePath = this.selectedFile.name;
+      const fileRef = this.storage.ref(filePath);
+      const uploadTask = this.storage.upload(filePath, this.selectedFile);
+
+      uploadTask.snapshotChanges().pipe(
+        finalize(() => {
+          fileRef.getDownloadURL().toPromise().then(url => {
+            this.fileUrl = url;
+            console.log(this.fileUrl);
+          });
+        })
+      ).subscribe();
+    }
+    this.formDocument.value.documentFile = this.fileUrl;
+
     if (this.formDocument.valid) {
       const document: Document = this.formDocument.value;
-      document.documentFile = this.fileName;
+      // document.documentFile = this.fileName;
       this.documentService.addDocument(document).subscribe(next => {
         console.log(this.fileName);
-        alert('Thêm mới thành công');
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer);
+            toast.addEventListener('mouseleave', Swal.resumeTimer);
+          }
+        });
+        Toast.fire({
+          icon: 'success',
+          title: 'Thêm tài liệu hướng dẫn thành công'
+        }).then(() => {
+          setTimeout(() => {
+            location.reload();
+          }, 500); // đợi 3 giây trước khi load lại trang
+        });
+
+
         this.formDocument.reset();
         this.getAll(this.p);
+
       }, er => {
         console.log(er);
         // tslint:disable-next-line:prefer-for-of
@@ -180,6 +225,7 @@ export class DocumentListCreateComponent implements OnInit {
 
   getAll(page: number) {
     this.documentService.getAllDocumentDto(this.search.trim(), page).subscribe(data => {
+      this.teamPage = data;
       // @ts-ignore
       this.documentDtoList = data['content'];
       // @ts-ignore
@@ -218,7 +264,6 @@ export class DocumentListCreateComponent implements OnInit {
     }
   }
 
-
   searchNameDocument() {
     // this.p = 0;
     // this.ngOnInit();
@@ -246,24 +291,47 @@ export class DocumentListCreateComponent implements OnInit {
     // Do something to load data for the new page
   }
 
-
   deleteDocument(id: any) {
     if (id != null) {
       this.documentService.deleteDocument(id).subscribe(data => {
-        alert('Xóa thành công');
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer);
+            toast.addEventListener('mouseleave', Swal.resumeTimer);
+          }
+        });
+        Toast.fire({
+          icon: 'success',
+          title: 'Xoá tài liệu hướng dẫn thành công'
+        }).then(() => {
+          setTimeout(() => {
+            location.reload();
+          }, 500); // đợi 3 giây trước khi load lại trang
+        });
         this.getAll(this.p);
       });
     } else {
-      alert('Xóa không thành công');
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer);
+          toast.addEventListener('mouseleave', Swal.resumeTimer);
+        }
+      });
+      Toast.fire({
+        icon: 'error',
+        title: 'Xoá tài liệu hướng dẫn không thành công'
+      })
     }
-    // this.groundFootballDtoService.deleteGF(id).subscribe(data => {
-    //   if (data != null) {
-    //     console.log(data);
-    //     alert("Xóa thành công")
-    //   }
-    // }, error => {
-    //   alert("Xóa thất bại")
-    // });
   }
 
 
@@ -286,4 +354,8 @@ export class DocumentListCreateComponent implements OnInit {
     });
   }
 
+  uploadFileImg() {
+    this.selectedFile = this.avatarDom?.nativeElement.files[0];
+    this.createDocument();
+  }
 }

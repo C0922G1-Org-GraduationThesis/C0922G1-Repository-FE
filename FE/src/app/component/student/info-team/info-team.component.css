@@ -24,8 +24,7 @@
 }
 
 .mg {
-  margin-top: 1rem;
-  margin-bottom: -1rem;
+  margin-top: 2rem;
 }
 
 .pagination-ellipsis {
@@ -33,21 +32,24 @@
 }
 
 .fixed-height {
-  height: 70vh;
-  overflow-y: scroll;
+  height: 80vh;
+}
+
+@media (max-width: 768px) {
+  .fixed-height {
+    overflow-y: scroll;
+  }
 }
 
 .bg {
   background-color: #f8f9fa;
 }
 
+.img-card {
+  max-width: 70vh;
+  height: 40vh;
+}
 
-
-
-
-
-
-
-
-
-
+.mg-left {
+  margin-right: 0.5rem;
+}

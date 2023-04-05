@@ -5,7 +5,7 @@
   <div class="row justify-content-end mb-3">
     <div class="col-lg-4 col-md-6 col-sm-12">
       <div class="input-group">
-        <input type="text" class="form-control rounded-pill" placeholder="Tên đề tài" id="groups-search"
+        <input type="text" class="form-control rounded-pill mg-left" placeholder="Tên đề tài" id="groups-search"
                [(ngModel)]="searchStr">
         <button class="btn btn-outline-primary rounded-pill" (click)="onSearch()">Tìm kiếm</button>
       </div>
@@ -71,7 +71,7 @@
             </div>
             <div class="mb-3">
               <label for="description" class="form-label text-color">Mô tả(<span class="text-danger">*</span>)</label>
-              <input class="form-control" type="file" id="description" formControlName="projectDescription">
+              <input class="form-control" type="file" #uploadFile1 (change)="uploadFileDes()" id="description" formControlName="projectDescription">
               <span
                 class="text-danger"
                 *ngIf="
@@ -82,7 +82,7 @@
             </div>
             <div class="mb-3">
               <label for="img" class="form-label text-color">Hình ảnh(<span class="text-danger">*</span>)</label>
-              <input class="form-control" type="file" id="img" formControlName="projectImg">
+              <input class="form-control" type="file" #uploadFile (change)="uploadFileImg()" id="img" formControlName="projectImg">
               <span
                 class="text-danger"
                 *ngIf="
@@ -107,8 +107,8 @@
       </div>
       <div class="row mb-3 fixed-height">
         <div class="col">
-          <table class="table table-striped">
-            <thead>
+          <table class="table">
+            <thead class="table-info">
             <tr>
               <th scope="col">STT</th>
               <th scope="col">Tên đề tài</th>

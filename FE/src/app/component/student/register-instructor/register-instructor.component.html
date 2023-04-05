@@ -1,3 +1,38 @@
+<style>
+  span.instructor, h5 {
+    color: #17a2b8;
+  }
+
+  .btn-custom {
+    color: #17a2b8;
+    border-color: #17a2b8;
+  }
+
+  .btn-custom:hover {
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+    color: white;
+  }
+
+  .modal-content {
+    border: 2px solid #17a2b8;
+    border-radius: 5px;
+  }
+
+  .form-control:hover {
+    border: 1px solid #17a2b8;
+    border-radius: 5px;
+  }
+
+  .img-instructor {
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+  }
+
+  .img-instructor:hover {
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.8);
+  }
+</style>
 <div class="d-flex text-center mt-4">
   <div class="container">
     <div class="row">
@@ -43,7 +78,7 @@
               <div *ngIf="it.total === default">
                 <ng-container
                   *ngIf="instructorId === it.teacherId || team.teacherId === it.teacherId; else cancelButton">
-                  <button class="btn btn-outline-primary btn-custom"
+                  <button class="btn btn-outline-danger"
                           style="border-radius: 5px;"
                           data-bs-toggle="modal" data-bs-target="#cancelModal">
                     Hủy đăng ký
@@ -61,7 +96,7 @@
               </div>
               <div *ngIf="it.total!==default">
                 <button *ngIf="instructorId === it.teacherId && isRegistered ; else registerButton"
-                        class="btn btn-outline-primary btn-custom"
+                        class="btn btn-outline-danger"
                         style="border-radius: 5px;"
                         data-bs-toggle="modal" data-bs-target="#cancelModal">
                   Hủy đăng ký
@@ -141,51 +176,60 @@
   </ul>
 </nav>
 
-<!--Modal chi tiết giáo viên-->
-<div class="modal fade" id="detail1" tabindex="-1" aria-labelledby="detailLabel1" aria-hidden="true">
-  <div class="modal-dialog">
+<!--Hiển thị chi tiết-->
+<div class="modal fade " id="detail1" tabindex="-1" aria-labelledby="detailLabel1" aria-hidden="true"
+     data-bs-centered="true">
+  <div class="modal-dialog modal-xl modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="detailLabel1">Thông tin chi tiết</h5>
       </div>
-      <div class="modal-body" *ngIf="teacher">
-        <input class="form-control" hidden>
-        <div class="mb-3">
-          <label class="form-label">Tên giảng viên</label>
-          <input type="text" class="form-control" [value]="teacher.teacherName" disabled>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Địa chỉ</label>
-          <input type="text" class="form-control" [value]="teacher.teacherAddress" disabled>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Ngày sinh</label><br>
-          <input type="text" class="form-control" [value]="teacher.teacherDateOfBirth" disabled>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Email</label>
-          <input type="text" class="form-control" [value]="teacher.teacherEmail" disabled>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Giới tính</label>
-          <div *ngIf="teacher.teacherGender === 'true'">
-            <input type="text" class="form-control" value="Nam" disabled>
-          </div>
-          <div *ngIf="teacher.teacherGender === 'false'">
-            <input type="text" class="form-control" value="Nữ" disabled>
+      <div class="modal-body d-flex flex-wrap justify-content-around align-items-center detail pe-xl-5" *ngIf="teacher">
+        <div class="col-lg-4 col-md-12 col-sm-12 d-flex align-items-center justify-content-center pb-2">
+          <div>
+            <img class="img-instructor" [src]="teacher.teacherImg" alt="img" style="height: 380px;width: 100%">
           </div>
         </div>
-        <div class="mb-3">
-          <label class="form-label">Số điện thoại</label>
-          <input type="text" class="form-control" [value]="teacher.teacherPhoneNumber" disabled>
+        <div class="col-lg-5 col-md-12 col-sm-12">
+          <div class="mb-3">
+            <label class="form-label">Tên giảng viên</label>
+            <input type="text" class="form-control" [value]="teacher.teacherName" disabled>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Địa chỉ</label>
+            <input type="text" class="form-control" [value]="teacher.teacherAddress" disabled>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Ngày sinh</label><br>
+            <input type="text" class="form-control" [value]="teacher.teacherDateOfBirth" disabled>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="text" class="form-control" [value]="teacher.teacherEmail" disabled>
+          </div>
         </div>
-        <div class="mb-3">
-          <label class="form-label">Trình độ</label>
-          <input type="text" class="form-control" [value]="teacher.degree" disabled>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Khoa</label><br>
-          <input type="text" class="form-control" [value]="teacher.faculty" disabled>
+        <div class="col-lg-3 col-md-12 col-sm-12">
+          <div class="mb-3">
+            <label class="form-label">Giới tính</label>
+            <div *ngIf="teacher.teacherGender === 'true'">
+              <input type="text" class="form-control" value="Nam" disabled>
+            </div>
+            <div *ngIf="teacher.teacherGender === 'false'">
+              <input type="text" class="form-control" value="Nữ" disabled>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Số điện thoại</label>
+            <input type="text" class="form-control" [value]="teacher.teacherPhoneNumber" disabled>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Trình độ</label>
+            <input type="text" class="form-control" [value]="teacher.degree" disabled>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Khoa</label><br>
+            <input type="text" class="form-control" [value]="teacher.faculty" disabled>
+          </div>
         </div>
       </div>
       <div class="modal-footer">

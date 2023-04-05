@@ -12,6 +12,7 @@ export class ProjectListComponent implements OnInit {
   totalPages: number;
   nameSearch = '';
   currentPage = 0;
+  teamPage: any;
 
   constructor(private projectService: ProjectService) {
   }
@@ -22,8 +23,10 @@ export class ProjectListComponent implements OnInit {
 
   getAllProject() {
     this.projectService.getAllProject(this.currentPage, this.nameSearch).subscribe(item => {
+      console.log(item)
       this.projectList = item.content;
       this.totalPages = item.totalPages;
+      this.teamPage = item;
     });
   }
 
@@ -33,17 +36,8 @@ export class ProjectListComponent implements OnInit {
     this.getAllProject();
   }
 
-  nextSlide() {
-    if (this.currentPage < this.totalPages) {
-      this.currentPage++;
-    }
-    this.getAllProject();
-  }
-
-  prevSlide() {
-    if (this.currentPage > 0) {
-      this.currentPage--;
-    }
+  changePage(pageNumber: number) {
+    this.currentPage = pageNumber;
     this.getAllProject();
   }
 

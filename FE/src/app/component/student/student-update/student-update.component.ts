@@ -1,12 +1,13 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {StudentService} from '../../../service/student/student.service';
 import {ClazzService} from '../../../service/clazz/clazz.service';
-import {ActivatedRoute} from '@angular/router';
-import {FormControl, FormGroup} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Clazz} from '../../../model/clazz';
 import {finalize} from 'rxjs/operators';
 import {AngularFireStorage} from '@angular/fire/storage';
 import {Student} from '../../../model/student';
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-student-update',
@@ -22,21 +23,22 @@ export class StudentUpdateComponent implements OnInit {
 
   studentForm: FormGroup = new FormGroup({
     studentId: new FormControl(),
-    studentName: new FormControl(),
-    studentGender: new FormControl(),
+    studentName: new FormControl('', Validators.required),
+    studentGender: new FormControl('', Validators.required),
     studentCode: new FormControl(),
-    studentDateOfBirth: new FormControl(),
-    studentPhoneNumber: new FormControl(),
-    studentEmail: new FormControl(),
-    studentAddress: new FormControl(),
+    studentDateOfBirth: new FormControl('', Validators.required),
+    studentPhoneNumber: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(11)]),
+    studentEmail: new FormControl('', [Validators.required, Validators.pattern('[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}')]),
+    studentAddress: new FormControl('', Validators.required),
     studentImg: new FormControl(this.arrayPicture),
-    clazz: new FormControl(),
+    clazz: new FormControl(''),
   });
 
   constructor(private studentService: StudentService,
               private clazzService: ClazzService,
               private activatedRoute: ActivatedRoute,
-              private storage: AngularFireStorage) {
+              private storage: AngularFireStorage,
+              private router: Router) {
   }
 
 
@@ -45,39 +47,47 @@ export class StudentUpdateComponent implements OnInit {
     this.getClazz();
   }
 
+
   getStudent() {
     this.activatedRoute.paramMap.subscribe(param => {
       // tslint:disable-next-line:radix
       const studentId = parseInt(param.get('studentId'));
-      this.studentService.findById(studentId).subscribe(next => {
+      this.studentService.findStudentById(studentId).subscribe(next => {
+        console.log(next)
         this.studentForm.patchValue(next);
 
         const student: Student = this.studentForm.value;
         this.arrayPicture = student.studentImg;
-        console.log(this.arrayPicture);
-        console.log(student);
+        // console.log(this.arrayPicture);
       });
-    });
-  }
-
-  getClazz() {
-    this.clazzService.findAll().subscribe(next => {
-      this.clazz = next;
-    });
-  }
-
-  updateStudent() {
-    const student = this.studentForm.value;
-    console.log(student);
-    this.studentService.updateStudent(student.studentId, student).subscribe(next => {
-      console.log(next);
-      alert('Đã cập nhật thành công');
-      this.studentForm.reset();
     });
   }
 
   comparaFn(o1: Clazz, o2: Clazz): boolean {
     return o1 && o2 ? o1.clazzId === o2.clazzId : o1 === o2;
+  }
+
+  getClazz() {
+    this.clazzService.findAll().subscribe(next => {
+      this.clazz = next;
+      // console.log(next)
+    });
+  }
+
+  updateStudent() {
+    const student = this.studentForm.value;
+    // console.log(student);
+    this.studentService.updateStudent(student.studentId, student).subscribe(next => {
+      // console.log(next);
+      Swal.fire({
+        icon: 'success',
+        title: 'Cập nhật thành công',
+        showConfirmButton: false,
+        timer: 1500
+      });
+      this.studentForm.reset();
+      this.router.navigateByUrl('students/list')
+    });
   }
 
   submit() {

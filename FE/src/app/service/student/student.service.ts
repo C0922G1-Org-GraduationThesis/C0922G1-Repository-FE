@@ -39,6 +39,10 @@ export class StudentService {
     return this.httpClient.get<Student>(this.API_URL + 'detail/' + id);
   }
 
+  findStudentById(studentId: number): Observable<Student> {
+    return this.httpClient.get<Student>("http://localhost:8080/api/students/getStd/" + studentId);
+  }
+
   findByTeamId(page: number, size: number, teamId: number): Observable<any> {
     return this.httpClient.get<any>(
       this.API_URL + 'team/' + teamId + '/' + page + '/' + size);
