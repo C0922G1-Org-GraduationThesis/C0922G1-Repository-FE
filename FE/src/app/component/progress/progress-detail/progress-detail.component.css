@@ -1,0 +1,66 @@
+
+img {
+  object-fit: cover;
+}
+.mg-top {
+  margin-top: 3vh;
+}
+
+.mg-left {
+  margin-left: 1.5vh;
+}
+/**
+create by :HungPV
+date create : 02/04/2023
+screen : css
+ */
+.text--info {
+  text-align: center;
+  height: 80px;
+  text-shadow: 0px 1px 1px #ffffff,
+  0px -1px 1px #000000
+}
+
+h2 {
+  font-size: 40px;
+  color: #17a2b8;
+}
+
+
+.card-margin {
+  margin:-5px;
+}
+
+.card-title {
+  text-align: center;
+  color: green;
+}
+
+.card-text {
+  font-size: 14px;
+  margin: 0px;
+}
+
+
+
+.container {
+  padding-top: 30px;
+}
+
+img {
+  object-fit: cover;
+}
+
+
+.button-search {
+  width: 130px;
+}
+
+.div-paginable {
+  margin-top: 30px;
+
+}
+
+.rounded-pill {
+  margin-left: 5px;
+}

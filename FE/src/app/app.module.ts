@@ -21,6 +21,7 @@ import {AngularFireStorageModule} from '@angular/fire/storage';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AuthInterceptor} from "./component/security/auth.interceptor";
 import {Http403Interceptor} from "./component/security/http403.interceptor";
+import {CKEditorModule} from "ckeditor4-angular";
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import {Http403Interceptor} from "./component/security/http403.interceptor";
     ReactiveFormsModule,
     AngularFireStorageModule,
     AngularFireModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig)
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    CKEditorModule
   ],
   providers: [
     {

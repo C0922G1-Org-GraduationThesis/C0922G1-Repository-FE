@@ -1,0 +1,17 @@
+h3 {
+  background-color: #14a2b8;
+  color: white;
+  padding: 10px 0 10px 20px;
+  display: flex;
+  justify-content: center;
+}
+.progress {
+  height: 1.2rem;
+}
+img{
+  margin-right: 5%;
+}
+.bd-shadown {
+  border: 0px solid black;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) ;
+}
