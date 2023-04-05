@@ -20,6 +20,8 @@ import {AngularFireStorageModule} from '@angular/fire/storage';
 import {AngularFireModule} from '@angular/fire';
 import {environment} from '../environments/environment';
 import {FormsModule} from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 
 @NgModule({
@@ -46,6 +48,7 @@ import {FormsModule} from '@angular/forms';
     AngularFireModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     FormsModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

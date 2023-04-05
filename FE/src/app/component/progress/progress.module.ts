@@ -11,6 +11,8 @@ import { ProgressReportComponent } from './progress-report/progress-report.compo
 
 
 
+
+
 @NgModule({
   declarations: [
     ProjectManagementComponent,

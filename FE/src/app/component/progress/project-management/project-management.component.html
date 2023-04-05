@@ -1,29 +1,29 @@
-<div style="text-align: center; background-color: white; height: 150vh">
+<!--<div style="text-align: center; background-color: white; height: 150vh">-->
 
-  <div class="container">
-    <div>
-      <div class="row">
-        <h2 class="mt-3 ">QUẢN LÝ ĐỀ TÀI</h2>
+    <div class="container">
+      <div class="row mt-4">
+        <h2 class="text-center">QUẢN LÝ ĐỀ TÀI</h2>
       </div>
       <div class="row mt-2">
         <div class="col-md-4"></div>
         <div class="col-md-8">
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-7">
               <input id="searchTerm" [(ngModel)]="nameProject" class="form-control rounded-pill" type="search"
-                     placeholder="Nhập tên dự án ..."
+                     placeholder="Nhập tên đề tài ..."
                      aria-label="Search">
             </div>
-            <div class="col-md-3" >
+            <div class="col-md-5">
+                <div class="row">
               <div class="form-check form-check-inline">
                 <input class="form-check-input" type="checkbox" id="checkbox1" [(ngModel)]="status">
                 <label class="form-check-label" for="checkbox1">
-                  <i class="bi bi-check2-square text-primary"></i> Trạng thái
+                  <i class="bi bi-check2-square text-primary"></i> Hoàn thành
                 </label>
+                <span class="mx-2"><button class="btn btn-outline-info button-search rounded-pill form-control" type="button" (click)="search()">Tìm kiếm</button>
+            </span>
               </div>
             </div>
-            <div class="col-md-3">
-              <button class="btn btn-outline-info button-search rounded-pill form-control" type="button" (click)="search()">Tìm kiếm</button>
             </div>
           </div>
         </div>
@@ -32,7 +32,7 @@
         <table class="table table-bordered table-hover table-sortable" style="background-color: white;
               box-shadow: 0 0 20px 0 #253365;">
           <thead class="table table-info">
-          <tr>
+          <tr class="text-center">
             <th scope="col">STT</th>
             <th scope="col">Nhóm</th>
             <th scope="col">Tên đề tài</th>
@@ -42,18 +42,18 @@
           </tr>
           </thead>
           <tbody class="table-group-divider">
-          <tr *ngIf="progressDtos.length === 0"><td colspan="6"><h5 class="text-danger">Danh sách đề tài trống</h5></td></tr>
+          <tr *ngIf="progressDtos.length === 0"><td style="text-align: center" colspan="6"><h5 class="text-danger">Danh sách đề tài trống</h5></td></tr>
           <tr *ngFor="let progress of progressDtos , index as i">
             <ng-container *ngIf="progress.status !=null">
-              <th>{{i + 1}}</th>
-              <td>{{progress.teamName}}</td>
-              <td>{{progress.projectName}}</td>
-              <td>{{progress.memberTotal}}</td>
-              <td>
+              <th class="text-center">{{i + 1}}</th>
+              <td style="text-align: left">{{progress.teamName}}</td>
+              <td style="text-align: left">{{progress.projectName}}</td>
+              <td class="text-center">{{progress.memberTotal}}</td>
+              <td style="text-align: center">
                 <ng-container *ngIf="progress.status === false ">Hoàn thành</ng-container>
                 <ng-container *ngIf="progress.status === true ">Đang thực hiện</ng-container>
               </td>
-              <td>
+              <td style="text-align: center">
                 <button routerLink="/progress/progress-detail/{{progress.projectId}}" class="btn btn-outline-success">
                   Chi tiết
                 </button>
@@ -64,7 +64,7 @@
         </table>
       </div>
     </div>
-  </div>
+
   <!--  Phân trang back-end-->
   <div style="margin-top: 10px">
     <div *ngIf="teamPage" class="d-flex justify-content-center" id="last-row">
@@ -123,5 +123,4 @@
       </nav>
     </div>
   </div>
-</div>
 

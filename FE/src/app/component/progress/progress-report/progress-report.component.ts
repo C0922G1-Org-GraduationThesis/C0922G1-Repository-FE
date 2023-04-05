@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 import {finalize} from 'rxjs/operators';
 // @ts-ignore
 import {AngularFireStorage} from '@angular/fire/storage';
-import {DatePipe} from '@angular/common';
+import {DatePipe, ViewportScroller} from '@angular/common';
 import {ProgressReportService} from '../../../service/progress-report.service';
 import {Stage} from '../../../model/stage';
 import {Project} from '../../../model/project';
@@ -52,7 +52,8 @@ export class ProgressReportComponent implements OnInit {
               private progressReviewService: ProgressReviewService,
               private storage: AngularFireStorage,
               private router: Router,
-              private datePipe: DatePipe) {
+              private datePipe: DatePipe,
+              private viewportScroller: ViewportScroller) {
     this.activatedRoute.paramMap.subscribe((paramMap) => {
       this.projectId = +paramMap.get('projectId');
       this.stageId = +paramMap.get('stageId');
@@ -61,6 +62,7 @@ export class ProgressReportComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.viewportScroller.scrollToPosition([0, 0]);
     this.progressReportService.findProjectByProjectId(this.projectId).subscribe(item2 => {
       this.project = item2;
       this.projectName = item2.projectName;

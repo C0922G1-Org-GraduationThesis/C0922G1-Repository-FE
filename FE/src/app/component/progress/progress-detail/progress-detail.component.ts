@@ -17,6 +17,7 @@ import {Question} from '../../../model/question';
 import {Answers} from '../../../model/answers';
 import {AnswerService} from '../../../service/answer.service';
 import {QuestionService} from '../../../service/question.service';
+import {ViewportScroller} from '@angular/common';
 
 @Component({
   selector: 'app-progress-detail',
@@ -39,19 +40,21 @@ export class ProgressDetailComponent implements OnInit {
   progressReviewForm: FormGroup;
   // SyVT
   studentProgressReports: StudentProgressReport[];
-  totalElementSyVT = 2;
+  totalElementProgress = 2;
   maxElement = 0;
-  flagSyVT = true;
+  flagProgress = true;
   // LanTTN
   questions: Question[] = [];
   answers: Answers[] = [];
-  totalElementLan = 1;
-  maxElementLan = 0;
-  flag = true;
+  totalElementAnswer = 1;
+  maxElementAnswer = 0;
+  flagQuestion = true;
   question: Question;
   answer: Answers;
   temp: number;
   answerFlag = false;
+
+   value = 50;
 
   formCreateQuestion: FormGroup = new FormGroup({
     questionContent: new FormControl()
@@ -66,10 +69,12 @@ export class ProgressDetailComponent implements OnInit {
               private activatedRoute: ActivatedRoute,
               private studentProgressReportService: StudentProgressReportService,
               private questionService: QuestionService,
-              private answerService: AnswerService) {
+              private answerService: AnswerService,
+              private viewportScroller: ViewportScroller) {
   }
 
   ngOnInit(): void {
+    this.viewportScroller.scrollToPosition([-2, -2]);
     this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
       this.projectId = +paramMap.get('id');
       this.getProjectById(this.projectId);
@@ -203,7 +208,7 @@ export class ProgressDetailComponent implements OnInit {
   }
 
   private getAllStudentProgressReport() {
-    this.studentProgressReportService.getAllStudentProgressReport(this.projectId, this.totalElementSyVT).subscribe(
+    this.studentProgressReportService.getAllStudentProgressReport(this.projectId, this.totalElementProgress).subscribe(
       (data) => {
         this.studentProgressReports = data;
         console.log(data.length);
@@ -212,27 +217,27 @@ export class ProgressDetailComponent implements OnInit {
   }
 
   hiddenLess() {
-    if (this.totalElementSyVT > 1) {
-      this.totalElementSyVT--;
-      this.flagSyVT = true;
+    if (this.totalElementProgress > 1) {
+      this.totalElementProgress--;
+      this.flagProgress = true;
     }
-    this.studentProgressReportService.getAllStudentProgressReport(this.projectId, this.totalElementSyVT).subscribe(
+    this.studentProgressReportService.getAllStudentProgressReport(this.projectId, this.totalElementProgress).subscribe(
       (data) => {
         this.studentProgressReports = data;
         console.log(data.length);
-        console.log(this.totalElementSyVT);
+        console.log(this.totalElementProgress);
       }
     );
   }
 
   loadMore() {
-    if (this.totalElementSyVT < this.maxElement) {
-      this.totalElementSyVT++;
+    if (this.totalElementProgress < this.maxElement) {
+      this.totalElementProgress++;
     }
-    if (this.totalElementSyVT === this.maxElement) {
-      this.flagSyVT = false;
+    if (this.totalElementProgress === this.maxElement) {
+      this.flagProgress = false;
     }
-    this.studentProgressReportService.getAllStudentProgressReport(this.projectId, this.totalElementSyVT).subscribe(
+    this.studentProgressReportService.getAllStudentProgressReport(this.projectId, this.totalElementProgress).subscribe(
       (data) => {
         this.studentProgressReports = data;
         console.log(data);
@@ -249,37 +254,37 @@ export class ProgressDetailComponent implements OnInit {
 
   //////////////////////// LanNan
   getAllQuestion() {
-    this.questionService.getAllQuestion(this.totalElementLan).subscribe(
+    this.questionService.getAllQuestion(this.totalElementAnswer).subscribe(
       (data) => {
         this.questions = data.content;
-        this.maxElementLan = data.totalPages;
+        this.maxElementAnswer = data.totalPages;
         console.log(data.content);
       }
     );
   }
 
   hidden() {
-    if (this.totalElementLan > 1) {
-      this.totalElementLan--;
-      this.flag = true;
+    if (this.totalElementAnswer > 1) {
+      this.totalElementAnswer--;
+      this.flagQuestion = true;
     }
-    this.questionService.getAllQuestion(this.totalElementLan).subscribe(
+    this.questionService.getAllQuestion(this.totalElementAnswer).subscribe(
       (data) => {
         this.questions = data.content;
         console.log(data.content);
-        console.log(this.totalElementLan);
+        console.log(this.totalElementAnswer);
       }
     );
   }
 
   loadMoreLan() {
-    if (this.totalElementLan < this.maxElementLan) {
-      this.totalElementLan++;
+    if (this.totalElementAnswer < this.maxElementAnswer) {
+      this.totalElementAnswer++;
     }
-    if (this.totalElementLan === this.maxElementLan) {
-      this.flag = false;
+    if (this.totalElementAnswer === this.maxElementAnswer) {
+      this.flagQuestion = false;
     }
-    this.questionService.getAllQuestion(this.totalElementLan).subscribe(
+    this.questionService.getAllQuestion(this.totalElementAnswer).subscribe(
       (data) => {
         this.questions = data.content;
         console.log(data.content);
@@ -306,7 +311,7 @@ export class ProgressDetailComponent implements OnInit {
     this.question.questionTopic = 'Giai doan 3';
     this.questionService.create(this.question).subscribe(data => {
       alert('Them moi thac mac thanh cong');
-      this.totalElementLan++;
+      this.totalElementAnswer++;
       this.getAllQuestion();
       this.formCreateQuestion.reset();
       this.answerFlag = false;

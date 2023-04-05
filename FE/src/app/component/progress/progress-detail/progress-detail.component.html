@@ -1,9 +1,9 @@
 <div class="container-fluid" xmlns="http://www.w3.org/1999/html">
   <div class="row " style="background: #14a2b8;">
     <div class="row" style="margin-top: -2px">
-      <span class="text-center mt-1" style="color: white">Chi tiết tiến độ</span>
-      <h5 class="text-center" style="color: white">Nhóm: {{progressDto?.teamName}}</h5>
-      <h5 class="text-center" style="color: white"><i>Đề tài: {{progressDto?.projectName}}</i></h5>
+      <h3 class="text-center mt-3" style="color: white">CHI TIẾT TIẾN ĐỘ</h3>
+      <h4 class="text-center" style="color: white">Nhóm: {{progressDto?.teamName}}</h4>
+      <h1 class="text-center" style="color: white"><i>Đề tài: {{progressDto?.projectName}}</i></h1>
     </div>
   </div>
   <div class="row mt-2">
@@ -41,8 +41,8 @@
                 <label >&ensp;{{progressStudentDto.studentCode}}</label>
               </p>
               <p class="card-text ">
-                <label style="margin-left: -2px" ><img src="../../../../assets/img/icons8-class-48.png" width="28px" height="28px"></label>
-                <label style="font-weight: bold">&ensp;Lớp: </label>
+                <label style="margin-left: -2px" ><img src="../../../../assets/img/classroom.png" width="28px" height="28px"></label>
+                <label style="font-weight: bold; ">&ensp;Lớp: </label>
                 <label>&ensp;{{progressStudentDto.studentClassName}}</label>
               </p>
               <p class="card-text">
@@ -78,18 +78,18 @@
               style="color: white">{{progressDetail.progressDetailName}}</span></a></button>
         </div>
         <div class="col-md-8">
-          <span>Giai đoạn {{progressDetail.stageId}}: {{progressDetail.progressDateStart |date: "dd-MM-yyyy"}}
-            - {{progressDetail.progressDateEnd |date: "dd-MM-yyyy"}}</span>
+          <span>Giai đoạn {{progressDetail.stageId}}: Từ <i><b>{{progressDetail.progressDateStart |date: "dd-MM-yyyy"}}</b></i>
+            đến <i><b>{{progressDetail.progressDateEnd |date: "dd-MM-yyyy"}}</b></i></span>
           <span><ng-container *ngIf="progressDetail.progressDetailPercent === 100"><span
-            class="badge bg-success">Hoàn thành</span></ng-container><ng-container
+            class="badge bg-success mx-2">Hoàn thành</span></ng-container><ng-container
             *ngIf="progressDetail.progressDetailPercent === 0 && progressDetail.progressStatus === false"><span
-            class="badge bg-danger">Chưa mở</span></ng-container>
+            class="badge bg-dark mx-2">Chưa mở</span></ng-container>
             <ng-container
               *ngIf="progressDetail.progressDetailPercent > 0 && progressDetail.progressDetailPercent < 100 && progressDetail.progressStatus ===false "><span
-              class="badge bg-warning">Chưa hoàn thành</span></ng-container>
+              class="badge bg-danger mx-2">Chưa hoàn thành</span></ng-container>
           <ng-container
             *ngIf="progressDetail.progressDetailPercent > 0 && progressDetail.progressDetailPercent < 100 && progressDetail.progressStatus ===true "><span
-            class="badge bg-dark">Đang thực hiện</span></ng-container></span>
+            class="badge bg-secondary mx-2">Đang thực hiện</span></ng-container></span>
 
           <div class="progress" role="progressbar">
             <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger"
@@ -163,49 +163,40 @@
                       [hidden]="projectDto?.projectStatus === false">
                   <input type="text" formControlName="progressReviewId" hidden>
                   <div class="row">
-            <span>(<span style="color: red">*</span>)Đánh giá tiến độ: <div class="form-check-inline">
+            <span>Đánh giá tiến độ:(<span style="color: red">*</span>) <div class="form-check-inline mx-1">
   <input class="form-check-input" type="radio" name="progressReviewPercent" formControlName="progressReviewPercent"
          id="exampleRadios1" [value]=25 checked>
                    <label class="form-check-label" for="exampleRadios1">
     25%
   </label>
-                   <span class="text-danger"
-                         *ngIf="progressReviewForm.controls.progressReviewPercent.touched && progressReviewForm.controls.progressReviewPercent?.errors?.required">?</span>
-</div>
+                </div>
 <div class="form-check-inline">
   <input class="form-check-input" type="radio" name="progressReviewPercent" formControlName="progressReviewPercent"
          id="exampleRadios2" [value]=50>
                      <label class="form-check-label" for="exampleRadios2">
     50%
   </label>
-                   <span class="text-danger"
-                         *ngIf="progressReviewForm.controls.progressReviewPercent.touched && progressReviewForm.controls.progressReviewPercent?.errors?.required">?</span>
-
-</div><div class="form-check-inline">
+                 </div><div class="form-check-inline">
   <input class="form-check-input" type="radio" name="progressReviewPercent" formControlName="progressReviewPercent"
          id="exampleRadios3" [value]=75>
                  <label class="form-check-label" for="exampleRadios2">
     75%
   </label>
-                   <span class="text-danger"
-                         *ngIf="progressReviewForm.controls.progressReviewPercent.touched && progressReviewForm.controls.progressReviewPercent?.errors?.required">?</span>
-
-</div><div class="form-check-inline">
+                   </div><div class="form-check-inline">
   <input class="form-check-input" type="radio" name="progressReviewPercent" formControlName="progressReviewPercent"
          id="exampleRadios4" [value]=100>
                 <label class="form-check-label" for="exampleRadios2">
     100%
   </label>
-                  <span class="text-danger"
-                        *ngIf="progressReviewForm.controls.progressReviewPercent.touched && progressReviewForm.controls.progressReviewPercent?.errors?.required">?</span>
-
 </div>
             </span>
                   </div>
-                  <label class="col-form-label">(<span style="color: red">*</span>)Tiêu đề:</label>
+
+                  <div class="text-danger"
+                        *ngIf="progressReviewForm.controls.progressReviewPercent.touched && progressReviewForm.controls.progressReviewPercent?.errors?.required">Bạn không được bỏ trống ô này</div>
+                  <label class="col-form-label">Tiêu đề:(<span style="color: red">*</span>)</label>
                   <div class="input-group  mb-2 ">
-                    <input type="text" class="form-control" formControlName="progressReviewTitle"
-                           placeholder="Nhập tiêu đề ở đây" aria-label="Username">
+                    <input type="text" class="form-control" formControlName="progressReviewTitle" aria-label="Username">
                   </div>
                   <p class="text-danger"
                      *ngIf="progressReviewForm.controls.progressReviewTitle.touched && progressReviewForm.controls.progressReviewTitle?.errors?.required">
@@ -217,7 +208,7 @@
                      *ngIf="progressReviewForm.controls.progressReviewTitle.dirty && progressReviewForm.controls.progressReviewTitle?.errors?.maxLength">
                     Bận phài nhập dưới 100 kí tự</p>
                   <div class="form-group">
-                    <label for="exampleFormControlTextarea1">(<span style="color: red">*</span>)Nội dung:
+                    <label for="exampleFormControlTextarea1">Nội dung:(<span style="color: red">*</span>)
                     </label><textarea   placeholder="Nhập nội dung ở đây"
                                       formControlName="progressReviewContent"
                                       class="form-control"
@@ -298,20 +289,20 @@
                         </div>
                       </div>
                       <div class="col-md-10">
-                        <div class="row">
-                          <span><b>{{studentProgressReport.studentName}}</b></span>
+                        <div class="row " style="margin-bottom: 1%;">
+                          <span><b style=" font-size: 16px">{{studentProgressReport.studentName}}</b></span>
                         </div>
-                        <p class="badge bg-info">{{studentProgressReport.stageName}}</p>
-                        <p>{{studentProgressReport.progressReportContent}}</p>
+                        <p class="badge bg-info" style=" font-size: 14px">{{studentProgressReport.stageName}}</p>
+                        <p><span><img src="../../../../assets/img/progress_report_icon_img/icons8-content-90.png" style="width: 4%; height: 8%;" alt="">&nbsp;</span><span>{{studentProgressReport.progressReportContent}}</span></p>
                         <p>
-                          <span>File báo cáo : </span><strong><span>{{studentProgressReport.progressReportFileName}}</span></strong>
+                          <span><img src="../../../../assets/img/progress_report_icon_img/icons8-downloads-90.png" style="width: 4%; height: 8%;" alt="">&nbsp;</span><span>File báo cáo : </span><strong><span>{{studentProgressReport.progressReportFileName}}</span></strong>
                           <span>
-              <input hidden type="text" [(ngModel)]="studentProgressReport.progressReportFile">
-                <a [href]="studentProgressReport.progressReportFile" download="" target="_blank"><span>&nbsp;&nbsp;&nbsp;</span><img
-                  class="mx-auto" width="30px"
-                  height="30px"
-                  src="../../../../assets/img/progress_report_icon_img/file_download_icon.png"
-                  alt=""></a></span>
+        <input hidden type="text" [(ngModel)]="studentProgressReport.progressReportFile">
+          <a [href]="studentProgressReport.progressReportFile" download="" target="_blank"><span>&nbsp;&nbsp;&nbsp;</span><img
+            class="mx-auto" width="30px"
+            height="30px"
+            src="../../../../assets/img/progress_report_icon_img/file_download_icon.png"
+            alt=""></a></span>
                         </p>
                         <div class="row">
                           <div class="col-md-8">
@@ -329,12 +320,12 @@
                   <div class="col-md-3"></div>
                   <div class="col-md-3"> <span> <a style="text-align: left; color: #0a58ca" role="button"
                                                    (click)="loadMore()"
-                                                   *ngIf="flagSyVT">Xem thêm...</a></span>
+                                                   *ngIf="flagProgress">Xem thêm...</a></span>
                   </div>
                   <div class="col-md-2"></div>
                   <div class="col-md-3">
-        <span *ngIf="totalElementSyVT > 1"> <a style="text-align: center; color: #0a58ca" role="button"
-                                           (click)="hiddenLess()">Ẩn báo cáo...</a></span>
+  <span *ngIf="totalElementProgress > 1"> <a style="text-align: center; color: #0a58ca" role="button"
+                                             (click)="hiddenLess()">Ẩn báo cáo...</a></span>
                   </div>
                   <div class="col-md-1"></div>
                 </div>
@@ -430,10 +421,10 @@
                   <div class="row">
                     <div class="col-md-2"></div>
                     <div class="col-md-6"> <span> <a style="text-align: left" role="button" (click)="loadMoreLan()"
-                                                     *ngIf="flag">Xem thêm</a></span>
+                                                     *ngIf="flagQuestion">Xem thêm</a></span>
                     </div>
                     <div class="col-md-4">
-                      <span *ngIf="totalElementLan>1"> <a style="text-align: left" role="button" (click)="hidden()">Ẩn đánh giá</a></span>
+                      <span *ngIf="totalElementAnswer>1"> <a style="text-align: left" role="button" (click)="hidden()">Ẩn đánh giá</a></span>
                     </div>
                   </div>
                 </div>
