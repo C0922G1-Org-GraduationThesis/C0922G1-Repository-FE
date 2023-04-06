@@ -43,4 +43,7 @@ export class ProgressReportService {
   findProjectByProjectId(projectId: number): Observable<Project> {
     return this.httpClient.get<Project>(this.URL_API + '/project' + '/' + projectId);
   }
+  findProgressDetailByStudentUserName(userName : string): Observable<ProgressDetail>{
+    return this.httpClient.get<ProgressDetail>(this.URL_API+ '/detail'+'?userName='+userName)
+  }
 }

@@ -3,6 +3,9 @@ import {TokenStorageService} from "../../../service/token-storage.service";
 import {ShareService} from "../../../service/share.service";
 import {TeacherService} from "../../../service/teacher.service";
 import {StudentService} from "../../../service/student/student.service";
+import {ProgressService} from "../../../service/progress.service";
+import {ProgressReportService} from "../../../service/progress-report.service";
+import {Team} from "../../../model/team";
 
 @Component({
   selector: 'app-header',
@@ -17,11 +20,15 @@ export class HeaderComponent implements OnInit {
   isLoggedIn = false;
   idProject?: number;
   idStage?: number;
+  flagStudentLeader = false;
+  studentId: number;
+  teamId?: Team;
 
   constructor(private tokenStorageService: TokenStorageService,
               private shareService: ShareService,
               private teacherService: TeacherService,
-              private studentService: StudentService,) {
+              private studentService: StudentService,
+              private progressReportService: ProgressReportService) {
     this.shareService.getClickEvent().subscribe(() => {
       this.loadHeader();
     });
@@ -38,6 +45,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadHeader();
+    this.findProjectIdAndStageId(this.username);
   }
 
   findNameUser(): void {
@@ -48,8 +56,12 @@ export class HeaderComponent implements OnInit {
       });
     } else {
       this.studentService.findStudentByEmail(this.username).subscribe(next => {
+        console.log(next)
         this.name = next.studentName;
         this.img = next.studentImg;
+        this.flagStudentLeader = next.flagLeader;
+        this.studentId = next.studentId;
+        this.teamId = next.teamId;
       });
     }
   }
@@ -58,5 +70,13 @@ export class HeaderComponent implements OnInit {
   logOut() {
     this.tokenStorageService.signOut();
     this.ngOnInit();
+  }
+
+  private findProjectIdAndStageId(username: string) {
+    this.progressReportService.findProgressDetailByStudentUserName(username).subscribe(next => {
+      this.idProject = next.projectId;
+      this.idStage = next.stageId;
+      console.log(this.idProject, this.idStage);
+    })
   }
 }

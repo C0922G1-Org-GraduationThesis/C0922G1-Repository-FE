@@ -19,7 +19,7 @@ const routes: Routes = [
   {path: 'update/:studentId', component: StudentUpdateComponent},
   {path: 'register-instructor', component: RegisterInstructorComponent},
   {
-    path: 'register-team',
+    path: 'register-team/:studentId',
     component: RegisterTeamComponent
   },
   {
@@ -35,7 +35,7 @@ const routes: Routes = [
     component: StudentListComponent
   },
   {
-    canActivate:[TeacherGuard],
+    canActivate:[],
     path: 'instructor',
     component: StudentInstructorComponent},
   {

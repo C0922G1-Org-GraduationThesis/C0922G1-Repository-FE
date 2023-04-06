@@ -3,5 +3,5 @@ export interface ProgressDto {
   teamName?: string;
   projectName?: string;
   memberTotal?: number;
-  status?: boolean;
+  status?: Boolean;
 }

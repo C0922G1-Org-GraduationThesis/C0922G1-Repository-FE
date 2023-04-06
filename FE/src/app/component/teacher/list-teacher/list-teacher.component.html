@@ -6,7 +6,7 @@
   <div class="row text--info">
     <h2>QUẢN LÝ GIÁO VIÊN</h2>
   </div>
-  <div class="row button-create">
+  <div class="row button-create mg-top">
     <div class="col-lg-7 col-xs-12">
       <a routerLink="/teachers/create">
         <button type="button" class="btn btn-outline-info">Thêm mới giáo viên</button>
@@ -14,7 +14,7 @@
     </div>
     <div class="col-lg-5 col-xs-12">
       <form class="d-flex">
-        <input id="searchTerm" #searchName class="form-control rounded-pill" type="search" placeholder="nhập tên giáo viên muốn tìm ..."
+        <input id="searchTerm" #searchName class="form-control rounded-pill" type="search" placeholder="Nhập tên giáo viên muốn tìm ..."
                aria-label="Search">
         <button class="btn btn-outline-info button-search  rounded-pill"  type="submit" (click)="search(searchName.value)">Tìm
           kiếm
@@ -23,7 +23,7 @@
     </div>
   </div>
 
-  <div style="padding-left: 60px;">
+  <div style="padding-left: 60px;" class="mg-top">
     <div *ngIf="teacherPage.length === 0">
       <h4>Không Có Giáo Viên Nào Trong Danh Sách</h4>
     </div>

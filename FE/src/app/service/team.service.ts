@@ -33,6 +33,10 @@ export class TeamService {
     return this.http.get<ITeamDto>(`${this.URL}/detail/team/${id}`);
   }
 
+  getTeamByEmail(email: string) :Observable<ITeamDto>{
+    return this.http.get<ITeamDto>(`${this.URL}/detail/team/${email}`);
+  }
+
   saveTeam(team: Team): Observable<any> {
     return this.http.post<Team>(this.API_URL + 'save/' + team.teamName + '/' + team.memberOfTeam, team);
   }

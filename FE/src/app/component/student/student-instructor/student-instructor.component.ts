@@ -55,7 +55,7 @@ export class StudentInstructorComponent implements OnInit {
    */
   getAllStudentAndSearch() {
 
-    this.studentService.getAllStudentByIdTeacher(this.id, this.page, this.nameSearch).subscribe(item => {
+    this.studentService.getAllStudentByIdTeacher(this.id, this.page, this.nameSearch.trim()).subscribe(item => {
       this.studentInfoList = item.content;
       this.studentInfoPage = item;
     }, error => {

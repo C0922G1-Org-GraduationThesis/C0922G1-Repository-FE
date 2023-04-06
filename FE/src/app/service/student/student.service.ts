@@ -10,7 +10,7 @@ export class StudentService {
 
   API_URL = `http://localhost:8080/api/students/`;
 
-  private API = 'http://localhost:8080/students';
+  private API = 'http://localhost:8080/api/students';
 
   private URL_API_STUDENT = 'http://localhost:8080';
 
@@ -73,5 +73,9 @@ export class StudentService {
    */
   findStudentByEmail(email: string): Observable<Student> {
     return this.httpClient.get<Student>(`http://localhost:8080/api/students/details/${email}`);
+  }
+
+  updateLeader(studentId: number, student: Student, teamId: number): Observable<Student> {
+    return this.httpClient.put<Student>(this.API_URL + 'updateLeader/' + studentId + '/' + teamId, student);
   }
 }

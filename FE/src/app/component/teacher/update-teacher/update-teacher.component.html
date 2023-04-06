@@ -170,14 +170,14 @@
             <p style="color: red;font-size: 13px;text-align: left">{{errorsUpdate.teacherEmail}}</p>
           </div>
           <div class="mb-3">
-            <div class="mg-10">
+            <div class="mg-10 d-flex justify-content-center">
+              <button [routerLink]="['/teachers/list']" type="button" class="btn btn-outline-secondary"
+                      style="margin-right: 2%;right: 0;border-radius: 60px/80px; width: 26%">
+                Thoát
+              </button>
               <button [disabled]="!formUpdateTeacher.valid" (click)="updateTeacher()" type="button" class="btn btn-outline-info "
                       style="border-radius: 60px/80px; width: 26%">
                 Lưu
-              </button>
-              <button [routerLink]="['/teachers/list']" type="button" class="btn btn-outline-secondary"
-                      style="margin-left: 2%;right: 0;border-radius: 60px/80px; width: 26%">
-                Thoát
               </button>
             </div>
           </div>

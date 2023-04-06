@@ -25,7 +25,7 @@ const routes: Routes = [
     loadChildren: () => import('./component/progress/progress.module').then(module => module.ProgressModule)
   },
   {
-    canActivate:[TeacherGuard,StudentGuard],
+    canActivate:[],
     path: 'projects',
     loadChildren: () => import('./component/project/project.module').then(module => module.ProjectModule)
   },

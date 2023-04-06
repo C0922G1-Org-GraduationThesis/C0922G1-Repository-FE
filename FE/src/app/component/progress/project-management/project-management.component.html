@@ -8,7 +8,7 @@
       <div class="row">
         <div class="col-md-7">
           <input id="searchTerm" [(ngModel)]="nameProject" class="form-control rounded-pill" type="search"
-                 placeholder="Nhập tên đề tài ..."
+                 placeholder="Nhập tên đề tài..."
                  aria-label="Search">
         </div>
         <div class="col-md-5">
@@ -42,7 +42,7 @@
       <tbody class="table-group-divider">
       <tr *ngIf="progressDtos.length === 0"><td style="text-align: center" colspan="6"><h5 class="text-danger">Danh sách đề tài trống</h5></td></tr>
       <tr *ngFor="let progress of progressDtos , index as i">
-        <ng-container *ngIf="progress.status !=null">
+
           <th class="text-center">{{i + 1}}</th>
           <td style="text-align: left">{{progress.teamName}}</td>
           <td style="text-align: left">{{progress.projectName}}</td>
@@ -50,13 +50,14 @@
           <td style="text-align: center">
             <ng-container *ngIf="progress.status === false "><span class="btn badge-success">Hoàn thành</span></ng-container>
             <ng-container *ngIf="progress.status === true "><span class= " btn badge-info">Đang thực hiện</span></ng-container>
+            <ng-container *ngIf="progress.status == nullValue "><span class= " btn badge-info">Chờ duyệt</span></ng-container>
           </td>
           <td style="text-align: center">
             <button routerLink="/progress/progress-detail/{{progress.projectId}}" class="btn btn-outline-success">
               Chi tiết
             </button>
           </td>
-        </ng-container>
+
       </tr>
       </tbody>
     </table>

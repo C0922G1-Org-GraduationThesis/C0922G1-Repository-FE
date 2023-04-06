@@ -42,12 +42,13 @@ export class ProListComponent implements OnInit {
 
   savePro(projectId: any) {
     this.projectService.updateBrowser(projectId).subscribe();
-    window.location.reload();
+     window.location.reload();
   }
 
   saveProNext(projectId: number) {
     this.projectService.updateCancel(projectId).subscribe();
     window.location.reload();
+
   }
 
   exportPdf(url: string) {

@@ -19,7 +19,7 @@ export class InfoTeamComponent implements OnInit {
   listStudent: Student[] = [];
   teamPage: any;
   teamId: number;
-  team: Team;
+  team?: Team;
   searchStr = '';
   project: Project = null;
   totalElement = 0;
@@ -33,6 +33,7 @@ export class InfoTeamComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe(paramMap => {
       this.teamId = +paramMap.get('teamId');
       this.teamService.findById(this.teamId).subscribe(team => {
+        console.log(team);
         this.team = team;
         this.teamPage = team;
       });

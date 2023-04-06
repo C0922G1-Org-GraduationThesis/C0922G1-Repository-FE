@@ -62,6 +62,7 @@ export class ProgressDetailComponent implements OnInit {
   emailFindLeader?: string;
   flagLeader?: boolean;
   studentFindLeader?: Student;
+  progressPercentage = 0;
 
   formCreateQuestion: FormGroup = new FormGroup({
     questionContent: new FormControl()
@@ -352,5 +353,11 @@ export class ProgressDetailComponent implements OnInit {
 
   hideFormAnswer() {
     this.answerFlag = false;
+  }
+  updateProgress(event: Event) {
+    const slider = event.target as HTMLInputElement;
+    const value = Number(slider.value);
+    const max = Number(slider.max);
+    this.progressPercentage = Math.round((value / max) * 100);
   }
 }

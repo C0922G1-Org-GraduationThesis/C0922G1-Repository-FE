@@ -3,7 +3,7 @@ import {Student} from '../../../model/student';
 import {StudentService} from '../../../service/student/student.service';
 import Swal from 'sweetalert2';
 import {Team} from '../../../model/team';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {TeamService} from '../../../service/team.service';
 
 @Component({
@@ -19,10 +19,16 @@ export class RegisterTeamComponent implements OnInit {
   listSearchStudent: Student[];
   listTeam: Student[] = [];
   teamPage: any;
+  studentId?: number;
 
   constructor(private studentService: StudentService,
               private teamService: TeamService,
-              private route: Router) {
+              private route: Router,
+              private activatedRoute: ActivatedRoute) {
+    this.activatedRoute.paramMap.subscribe(param => {
+      this.studentId = +param.get('studentId');
+      console.log('Mã sinh viên nè', this.studentId);
+    });
   }
 
   ngOnInit(): void {
@@ -45,7 +51,7 @@ export class RegisterTeamComponent implements OnInit {
   }
 
   addStudent(id: number) {
-    if (this.listTeam.length === 7) {
+    if (this.listTeam.length === 6) {
       Swal.fire({
         title: 'Lỗi',
         text: 'Mỗi nhóm chỉ được 7 thành viên!',
@@ -60,7 +66,6 @@ export class RegisterTeamComponent implements OnInit {
       }
     });
   }
-
 
 
   delete(id: number) {
@@ -103,28 +108,35 @@ export class RegisterTeamComponent implements OnInit {
         } else {
           const newTeam: Team = {
             teamName: groupName,
-            memberOfTeam: this.listTeam.length
+            memberOfTeam: this.listTeam.length + 1
           };
           // Tên nhóm hợp lệ
           this.teamService.saveTeam(newTeam).subscribe(team => {
-            console.log(team);
-            const Toast = Swal.mixin({
-              toast: true,
-              position: 'top-end',
-              showConfirmButton: false,
-              timer: 3000,
-              timerProgressBar: true,
-              didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer);
-                toast.addEventListener('mouseleave', Swal.resumeTimer);
-              }
+            // Update leader team
+            this.studentService.findById(this.studentId).subscribe(student => {
+              this.studentService.updateLeader(this.studentId, student, team.teamId).subscribe(next => {
+                console.log(next);
+                console.log(team);
+                const Toast = Swal.mixin({
+                  toast: true,
+                  position: 'top-end',
+                  showConfirmButton: false,
+                  timer: 3000,
+                  timerProgressBar: true,
+                  didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer);
+                    toast.addEventListener('mouseleave', Swal.resumeTimer);
+                  }
+                });
+                this.route.navigateByUrl('/students/info-team/' + team.teamId);
+                Toast.fire({
+                  icon: 'success',
+                  title: 'Đăng ký nhóm thành công'
+                });
+              }, error => {
+                console.log(error);
+              });
             });
-            this.route.navigateByUrl('/students/info-team/' + team.teamId);
-            Toast.fire({
-              icon: 'success',
-              title: 'Đăng ký nhóm thành công'
-            });
-
           }, error => {
             // Tên nhóm bị trùng
             const Toast = Swal.mixin({

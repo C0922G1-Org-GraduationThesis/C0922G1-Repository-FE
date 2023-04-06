@@ -163,7 +163,7 @@
               <div class="col-md-2">
                 <div class="d-flex justify-content-start mb-2 align-items-center "
                      [hidden]="projectDto?.projectStatus === false">
-                  <img style="width: 50px; " class="rounded-circle"
+                  <img style="width: 50px; height: 50px " class="rounded-circle"
                        src="{{teacherDto?.teacherImg}}" [hidden]="projectDto?.projectStatus === false">
                 </div>
               </div>
@@ -171,41 +171,47 @@
                 <form *ngIf="progressReviewForm" [formGroup]="progressReviewForm" (ngSubmit)="onSubmit()"
                       [hidden]="projectDto?.projectStatus === false">
                   <input type="text" formControlName="progressReviewId" hidden>
-                  <div class="row">
-            <span>Đánh giá tiến độ:(<span style="color: red">*</span>) <div class="form-check-inline mx-1">
-  <input class="form-check-input" type="radio" name="progressReviewPercent" formControlName="progressReviewPercent"
-         id="exampleRadios1" [value]=25 checked>
-                   <label class="form-check-label" for="exampleRadios1">
-    25%
-  </label>
-                </div>
-<div class="form-check-inline">
-  <input class="form-check-input" type="radio" name="progressReviewPercent" formControlName="progressReviewPercent"
-         id="exampleRadios2" [value]=50>
-                     <label class="form-check-label" for="exampleRadios2">
-    50%
-  </label>
-                 </div><div class="form-check-inline">
-  <input class="form-check-input" type="radio" name="progressReviewPercent" formControlName="progressReviewPercent"
-         id="exampleRadios3" [value]=75>
-                 <label class="form-check-label" for="exampleRadios2">
-    75%
-  </label>
-                   </div><div class="form-check-inline">
-  <input class="form-check-input" type="radio" name="progressReviewPercent" formControlName="progressReviewPercent"
-         id="exampleRadios4" [value]=100>
-                <label class="form-check-label" for="exampleRadios2">
-    100%
-  </label>
-</div>
-            </span>
+                  <div>Đánh giá tiến độ (<span style="color: red">*</span>)
+                    <div class="slider-container">
+                      <input  style="width: 68%" type="range" min="0" name="progressReviewPercent"
+                              formControlName="progressReviewPercent" max="100" [(ngModel)]="progressPercentage"  (input)="updateProgress($event)" >
+                      <span  class="progressA " [style.width.%]="progressPercentage">
+                      <b><span class="swal2-textarea" style="color: #117a8b">{{progressPercentage}}%</span></b>
+                    </span>
+                    </div>
+                    <!--                <div class="form-check-inline mx-1">-->
+                    <!--    <input class="form-check-input" type="radio" name="progressReviewPercent" formControlName="progressReviewPercent"-->
+                    <!--           id="exampleRadios1" [value]=25 checked>-->
+                    <!--                     <label class="form-check-label" for="exampleRadios1">-->
+                    <!--      25%-->
+                    <!--    </label>-->
+                    <!--                  </div>-->
+                    <!--  <div class="form-check-inline">-->
+                    <!--    <input class="form-check-input" type="radio" name="progressReviewPercent" formControlName="progressReviewPercent"-->
+                    <!--           id="exampleRadios2" [value]=50>-->
+                    <!--                       <label class="form-check-label" for="exampleRadios2">-->
+                    <!--      50%-->
+                    <!--    </label>-->
+                    <!--                   </div><div class="form-check-inline">-->
+                    <!--    <input class="form-check-input" type="radio" name="progressReviewPercent" formControlName="progressReviewPercent"-->
+                    <!--           id="exampleRadios3" [value]=75>-->
+                    <!--                   <label class="form-check-label" for="exampleRadios2">-->
+                    <!--      75%-->
+                    <!--    </label>-->
+                    <!--                     </div><div class="form-check-inline">-->
+                    <!--    <input class="form-check-input" type="radio" name="progressReviewPercent" formControlName="progressReviewPercent"-->
+                    <!--           id="exampleRadios4" [value]=100>-->
+                    <!--                  <label class="form-check-label" for="exampleRadios2">-->
+                    <!--      100%-->
+                    <!--    </label>-->
+                    <!--  </div>-->
                   </div>
 
                   <div class="text-danger"
                        *ngIf="progressReviewForm.controls.progressReviewPercent.touched && progressReviewForm.controls.progressReviewPercent?.errors?.required">
                     Bạn không được bỏ trống ô này
                   </div>
-                  <label class="col-form-label">Tiêu đề:(<span style="color: red">*</span>)</label>
+                  <label class="col-form-label">Tiêu đề (<span style="color: red">*</span>)</label>
                   <div class="input-group  mb-2 ">
                     <input type="text" class="form-control" formControlName="progressReviewTitle" aria-label="Username">
                   </div>
@@ -219,7 +225,7 @@
                      *ngIf="progressReviewForm.controls.progressReviewTitle.dirty && progressReviewForm.controls.progressReviewTitle?.errors?.maxLength">
                     Bận phài nhập dưới 100 kí tự</p>
                   <div class="form-group">
-                    <label for="exampleFormControlTextarea1">Nội dung:(<span style="color: red">*</span>)
+                    <label for="exampleFormControlTextarea1">Nội dung (<span style="color: red">*</span>)
                     </label><textarea placeholder="Nhập nội dung ở đây"
                                       formControlName="progressReviewContent"
                                       class="form-control"
@@ -249,7 +255,7 @@
             <div class="row mt-4" *ngFor="let progressReview of progressReviewsRecords">
               <div class="col-md-2">
                 <div class="d-flex justify-content-start mb-2 align-items-center">
-                  <img style="width: 50px; " class="rounded-circle"
+                  <img style="width: 50px;height: 50px " class="rounded-circle"
                        src="{{progressReview.teacher?.teacherImg}}">
                 </div>
               </div>
@@ -343,7 +349,7 @@
                   <div class="col-md-2"></div>
                   <div class="col-md-3">
   <span *ngIf="totalElementProgress > 1"> <a style="text-align: center; color: #0a58ca" role="button"
-                                             (click)="hiddenLess()">Ẩn báo cáo...</a></span>
+                                             (click)="hiddenLess()">Ẩn báo cáo</a></span>
                   </div>
                   <div class="col-md-1"></div>
                 </div>
@@ -406,7 +412,7 @@
                                   <div class="col-md-2 ml-5">
                                   </div>
                                   <div class="row d-flex justify-content-end"><span
-                                    style="font-size: 12px"><small>{{answer.dateTime | date: "dd-MM-yyyy hh:ss"}}</small></span>
+                                    style="font-size: 12px"><small>{{answer.dateTime | date: "dd-MM-yyyy hh:mm:ss"}}</small></span>
                                   </div>
                                 </div>
                                 <div class="row"></div>
@@ -414,7 +420,6 @@
                               <div *ngIf="answerFlag">
                                 <form [formGroup]="formCreateAnswer" *ngIf="formCreateAnswer"
                                       (ngSubmit)="createAnswer()">
-                                  <label for="description">Nhập câu trả lời của bạn vào đây</label>
                                   <ckeditor
                                     #editor
                                     formControlName="answerContent"
@@ -422,10 +427,10 @@
                                     type="divarea">
                                   </ckeditor>
                                   <div class="d-flex justify-content-end ">
-                                    <button class="btn btn-outline-success mg-top" type="submit">Đăng</button>
-                                    <button class="btn btn-outline-danger mg-top mg-left " (click)="hideFormAnswer()">
+                                    <button style="width: 4.3rem" class="btn btn-outline-dark mg-top mg-right " (click)="hideFormAnswer()">
                                       Hủy
                                     </button>
+                                    <button class="btn btn-outline-info mg-top" type="submit">Đăng</button>
                                   </div>
                                 </form>
                               </div>
@@ -435,7 +440,7 @@
                         </div>
                         <div class="col-md-3">
                           <span class=""
-                                style="font-size: 12px;"><small>{{question.dateTime| date: 'dd-MM-yyyy hh:mm'}}</small></span>
+                                style="font-size: 12px;"><small>{{question.dateTime| date: 'dd-MM-yyyy hh:mm:ss'}}</small></span>
                         </div>
                       </div>
                       <hr>
@@ -443,11 +448,11 @@
                   </div>
                   <div class="row">
                     <div class="col-md-2"></div>
-                    <div class="col-md-6"> <span> <a style="text-align: left" role="button" (click)="loadMoreLan()"
-                                                     *ngIf="flagQuestion">Xem thêm</a></span>
+                    <div class="col-md-6"> <span> <a style="text-align: left;color: #0a58ca" role="button" (click)="loadMoreLan()"
+                                                     *ngIf="flagQuestion">Xem thêm...</a></span>
                     </div>
                     <div class="col-md-4">
-                      <span *ngIf="totalElementAnswer>1"> <a style="text-align: left" role="button" (click)="hidden()">Ẩn đánh giá</a></span>
+                      <span *ngIf="totalElementAnswer>1"> <a style="text-align: left; color: #0a58ca" role="button" (click)="hidden()">Ẩn đánh giá</a></span>
                     </div>
                   </div>
                 </div>
@@ -466,14 +471,13 @@
                       </div>
                       <div class="col-md-10">
                         <form [formGroup]="formCreateQuestion" *ngIf="formCreateQuestion" (ngSubmit)="createQuestion()">
-                          <label for="description1">Nhập thắc mắc của bạn vào đây</label>
                           <ckeditor
                             #editor
                             formControlName="questionContent"
                             id="description1"
                             type="textarea">
                           </ckeditor>
-                          <div class="d-flex justify-content-end ">
+                          <div class="d-flex justify-content-end mt-3">
                             <button class="btn btn-outline-info" style="float: right" type="submit">Đăng</button>
                           </div>
                         </form>

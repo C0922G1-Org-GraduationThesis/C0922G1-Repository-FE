@@ -1,4 +1,4 @@
-<h2 style="color: #14a2b8;text-align: center; margin-top: 2rem">CHÍNH SỬA SINH VIÊN</h2>
+<h2 style="color: #14a2b8;text-align: center; margin-top: 1rem">CHỈNH SỬA SINH VIÊN</h2>
 <br>
 <form [formGroup]="studentForm"  (ngSubmit)="updateStudent()">
   <div class="row" style="overflow: hidden; margin: 0; padding: 0">
@@ -6,7 +6,7 @@
     <div class="col-10 row shadow p-3">
       <div class="col-4">
         <div style="margin: 10%" class="parent-div">
-          <img [src]="arrayPicture" style="width: 80%;height: 80%" >
+          <img [src]="arrayPicture" style="width: 70%;height: 70%; margin-top: -3rem" >
           <br>
           <br>
           <label style="cursor: pointer;margin-left: 25px" for="upfile" class="btn-upload" >Chọn ảnh đại diện</label>
@@ -42,12 +42,6 @@
           <p *ngIf="studentForm.controls.studentEmail.touched && studentForm.controls.studentEmail?.errors?.pattern" style="color: red">Email sai định dạng</p>
         </div>
 
-        <div class="mb-3" style="text-align: center">
-          <button type="submit" class="btn btn-outline-info">Lưu</button>&nbsp;
-
-          <button routerLink="/students/list" type="button" class="btn btn-outline-secondary ">Thoát</button>
-          &ensp;&ensp;&ensp;&ensp;
-        </div>
       </div>
       <div class="col-4">
         <div class="mb-3">
@@ -85,6 +79,12 @@
           <label class="form-label">Mã sinh viên(<span style="color: red">*</span>)</label>
           <input type="text" class="form-control"  formControlName="studentCode" readonly="readonly">
         </div>
+        <div class="mb-3" style="text-align: center; margin-top: 1rem">
+
+          <button routerLink="/students/list" type="button" class="btn btn-outline-secondary ">Thoát</button>
+          <button style="margin-left: 1rem; width: 4.5rem" type="submit" class="btn btn-outline-info">Lưu</button>&nbsp;
+        </div>
+
       </div>
     </div>
     <div class="col-1"></div>

@@ -93,7 +93,7 @@
   <div class="col-1">
   </div>
   <div class="col-10 shadow p-3">
-    <form [formGroup]="formCreateTeacher" class="row " style=" padding: 10px">
+    <form [formGroup]="formCreateTeacher" class="row " style=" padding: 10px; margin-top: 4rem">
       <div class="col-4 col-sm-12 text-center" id="content1">
         <div>
           <img [src]="arrayPicture"
@@ -186,11 +186,11 @@
         </div>
         <div class="mb-3">
           <div class="mg-10">
+            <button [routerLink]="['/teachers/list']" type="button" class="btn btn-outline-secondary" style="margin-right: 2%;right: 0;border-radius: 60px/80px;width: 26%">
+              Thoát
+            </button>
             <button [disabled]="!formCreateTeacher.valid" (click)="createTeacher()" type="button" class="btn btn-outline-info " style="border-radius: 60px/80px;width: 26%">
               Lưu
-            </button>
-            <button [routerLink]="['/teachers/list']" type="button" class="btn btn-outline-secondary" style="margin-left: 2%;right: 0;border-radius: 60px/80px;width: 26%">
-              Thoát
             </button>
           </div>
         </div>

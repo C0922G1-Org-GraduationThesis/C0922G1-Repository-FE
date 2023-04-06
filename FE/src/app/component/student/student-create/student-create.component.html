@@ -5,7 +5,7 @@
     <div class="col-1"></div>
     <div class="col-10 row shadow p-3">
       <div class="col-4">
-        <img [src]="arrayPicture" style="width: 80%;height: 80%" >
+        <img [src]="arrayPicture" style="width: 55%;height: 70%; margin-left: 2.7rem" >
         <br>
         <div style="margin: 10%" class="parent-div">
           <label  style="cursor: pointer;margin-left: 20px" for="upfile" class="btn-upload">Chọn ảnh đại diện</label>
@@ -41,13 +41,6 @@
           <p *ngIf="studentForm.controls.studentEmail.touched && studentForm.controls.studentEmail?.errors?.required" style="color: red">Bắt buộc nhập</p>
           <p *ngIf="studentForm.controls.studentEmail.touched && studentForm.controls.studentEmail?.errors?.pattern" style="color: red">Email sai định dạng</p>
         </div>
-
-        <div class="mb-3" style="text-align: center">
-
-          &ensp;&ensp;&ensp;&ensp;
-          <button type="submit" class="btn btn-outline-info">Lưu</button>
-          <button routerLink="/students/list" style="margin-left: 5px" type="button" class="btn btn-outline-secondary ">Thoát</button>
-        </div>
       </div>
       <div class="col-4">
         <div class="mb-3">
@@ -76,10 +69,15 @@
           </div>
         </div>
 
-        <!--        <div class="mb-3">-->
-        <!--          <label class="form-label">Mã sinh viên(<span style="color: red">*</span>)</label>-->
-        <!--          <input type="text" class="form-control"  -->
-        <!--        </div>-->
+        <br>
+        <br>
+        <br>
+        <br>
+
+        <div class="mb-3">
+          <button routerLink="/students/list" style="margin-right: 2%" type="button" class="btn btn-outline-secondary ">Thoát</button>
+          <button type="submit" class="btn btn-outline-info" style="width: 4.2rem" [disabled]="studentForm.invalid">Lưu</button>
+        </div>
       </div>
     </div>
     <div class="col-1"></div>

@@ -1,11 +1,11 @@
 <div class="container">
   <div class="row">
-    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-      <div class="card my-3">
-        <div class="card-body">
-          <h2 class="card-title text-isLoggedIncenter"> THÔNG TIN CHI TIẾT</h2>
-          <img src="{{teacherAdmin.teacherImg}}" class="card-img-top w100"  style="height: 40%;width: 40%; float: left" alt="...">
-          <div class="mb-2 card-text">
+    <div class="card my-3">
+      <div class="card-body">
+        <h2 class="card-title text-isLoggedIncenter"> THÔNG TIN CHI TIẾT</h2>
+        <img src="{{teacherAdmin.teacherImg}}" class="card-img-top w100"  style="height: 70%;width: 30%; float: left" alt="...">
+        <div>
+          <div class="mb-2 card-text pl-5">
             <span><label class="form-label">Họ và tên:</label></span>
             <span *ngIf="teacherAdmin">{{teacherAdmin.teacherName}}</span>
           </div>

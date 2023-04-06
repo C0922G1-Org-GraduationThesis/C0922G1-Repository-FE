@@ -7,13 +7,13 @@
     <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1"></div>
     <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 col-xl-10" style="text-align: right;">
       <form class="form-inline" [formGroup]="formGroup">
-        <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7 col-xl-7" style="padding-right: 5px;">
+        <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7 col-xl-7 mg-top" style="padding-right: 5px;">
           <input class="form-control rounded-pill mg-right" type="search" placeholder="Nhập tên tài liệu" aria-label="Search" formControlName="search" [(ngModel)]="search"
                  style="border: 1px solid #14a2b8; width: 100%;"
                  onfocus="this.style.borderColor='#14a2b8';this.style.boxShadow='none';this.style.outline='2px solid #14a2b8';"
                  onblur="this.style.borderColor='#ced4da';this.style.outline='none';">
         </div>
-        <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 col-xl-5" style="padding-left: 0px;">
+        <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 col-xl-5 mg-top" style="padding-left: 0px;">
           <button class="btn btn-outline-primary" type="submit" (click)="searchNameDocument()" style="border: 1px solid #14a2b8; width: 50%; font-weight: bold; color: black;float: left"
                   onmouseover="this.style.backgroundColor='#14a2b8'" onmouseout="this.style.backgroundColor='white';"
                   onfocus="this.style.borderColor='#14a2b8';this.style.boxShadow='none';this.style.outline='2px solid #14a2b8';"
@@ -121,11 +121,10 @@
       </div>
     </div>
   </div>
-  <form [formGroup]="formDocument" (ngSubmit)="createDocument()"
-            *ngIf="roleUser==='ROLE_ADMIN'||roleUser==='ROLE_TEACHER'">
+  <form [formGroup]="formDocument" (ngSubmit)="createDocument()" >
     <div class="row">
       <div class="col-1" style="margin: 0; padding: 0">
-        <span style="border: 1px solid #DEE2E6;font-weight: bold; display: block;width: 120%; margin-left: 203.5%; background-color:#CFF4FC">Tải lên</span>
+        <span class="bg-info text-black-50" style="border: 1px solid #DEE2E6;font-weight: bold; display: block;width: 120%; margin-left: 203.5%;">Tải lên</span>
       </div>
       <div class="col-11"></div>
     </div>
@@ -150,7 +149,8 @@
             <!--            </div>-->
             <label for="exampleInputEmail1"
                    style=" font-weight: bold; text-align: left;display: block; float: left;margin-left: 3%">
-              <input type="file" #uploadFile (change)="uploadFileImg()"   class="form-control rounded-pill" style="max-height: 100%"/>
+              <input type="file" #uploadFile (change)="uploadFileImg()"   class="form-control rounded-pill"
+              />
             </label>
 
             <input class="form-control"  aria-describedby="emailHelp"  hidden formControlName="documentFile"
@@ -182,11 +182,7 @@
       <div class="col-sm-1 col-xs-1 col-lg-1 col-md-1 col-xl-1 "></div>
       <div class="col-sm-9 col-xs-9 col-lg-9 col-md-9 col-xl-9 "
            style=" text-align: right;display: block; float: right; margin-left: 3.5%">
-        <button type="submit" class="btn btn-sm mx-auto"
-                style="border: 1px solid #CFF4FC;margin-bottom: 3%; margin-top: 2%;font-size: 100%; width: 20%;color:black;font-weight: bold;"
-                onmouseover="this.style.backgroundColor='#CFF4FC'" onmouseout="this.style.backgroundColor='white';"
-                onfocus="this.style.borderColor='#CFF4FC';this.style.boxShadow='none';this.style.outline='2px solid #CFF4FC';"
-                onblur="this.style.borderColor='#ced4da';this.style.outline='none';">
+        <button type="submit" class="btn btn-outline-info mt-3">
           Tải file lên
         </button>
       </div>
@@ -194,6 +190,11 @@
     </div>
   </form>
 </div>
+
+<!--style="border: 1px solid #CFF4FC;margin-bottom: 3%; margin-top: 2%;font-size: 100%; width: 20%;color:black;font-weight: bold;"-->
+<!--onmouseover="this.style.backgroundColor='#CFF4FC'" onmouseout="this.style.backgroundColor='white';"-->
+<!--onfocus="this.style.borderColor='#CFF4FC';this.style.boxShadow='none';this.style.outline='2px solid #CFF4FC';"-->
+<!--onblur="this.style.borderColor='#ced4da';this.style.outline='none';"-->
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

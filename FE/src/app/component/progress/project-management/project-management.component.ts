@@ -20,8 +20,10 @@ export class ProjectManagementComponent implements OnInit {
 
   teamPage!: PageProgress;
   nameProject = '';
-  status: any;
+  status: Boolean;
   page = 0;
+
+  nullValue = null;
 
   ngOnInit(): void {
     this.getAll();

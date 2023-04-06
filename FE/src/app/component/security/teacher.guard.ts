@@ -15,7 +15,7 @@ export class TeacherGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (this.token.getToken()) {
-      if (this.token.getUser().roles[0] === 'ROLE_ADMIN' || this.token.getUser().roles[0] === 'ROLE_TEACHER' && this.token.isLogger()) {
+      if( (this.token.getUser().roles[0] === 'ROLE_ADMIN' || this.token.getUser().roles[0] === 'ROLE_TEACHER' )&& this.token.isLogger()) {
         return true;
       } else {
         this.router.navigateByUrl('error-page/error');

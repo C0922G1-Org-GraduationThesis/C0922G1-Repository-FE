@@ -32,7 +32,7 @@ export class StudentListComponent implements OnInit {
    *
    */
   searchStudent() {
-    this.studentService.findAllStudent(this.nameSearch, this.page).subscribe(data => {
+    this.studentService.findAllStudent(this.nameSearch.trim(), this.page).subscribe(data => {
       console.log(this.nameSearch);
       console.log(data);
 

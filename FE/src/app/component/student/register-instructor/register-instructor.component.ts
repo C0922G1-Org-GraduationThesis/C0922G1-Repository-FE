@@ -1,14 +1,13 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {TeacherDto} from '../../../model/teacher-dto';
 import {TeamService} from '../../../service/team.service';
 import {FormControl, FormGroup} from '@angular/forms';
 import {ProJson} from '../../../model/pro-json';
 import {ITeacherDto} from '../../../model/iteacher-dto';
 import {ActivatedRoute} from '@angular/router';
-import {Team} from '../../../model/team';
-import {Teacher} from '../../../model/teacher';
 import {ITeamDto} from '../../../model/iteam-dto';
-import Swal from "sweetalert2";
+import Swal from 'sweetalert2';
+import {TokenStorageService} from "../../../service/token-storage.service";
 
 @Component({
   selector: 'app-register-instructor',
@@ -31,20 +30,24 @@ export class RegisterInstructorComponent implements OnInit {
   isRegistered: boolean;
   flag: number;
   team: ITeamDto;
+  isTeamNull: boolean;
+  emailFind: string;
+  flagTeam = false;
 
   constructor(private teamService: TeamService,
-              private activatedRoute: ActivatedRoute) {
+              private activatedRoute: ActivatedRoute,
+              private cd: ChangeDetectorRef,
+              private tokenStorageService: TokenStorageService) {
   }
 
   ngOnInit(): void {
+    this.isTeamNull = false;
+    this.emailFind = this.tokenStorageService.getUser().username;
+    this.getTeam(this.emailFind);
+    this.instructorName = 'N/A';
+    this.flag = 0;
     this.isRegistered = false;
-    this.flag=0;
     this.getAllInstructor(0);
-    this.activatedRoute.paramMap.subscribe(paramMap => {
-      this.teamId = +paramMap.get('id');
-      this.teamId = 2;
-      this.getTeam(this.teamId);
-    });
   }
 
   getTeacherById(id: number) {
@@ -60,27 +63,37 @@ export class RegisterInstructorComponent implements OnInit {
       // @ts-ignore
       this.teamPage = item;
     });
+  }
 
+  getTeam(email: string) {
+    this.teamService.getTeamByEmail(email).subscribe(item => {
+        this.team = item;
+        this.editForm = new FormGroup({
+          teamId: new FormControl(item.teamId),
+          memberOfTeam: new FormControl(item.memberOfTeam),
+          teamName: new FormControl(item.teamName),
+          teacherId: new FormControl(item.teacherId),
+          teacherName: new FormControl(item.teacherName),
+        });
+      },
+      error => {
+        this.flagTeam = true;
+      });
+  }
+
+  getTeacherNameControl() {
+    return this.editForm.get('teacherName').value === null ? 'N/A' : this.editForm.get('teacherName').value;
   }
 
   register(teacherId: number, teacher: string) {
-    this.flag=1;
+    this.flag = 1;
     this.instructorName = teacher;
     this.instructorId = teacherId;
   }
 
-  getTeam(id: number) {
-    this.teamService.getTeamById(id).subscribe(item => {
-      this.team = item;
-      this.editForm = new FormGroup({
-        teamId: new FormControl(item.teamId),
-        memberOfTeam: new FormControl(item.memberOfTeam),
-        teamName: new FormControl(item.teamName),
-        teacherId: new FormControl(item.teacherId),
-        teacherName: new FormControl(item.teacherName),
-      });
-      console.log(this.editForm.value);
-    });
+  cancel(teacherId: number, teacherName: string) {
+    this.instructorId = teacherId;
+    this.instructorName = teacherName;
   }
 
   submit(teacherId: number, teacher: string) {
@@ -88,7 +101,7 @@ export class RegisterInstructorComponent implements OnInit {
     this.instructorId = teacherId;
     this.editForm.get('teacherId').setValue(teacherId);
     this.editForm.get('teacherName').setValue(teacher);
-    this.teamService.editInstructor(this.teamId, this.editForm.value).subscribe(item => {
+    this.teamService.editInstructor(this.editForm.get('teamId').value, this.editForm.value).subscribe(item => {
       this.getAllInstructor(0);
       this.isRegistered = true;
       Swal.fire({
@@ -99,18 +112,16 @@ export class RegisterInstructorComponent implements OnInit {
         background: '#fff0e6',
         iconHtml: '<i class="fas fa-check"></i>',
       });
+      this.team.teacherId = teacherId;
+      this.cd.detectChanges();
     });
-  }
-
-  changePage(page: number) {
-    this.getAllInstructor(page);
   }
 
   cancelRegistration() {
     this.flag = 1;
     this.editForm.get('teacherId').setValue(null);
     this.editForm.get('teacherName').setValue(null);
-    this.teamService.editInstructor(this.teamId, this.editForm.value).subscribe(item => {
+    this.teamService.editInstructor(this.editForm.get('teamId').value, this.editForm.value).subscribe(item => {
       this.getAllInstructor(0);
       this.isRegistered = false;
       Swal.fire({
@@ -121,6 +132,14 @@ export class RegisterInstructorComponent implements OnInit {
         background: '#fff0e6',
         iconHtml: '<i class="fas fa-check"></i>',
       });
+      this.team.teacherId = null;
+      this.cd.detectChanges();
+      this.instructorName = 'N/A';
     });
   }
+
+  changePage(page: number) {
+    this.getAllInstructor(page);
+  }
+
 }
