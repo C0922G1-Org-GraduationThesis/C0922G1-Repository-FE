@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {TokenStorageService} from "../../../service/token-storage.service";
 import {ShareService} from "../../../service/share.service";
 import {TeacherService} from "../../../service/teacher.service";
@@ -11,15 +11,17 @@ import {StudentService} from "../../../service/student/student.service";
 })
 export class HeaderComponent implements OnInit {
   username?: string;
-  img?:string;
+  img?: string;
   name?: string;
   role?: string;
   isLoggedIn = false;
+  idProject?: number;
+  idStage?: number;
 
   constructor(private tokenStorageService: TokenStorageService,
               private shareService: ShareService,
               private teacherService: TeacherService,
-              private studentService: StudentService) {
+              private studentService: StudentService,) {
     this.shareService.getClickEvent().subscribe(() => {
       this.loadHeader();
     });
@@ -37,19 +39,22 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.loadHeader();
   }
+
   findNameUser(): void {
     if (this.role === 'ROLE_ADMIN' || this.role === 'ROLE_TEACHER') {
       this.teacherService.findTeacherByEmail(this.username).subscribe(next => {
         this.name = next.teacherName;
-        this.img=next.teacherImg;
+        this.img = next.teacherImg;
       });
     } else {
       this.studentService.findStudentByEmail(this.username).subscribe(next => {
         this.name = next.studentName;
-        this.img=next.studentImg;
+        this.img = next.studentImg;
       });
     }
   }
+
+
   logOut() {
     this.tokenStorageService.signOut();
     this.ngOnInit();

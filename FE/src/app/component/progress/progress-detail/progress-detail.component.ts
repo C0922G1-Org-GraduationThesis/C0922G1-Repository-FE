@@ -18,6 +18,9 @@ import {StudentProgressReportService} from "../../../service/student-progress-re
 import {QuestionService} from "../../../service/question.service";
 import {AnswerService} from "../../../service/answer.service";
 import {ViewportScroller} from "@angular/common";
+import {TokenStorageService} from "../../../service/token-storage.service";
+import {StudentService} from "../../../service/student/student.service";
+import {Student} from "../../../model/student";
 
 @Component({
   selector: 'app-progress-detail',
@@ -55,6 +58,10 @@ export class ProgressDetailComponent implements OnInit {
   answerFlag = false;
 
   value = 50;
+  role?: string;
+  emailFindLeader?: string;
+  flagLeader?: boolean;
+  studentFindLeader?: Student;
 
   formCreateQuestion: FormGroup = new FormGroup({
     questionContent: new FormControl()
@@ -70,7 +77,9 @@ export class ProgressDetailComponent implements OnInit {
               private studentProgressReportService: StudentProgressReportService,
               private questionService: QuestionService,
               private answerService: AnswerService,
-              private viewportScroller: ViewportScroller) {
+              private viewportScroller: ViewportScroller,
+              private tokenStorageService: TokenStorageService,
+              private studentService: StudentService) {
   }
 
   ngOnInit(): void {
@@ -89,7 +98,20 @@ export class ProgressDetailComponent implements OnInit {
       this.getLengthStudentProgressReport();
       this.saveAutoProgressDetail(this.projectId);
       this.getAllQuestion();
+      this.role = this.tokenStorageService.getUser().roles[0];
+      this.emailFindLeader = this.tokenStorageService.getUser().username;
+      this.findStudentLeader(this.emailFindLeader);
+
     });
+  }
+
+  findStudentLeader(email: string) {
+    if (this.role === 'ROLE_STUDENT') {
+      this.studentService.findStudentByEmail(email).subscribe(next => {
+        this.studentFindLeader = next;
+        this.flagLeader = this.studentFindLeader.flagLeader;
+      })
+    }
   }
 
   getProjectById(projectId: number) {

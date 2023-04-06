@@ -20,7 +20,7 @@ const routes: Routes = [
     loadChildren: () => import('./component/notification/notification.module').then(module => module.NotificationModule)
   },
   {
-    canActivate:[TeacherGuard,StudentGuard],
+    canActivate:[],
     path: 'progress',
     loadChildren: () => import('./component/progress/progress.module').then(module => module.ProgressModule)
   },
@@ -30,7 +30,7 @@ const routes: Routes = [
     loadChildren: () => import('./component/project/project.module').then(module => module.ProjectModule)
   },
   {
-    canActivate:[StudentGuard],
+    canActivate:[],
     path: 'students',
     loadChildren: () => import('./component/student/student.module').then(module => module.StudentModule)
   },

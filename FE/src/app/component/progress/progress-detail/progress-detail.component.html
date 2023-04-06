@@ -78,7 +78,8 @@
       <h4><strong>Tiến độ</strong></h4>
       <div class="row mt-2" *ngFor="let progressDetail of progressDetails">
         <div class="col-md-2">
-          <button [disabled]="!progressDetail.progressStatus" type="button" class="btn btn-outline-info"
+          <button [disabled]="!progressDetail.progressStatus||!((role==='ROLE_STUDENT')&&flagLeader)" type="button"
+                  class="btn btn-outline-info"
                   style="background: #14a2b8;">
             <a style="text-decoration: none"
                routerLink="/progress/report/{{projectId}}/{{progressDetail.stageId}}"><span
@@ -374,7 +375,8 @@
                       <p [innerHTML]="question.questionContent"></p>
                       <div class="row">
                         <div class="col-md-9">
-                          <p class="btn btn-outline-info" (click)="getAllAnswer(question.questionId)">Trả lời</p>
+                          <p class="btn btn-outline-info" (click)="getAllAnswer(question.questionId)"
+                             [hidden]="!(role==='ROLE_TEACHER')">Trả lời</p>
                           <div class="row" *ngIf="answers">
                             <div *ngIf="temp === question.questionId">
                               <div *ngFor="let answer of answers">
@@ -452,7 +454,7 @@
               </div>
             </div>
             <form [formGroup]="formCreateQuestion" (ngSubmit)="createQuestion()">
-              <div class="row">
+              <div class="row" [hidden]="!(role==='ROLE_STUDENT')">
                 <div class="card" style="width: 100%">
                   <div class="card-body">
                     <div class="row">
