@@ -63,6 +63,8 @@ export class ProgressDetailComponent implements OnInit {
   flagLeader?: boolean;
   studentFindLeader?: Student;
   progressPercentage = 0;
+  idTeam?: number;
+  checkTeam?: boolean;
 
   formCreateQuestion: FormGroup = new FormGroup({
     questionContent: new FormControl()
@@ -102,7 +104,8 @@ export class ProgressDetailComponent implements OnInit {
       this.role = this.tokenStorageService.getUser().roles[0];
       this.emailFindLeader = this.tokenStorageService.getUser().username;
       this.findStudentLeader(this.emailFindLeader);
-
+      this.idTeam = this.studentFindLeader.studentId;
+      this.checkTeam = (this.idTeam === this.projectDto.team.teamId);
     });
   }
 
@@ -130,6 +133,7 @@ export class ProgressDetailComponent implements OnInit {
   getProgressReview(projectId: number) {
     this.progressReviewService.getProgressReviewByProjectId(projectId).subscribe(item => {
       this.progressReviews = item;
+      this.progressPercentage = item[0].progressReviewPercent;
       if (this.maxSizeProgressReview === 0) {
         this.checkShowMore = false;
       }
@@ -354,6 +358,7 @@ export class ProgressDetailComponent implements OnInit {
   hideFormAnswer() {
     this.answerFlag = false;
   }
+
   updateProgress(event: Event) {
     const slider = event.target as HTMLInputElement;
     const value = Number(slider.value);

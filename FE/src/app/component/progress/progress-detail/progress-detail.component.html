@@ -78,7 +78,7 @@
       <h4><strong>Tiến độ</strong></h4>
       <div class="row mt-2" *ngFor="let progressDetail of progressDetails">
         <div class="col-md-2">
-          <button [disabled]="!progressDetail.progressStatus||!((role==='ROLE_STUDENT')&&flagLeader)" type="button"
+          <button [disabled]="!progressDetail.progressStatus||!((role==='ROLE_STUDENT')&&flagLeader&&checkTeam)"  type="button"
                   class="btn btn-outline-info"
                   style="background: #14a2b8;">
             <a style="text-decoration: none"
@@ -98,7 +98,7 @@
               class="badge bg-danger mx-2">Chưa hoàn thành</span></ng-container>
           <ng-container
             *ngIf="progressDetail.progressDetailPercent > 0 && progressDetail.progressDetailPercent < 100 && progressDetail.progressStatus ===true "><span
-            class="badge bg-secondary mx-2">Đang thực hiện</span></ng-container></span>
+            class="badge bg-warning mx-2">Đang thực hiện</span></ng-container></span>
 
           <div class="progress" role="progressbar">
             <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger"
@@ -164,12 +164,12 @@
                 <div class="d-flex justify-content-start mb-2 align-items-center "
                      [hidden]="projectDto?.projectStatus === false">
                   <img style="width: 50px; height: 50px " class="rounded-circle"
-                       src="{{teacherDto?.teacherImg}}" [hidden]="projectDto?.projectStatus === false">
+                       src="{{teacherDto?.teacherImg}}" [hidden]="(projectDto?.projectStatus === false || (role==='ROLE_STUDENT'))">
                 </div>
               </div>
               <div class="col-md-10">
                 <form *ngIf="progressReviewForm" [formGroup]="progressReviewForm" (ngSubmit)="onSubmit()"
-                      [hidden]="projectDto?.projectStatus === false">
+                      [hidden]="(projectDto?.projectStatus === false || (role==='ROLE_STUDENT'))">
                   <input type="text" formControlName="progressReviewId" hidden>
                   <div>Đánh giá tiến độ (<span style="color: red">*</span>)
                     <div class="slider-container">

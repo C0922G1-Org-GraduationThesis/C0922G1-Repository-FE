@@ -121,13 +121,7 @@ export class RegisterTopicComponent implements OnInit {
         icon: 'success'
       });
       this.route.navigateByUrl('projects/detail/' + project.projectId);
-    }, error => {
-      Swal.fire({
-        title: 'Lỗi',
-        text: 'Đăng ký đề tài thất bại!',
-        icon: 'error'
-      });
-    })
+    });
   }
 
   uploadFileImg() {

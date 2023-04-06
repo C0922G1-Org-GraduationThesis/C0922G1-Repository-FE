@@ -17,13 +17,13 @@
         <div class="mb-3">
           <label  class="form-label">Tên sinh viên(<span style="color: red">*</span>)</label>
           <input type="email" class="form-control"   formControlName="studentName">
-          <p *ngIf="studentForm.controls.studentName.touched && studentForm.controls.studentName?.errors?.required" style="color: red">Bắt buộc nhập</p>
+          <p *ngIf="studentForm.controls.studentName.touched && studentForm.controls.studentName?.errors?.required" style="color: red">Vui lòng nhập trường này.</p>
         </div>
 
         <div class="mb-3">
           <label  class="form-label">Ngày sinh(<span style="color: red">*</span>)</label>
           <input  class="form-control"  formControlName="studentDateOfBirth" type="text">
-          <p *ngIf="studentForm.controls.studentDateOfBirth.touched && studentForm.controls.studentDateOfBirth?.errors?.required" style="color: red">Bắt buộc nhập</p>
+          <p *ngIf="studentForm.controls.studentDateOfBirth.touched && studentForm.controls.studentDateOfBirth?.errors?.required" style="color: red">Vui lòng nhập trường này.</p>
         </div>
 
         <div class="mb-3">
@@ -32,13 +32,13 @@
             <!--            <option value="" selected >Chọn lớp</option>-->
             <option *ngFor="let clazz of clazz" [ngValue]="clazz" >{{clazz.clazzName}}</option>
           </select>
-          <p *ngIf="studentForm.controls.clazz.touched && studentForm.controls.clazz?.errors?.required" style="color: red">Bắt buộc nhập</p>
+          <p *ngIf="studentForm.controls.clazz.touched && studentForm.controls.clazz?.errors?.required" style="color: red">Vui lòng nhập trường này.</p>
         </div>
 
         <div class="mb-3">
           <label  class="form-label"> Email(<span style="color: red">*</span>)</label>
           <input type="text" class="form-control" formControlName="studentEmail">
-          <p *ngIf="studentForm.controls.studentEmail.touched && studentForm.controls.studentEmail?.errors?.required" style="color: red">Bắt buộc nhập</p>
+          <p *ngIf="studentForm.controls.studentEmail.touched && studentForm.controls.studentEmail?.errors?.required" style="color: red">Vui lòng nhập trường này.</p>
           <p *ngIf="studentForm.controls.studentEmail.touched && studentForm.controls.studentEmail?.errors?.pattern" style="color: red">Email sai định dạng</p>
         </div>
 
@@ -47,7 +47,7 @@
         <div class="mb-3">
           <label  class="form-label">Số điện thoại(<span style="color: red">*</span>)</label>
           <input type="text" class="form-control" formControlName="studentPhoneNumber">
-          <p *ngIf="studentForm.controls.studentPhoneNumber.touched && studentForm.controls.studentPhoneNumber?.errors?.required" style="color: red">Bắt buộc nhập</p>
+          <p *ngIf="studentForm.controls.studentPhoneNumber.touched && studentForm.controls.studentPhoneNumber?.errors?.required" style="color: red">Vui lòng nhập trường này.</p>
           <p *ngIf="studentForm.controls.studentPhoneNumber.touched && studentForm.controls.studentPhoneNumber?.errors?.minlength" style="color: red">Tối thiểu 10 chữ số</p>
           <p *ngIf="studentForm.controls.studentPhoneNumber.touched && studentForm.controls.studentPhoneNumber?.errors?.maxlength" style="color: red">Tối đa 11 chữ số</p>
         </div>
@@ -55,7 +55,7 @@
         <div class="mb-3">
           <label class="form-label">Địa chỉ(<span style="color: red">*</span>)</label>
           <input type="text" class="form-control"  formControlName="studentAddress">
-          <p *ngIf="studentForm.controls.studentAddress.touched && studentForm.controls.studentAddress?.errors?.required" style="color: red">Bắt buộc nhập</p>
+          <p *ngIf="studentForm.controls.studentAddress.touched && studentForm.controls.studentAddress?.errors?.required" style="color: red">Vui lòng nhập trường này.</p>
         </div>
 
         <div class="mb-3">
@@ -72,7 +72,7 @@
             <input type="radio" id="contactChoice2"  [value]="false" formControlName="studentGender" style="margin-left: 20px"/>
             <label for="contactChoice2" >Nữ</label>
           </div>
-          <p *ngIf="studentForm.controls.studentGender.touched && studentForm.controls.studentGender?.errors?.required" style="color: red">Bắt buộc nhập</p>
+          <p *ngIf="studentForm.controls.studentGender.touched && studentForm.controls.studentGender?.errors?.required" style="color: red">Vui lòng nhập trường này.</p>
         </div>
 
         <div class="mb-3">

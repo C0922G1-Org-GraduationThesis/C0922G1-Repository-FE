@@ -90,7 +90,7 @@
             <label for="exampleInputEmail1" class="form-label">Tên giáo viên(<span style="color: red">*</span>)</label>
             <input formControlName="teacherName" type="email" class="form-control" id="exampleInputEmail1"
                    aria-describedby="emailHelp">
-            <p style="color: red;font-size: 13px;text-align: left" *ngIf="formUpdateTeacher.controls.teacherName.hasError('required') && formUpdateTeacher.controls.teacherName.touched">Nhập tên</p>
+            <p style="color: red;font-size: 13px;text-align: left" *ngIf="formUpdateTeacher.controls.teacherName.hasError('required') && formUpdateTeacher.controls.teacherName.touched">Vui lòng nhập trường này.</p>
             <p style="color: red;font-size: 13px;text-align: left">{{errorsUpdate.teacherName}}</p>
 
           </div>
@@ -100,7 +100,7 @@
               style="color: red">*</span>)</label>
             <input formControlName="teacherDateOfBirth" type="date" class="form-control" id="exampleInputEmail2"
                    aria-describedby="emailHelp">
-            <p style="color: red;font-size: 13px;text-align: left" *ngIf="formUpdateTeacher.controls.teacherDateOfBirth.hasError('required') && formUpdateTeacher.controls.teacherDateOfBirth.touched">Nhập ngày sinh</p>
+            <p style="color: red;font-size: 13px;text-align: left" *ngIf="formUpdateTeacher.controls.teacherDateOfBirth.hasError('required') && formUpdateTeacher.controls.teacherDateOfBirth.touched">Vui lòng nhập trường này.</p>
             <p style="color: red;font-size: 13px;text-align: left">{{errorsUpdate.teacherDateOfBirth}}</p>
           </div>
 
@@ -110,7 +110,7 @@
                      aria-label="Default select example">
               <option *ngFor="let degree of listDegree" [ngValue]="degree">{{degree.degreeName}}</option>
             </select>
-            <p style="color: red;font-size: 13px;text-align: right" *ngIf="formUpdateTeacher.controls.degree.hasError('required') && formUpdateTeacher.controls.degree.touched">Chọn học vị</p>
+            <p style="color: red;font-size: 13px;text-align: right" *ngIf="formUpdateTeacher.controls.degree.hasError('required') && formUpdateTeacher.controls.degree.touched">Vui lòng nhập trường này.</p>
             <p style="color: red;font-size: 13px;text-align: left">{{errorsUpdate.degree}}</p>
 
           </div>
@@ -120,7 +120,7 @@
               style="color: red">*</span>)</label>
             <input formControlName="teacherAddress" type="text" class="form-control" id="exampleInputEmail4"
                    aria-describedby="emailHelp">
-            <p style="color: red;font-size: 13px;text-align: left" *ngIf="formUpdateTeacher.controls.teacherAddress.hasError('required') && formUpdateTeacher.controls.teacherAddress.touched">Nhập địa chỉ</p>
+            <p style="color: red;font-size: 13px;text-align: left" *ngIf="formUpdateTeacher.controls.teacherAddress.hasError('required') && formUpdateTeacher.controls.teacherAddress.touched">Vui lòng nhập trường này.</p>
 
             <p style="color: red;font-size: 13px;text-align: left">{{errorsUpdate.teacherAddress}}</p>
 
@@ -165,7 +165,7 @@
             <label for="exampleInputEmail6" class="form-label">Email(<span style="color: red">*</span>)</label>
             <input formControlName="teacherEmail" type="text" class="form-control" id="exampleInputEmail6"
                    aria-describedby="emailHelp">
-            <p style="color: red;font-size: 13px;text-align: left" *ngIf="formUpdateTeacher.controls.teacherEmail.hasError('required') && formUpdateTeacher.controls.teacherEmail.touched">Nhập email</p>
+            <p style="color: red;font-size: 13px;text-align: left" *ngIf="formUpdateTeacher.controls.teacherEmail.hasError('required') && formUpdateTeacher.controls.teacherEmail.touched">Vui lòng nhập trường này.</p>
 
             <p style="color: red;font-size: 13px;text-align: left">{{errorsUpdate.teacherEmail}}</p>
           </div>

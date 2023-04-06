@@ -16,14 +16,14 @@
         <div class="mb-3">
           <label  class="form-label">Tên sinh viên(<span style="color: red">*</span>)</label>
           <input type="email" class="form-control"   formControlName="studentName">
-          <p *ngIf="studentForm.controls.studentName.touched && studentForm.controls.studentName?.errors?.required" style="color: red">Bắt buộc nhập</p>
+          <p *ngIf="studentForm.controls.studentName.touched && studentForm.controls.studentName?.errors?.required" style="color: red">Vui lòng nhập trường này.</p>
           <!--          <p *ngIf="studentForm.controls.studentName.touched && studentForm.controls.studentName?.errors?.pattern" style="color: red">Tên không đúng định dạng</p>-->
         </div>
 
         <div class="mb-3">
           <label  class="form-label">Ngày sinh(<span style="color: red">*</span>)</label>
           <input type="date" class="form-control"  formControlName="studentDateOfBirth" >
-          <p *ngIf="studentForm.controls.studentDateOfBirth.touched && studentForm.controls.studentDateOfBirth?.errors?.required" style="color: red">Bắt buộc nhập</p>
+          <p *ngIf="studentForm.controls.studentDateOfBirth.touched && studentForm.controls.studentDateOfBirth?.errors?.required" style="color: red">Vui lòng nhập trường này.</p>
         </div>
 
         <div class="mb-3">
@@ -31,14 +31,14 @@
           <select formControlName="clazz" class="form-control">
             <option value="" selected>Lựa Chọn</option>
             <option *ngFor="let clazz of clazzType" [ngValue]="clazz" >{{clazz.clazzName}}</option>
-            <p *ngIf="studentForm.controls.clazz.touched && studentForm.controls.clazz?.errors?.required" style="color: red">Bắt buộc nhập</p>
+            <p *ngIf="studentForm.controls.clazz.touched && studentForm.controls.clazz?.errors?.required" style="color: red">Vui lòng nhập trường này.</p>
           </select>
         </div>
 
         <div class="mb-3">
           <label  class="form-label"> Email(<span style="color: red">*</span>)</label>
           <input type="text" class="form-control" formControlName="studentEmail">
-          <p *ngIf="studentForm.controls.studentEmail.touched && studentForm.controls.studentEmail?.errors?.required" style="color: red">Bắt buộc nhập</p>
+          <p *ngIf="studentForm.controls.studentEmail.touched && studentForm.controls.studentEmail?.errors?.required" style="color: red">Vui lòng nhập trường này.</p>
           <p *ngIf="studentForm.controls.studentEmail.touched && studentForm.controls.studentEmail?.errors?.pattern" style="color: red">Email sai định dạng</p>
         </div>
       </div>
@@ -46,7 +46,7 @@
         <div class="mb-3">
           <label  class="form-label">Số điện thoại(<span style="color: red">*</span>)</label>
           <input type="text" class="form-control" formControlName="studentPhoneNumber">
-          <p *ngIf="studentForm.controls.studentPhoneNumber.touched && studentForm.controls.studentPhoneNumber?.errors?.required" style="color: red">Bắt buộc nhập</p>
+          <p *ngIf="studentForm.controls.studentPhoneNumber.touched && studentForm.controls.studentPhoneNumber?.errors?.required" style="color: red">Vui lòng nhập trường này.</p>
           <p *ngIf="studentForm.controls.studentPhoneNumber.touched && studentForm.controls.studentPhoneNumber?.errors?.minlength" style="color: red">Tối thiểu 10 chữ số</p>
           <p *ngIf="studentForm.controls.studentPhoneNumber.touched && studentForm.controls.studentPhoneNumber?.errors?.maxlength" style="color: red">Tối đa 11 chữ số</p>
           <!--          <p *ngIf="studentForm.controls.studentPhoneNumber.touched && studentForm.controls.studentPhoneNumber?.errors?.pattern" style="color: red">Số điện thoại không chứa chữ hoặc kí tự đặc biệt</p>-->
@@ -55,7 +55,7 @@
         <div class="mb-3">
           <label class="form-label">Địa chỉ(<span style="color: red">*</span>)</label>
           <input type="text" class="form-control"  formControlName="studentAddress">
-          <p *ngIf="studentForm.controls.studentAddress.touched && studentForm.controls.studentAddress?.errors?.required" style="color: red">Bắt buộc nhập</p>
+          <p *ngIf="studentForm.controls.studentAddress.touched && studentForm.controls.studentAddress?.errors?.required" style="color: red">Vui lòng nhập trường này.</p>
         </div>
 
         <div class="mb-3">
