@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormControl, FormGroup, ValidatorFn, Validators} from '@angular/forms';
 import {TokenStorageService} from '../../../service/token-storage.service';
 import Swal from 'sweetalert2';
 import {AccountService} from "../../../service/account.service";
@@ -26,9 +26,9 @@ export class PasswordChangeComponent implements OnInit {
     this.username = this.tokenStorageService.getUser().username;
     this.formChangePassword = new FormGroup({
       username: new FormControl(this.username),
-      oldPassword: new FormControl('', [Validators.required]),
-      newPassword: new FormControl('', [Validators.required, Validators.minLength(8)]),
-      passwordConfirm: new FormControl('', [Validators.required, Validators.minLength(8)])
+      oldPassword: new FormControl('', [Validators.required, this.keditorMinLengthValidator(8)]),
+      newPassword: new FormControl('', [Validators.required, this.keditorMinLengthValidator(8)]),
+      passwordConfirm: new FormControl('', [Validators.required,])
     });
   }
 
@@ -73,5 +73,19 @@ export class PasswordChangeComponent implements OnInit {
           this.formChangePassword.controls[err.field].setErrors({errorOldPasswordWrong: err.defaultMessage});
         }
       });
+  }
+
+  keditorMaxLengthValidator(maxLength: number): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const contentLength = control.value.replace(/<[^>]*>/g, '').length;
+      return contentLength > maxLength ? {'ckeditorMinLength': {value: control.value}} : null;
+    };
+  }
+
+  keditorMinLengthValidator(minLength: number): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const contentLength = control.value.replace(/<[^>]*>/g, '').length;
+      return contentLength < minLength ? {'ckeditorMinLength': {value: control.value}} : null;
+    };
   }
 }

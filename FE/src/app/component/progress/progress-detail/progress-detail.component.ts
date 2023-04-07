@@ -21,6 +21,8 @@ import {ViewportScroller} from "@angular/common";
 import {TokenStorageService} from "../../../service/token-storage.service";
 import {StudentService} from "../../../service/student/student.service";
 import {Student} from "../../../model/student";
+import {TeacherService} from "../../../service/teacher.service";
+import {Teacher} from "../../../model/teacher";
 
 @Component({
   selector: 'app-progress-detail',
@@ -65,6 +67,8 @@ export class ProgressDetailComponent implements OnInit {
   progressPercentage = 0;
   idTeam?: number;
   checkTeam?: boolean;
+  checkTeacher?:boolean;
+  teacherUser?:Teacher;
 
   constructor(private progressDetailService: ProgressDetailService,
               private progressReviewService: ProgressReviewService,
@@ -74,7 +78,8 @@ export class ProgressDetailComponent implements OnInit {
               private answerService: AnswerService,
               private viewportScroller: ViewportScroller,
               private tokenStorageService: TokenStorageService,
-              private studentService: StudentService) {
+              private studentService: StudentService,
+              private  teacherService: TeacherService) {
   }
 
   ngOnInit(): void {
@@ -95,17 +100,22 @@ export class ProgressDetailComponent implements OnInit {
       this.getAllQuestion();
       this.role = this.tokenStorageService.getUser().roles[0];
       this.emailFindLeader = this.tokenStorageService.getUser().username;
-      this.findStudentLeader(this.emailFindLeader);
+      this.findUser(this.emailFindLeader);
       this.idTeam = this.studentFindLeader.studentId;
       this.checkTeam = (this.idTeam === this.projectDto.team.teamId);
+      this.checkTeacher=this.teacherDto.teacherId===this.teacherUser.teacherId;
     });
   }
 
-  findStudentLeader(email: string) {
+  findUser(email: string) {
     if (this.role === 'ROLE_STUDENT') {
       this.studentService.findStudentByEmail(email).subscribe(next => {
         this.studentFindLeader = next;
         this.flagLeader = this.studentFindLeader.flagLeader;
+      })
+    }else {
+      this.teacherService.findTeacherByEmail(email).subscribe(next=>{
+        this.teacherUser=next;
       })
     }
   }

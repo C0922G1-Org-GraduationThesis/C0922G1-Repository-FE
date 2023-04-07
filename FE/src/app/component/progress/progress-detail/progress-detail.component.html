@@ -164,12 +164,12 @@
                 <div class="d-flex justify-content-start mb-2 align-items-center "
                      [hidden]="projectDto?.projectStatus === false">
                   <img style="width: 50px; height: 50px " class="rounded-circle"
-                       src="{{teacherDto?.teacherImg}}" [hidden]="(projectDto?.projectStatus === false || (role==='ROLE_STUDENT'))">
+                       src="{{teacherDto?.teacherImg}}" [hidden]="(projectDto?.projectStatus === false || (role==='ROLE_STUDENT')||!checkTeacher)">
                 </div>
               </div>
               <div class="col-md-10">
                 <form *ngIf="progressReviewForm" [formGroup]="progressReviewForm" (ngSubmit)="onSubmit()"
-                      [hidden]="(projectDto?.projectStatus === false || (role==='ROLE_STUDENT'))">
+                      [hidden]="(projectDto?.projectStatus === false || (role==='ROLE_STUDENT'))||!checkTeacher">
                   <input type="text" formControlName="progressReviewId" hidden>
                   <div>Đánh giá tiến độ (<span style="color: red">*</span>)
                     <div class="slider-container">
@@ -382,7 +382,7 @@
                       <div class="row">
                         <div class="col-md-9">
                           <p class="btn btn-outline-info" (click)="getAllAnswer(question.questionId)"
-                             [hidden]="!(role==='ROLE_TEACHER')">Trả lời</p>
+                             [hidden]="(!role==='ROLE_TEACHER'||!checkTeacher)">Trả lời</p>
                           <div class="row" *ngIf="answers">
                             <div *ngIf="temp === question.questionId">
                               <div *ngFor="let answer of answers">
@@ -419,7 +419,7 @@
                               </div>
                               <div *ngIf="answerFlag">
                                 <form [formGroup]="formCreateAnswer" *ngIf="formCreateAnswer"
-                                      (ngSubmit)="createAnswer()">
+                                      (ngSubmit)="createAnswer()" [hidden]="!checkTeacher">
                                   <ckeditor
                                     #editor
                                     formControlName="answerContent"
@@ -486,7 +486,7 @@
                           <p *ngIf="formCreateQuestion.controls?.questionContent?.dirty && formCreateQuestion.controls?.questionContent?.errors" class="text-danger">
                             Bạn phải nhập hơn 4 kí tự và nhỏ hơn 100 kí tự</p>
                           <div class="d-flex justify-content-end mt-3">
-                            <button class="btn btn-outline-info" style="float: right" type="submit">Đăng</button>
+                            <button class="btn btn-outline-info" style="float: right" type="submit" [disabled]="checkTeam">Đăng</button>
                           </div>
                         </form>
                       </div>

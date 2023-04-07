@@ -6,6 +6,8 @@ import {StudentService} from "../../../service/student/student.service";
 import {ProgressService} from "../../../service/progress.service";
 import {ProgressReportService} from "../../../service/progress-report.service";
 import {Team} from "../../../model/team";
+import {Announcement} from "../../../model/announcement";
+import {AnnouncementService} from "../../../service/announcement.service";
 
 @Component({
   selector: 'app-header',
@@ -23,12 +25,14 @@ export class HeaderComponent implements OnInit {
   flagStudentLeader = false;
   studentId: number;
   teamId?: Team;
+  listAnnouncement: Announcement[];
 
   constructor(private tokenStorageService: TokenStorageService,
               private shareService: ShareService,
               private teacherService: TeacherService,
               private studentService: StudentService,
-              private progressReportService: ProgressReportService) {
+              private progressReportService: ProgressReportService,
+              private announcementService: AnnouncementService) {
     this.shareService.getClickEvent().subscribe(() => {
       this.loadHeader();
     });
@@ -78,5 +82,11 @@ export class HeaderComponent implements OnInit {
       this.idStage = next.stageId;
       console.log(this.idProject, this.idStage);
     })
+  }
+
+  findAllAnnouncement(studentId: number) {
+    this.announcementService.findAll(studentId).subscribe(announcements => {
+      this.listAnnouncement = announcements;
+    });
   }
 }
