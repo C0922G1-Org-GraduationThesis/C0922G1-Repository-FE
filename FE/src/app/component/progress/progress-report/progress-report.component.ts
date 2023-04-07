@@ -1,7 +1,7 @@
 import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ProgressReviewService} from '../../../service/progress-review.service';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormControl, FormGroup, ValidatorFn, Validators} from '@angular/forms';
 import Swal from 'sweetalert2';
 
 
@@ -109,10 +109,10 @@ export class ProgressReportComponent implements OnInit {
 
   getProgressReport() {
     this.progressReportForm = new FormGroup({
-      progressReportContent: new FormControl('', [Validators.required]),
+      progressReportContent: new FormControl('', [Validators.required,this.keditorMinLengthValidator(10),this.keditorMaxLengthValidator(200)]),
       progressReportTime: new FormControl('', [Validators.required]),
-      progressReportFile: new FormControl(),
-      progressReportFileName: new FormControl('', [Validators.required])
+      progressReportFile: new FormControl('', [Validators.required]),
+      progressReportFileName: new FormControl('', [Validators.required,this.keditorMinLengthValidator(5),this.keditorMaxLengthValidator(100)])
     });
   }
 
@@ -154,18 +154,16 @@ export class ProgressReportComponent implements OnInit {
     this.save();
 
   }
-
-  setProgressReportFileName(progressReportFileName: string) {
-    if (this.progressReportFileName !== '') {
-      console.log(this.progressReportFileName);
-      this.fileNameValue = false;
-      console.log(this.contentValue);
-    }
+  keditorMinLengthValidator(minLength: number): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const contentLength = control.value.replace(/<[^>]*>/g, '').length;
+      return contentLength < minLength ? { 'ckeditorMinLength': { value: control.value } } : null;
+    };
   }
-
-  setProgressReportContent(progressReportContent: string) {
-    if (this.progressReportContent !== '') {
-      this.contentValue = false;
-    }
+  keditorMaxLengthValidator(maxLength: number): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const contentLength = control.value.replace(/<[^>]*>/g, '').length;
+      return contentLength > maxLength ? { 'ckeditorMinLength': { value: control.value } } : null;
+    };
   }
 }

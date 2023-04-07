@@ -48,14 +48,16 @@
               <input class="form-control btn-outline" type="file" #uploadFile formControlName="progressReportFile"
                      (change)="uploadFileImg()" >
               <span style="color: red"
-                    *ngIf="progressReportForm.controls.progressReportFile?.touched && progressReportForm.controls.progressReportFile?.errors?.required">Chưa chọn file !</span>
+                    *ngIf="progressReportForm.controls.progressReportFile?.touched && progressReportForm.controls.progressReportFile?.errors?.required">Chưa chọn file </span>
 
             </div>
 
             <div class="col-md-3"><input class="form-control btn-outline" type="text"
                                          placeholder="Nhập tên file báo cáo"  formControlName="progressReportFileName">
               <span style="color: red"
-                    *ngIf="progressReportForm.controls.progressReportFileName?.touched && progressReportForm.controls.progressReportFileName?.errors?.required">Chưa nhập tên file !</span>
+                    *ngIf="progressReportForm.controls.progressReportFileName?.touched && progressReportForm.controls.progressReportFileName?.errors?.required">Bạn không được bỏ trống ô này</span>
+              <span style="color: red"
+                    *ngIf="progressReportForm.controls.progressReportFileName?.dirty && progressReportForm.controls.progressReportFileName?.errors">Nội dung phải lớn hơn 5 và nhỏ hơn 100 ký tự</span>
 
             </div>
             <div class="col-md-4">
@@ -83,7 +85,9 @@
                 <textarea class="form-control btn-outline" id="" style="width: 100%" rows="7"  formControlName="progressReportContent"
                           placeholder="Nội dung báo cáo..."></textarea>
             <span style="color: red"
-                  *ngIf="progressReportForm.controls.progressReportContent?.touched && progressReportForm.controls.progressReportContent?.errors?.required">Chưa nhập nội dung báo cáo !</span>
+                  *ngIf="progressReportForm.controls.progressReportContent?.touched && progressReportForm.controls.progressReportContent?.errors?.required">Bạn không được bỏ trống ô này</span>
+            <span style="color: red"
+                  *ngIf="progressReportForm.controls.progressReportContent?.dirty && progressReportForm.controls.progressReportContent?.errors">Nội dung phải lớn hơn 10 và nhỏ hơn 200 ký tự</span>
           </div>
         </div>
       </div>
@@ -94,13 +98,13 @@
             <div class="col-md-4"></div>
             <div class="col-md-2">
               <a routerLink="/progress/progress-detail/{{projectId}}" style=" text-decoration: none">
-                <button type="button" class="btn btn-outline-dark btn-block mx-auto"
+                <button type="button" class="btn btn-outline-info btn-block mx-auto"
                         style="border-radius: 15px; width: 89%;color: #100e0e">Thoát
                 </button>
               </a>
             </div>
             <div class="col-md-2">
-              <button class="btn btn-outline-info btn-block mx-auto" [disabled]="showMessage && fileNameValue && contentValue"
+              <button class="btn btn-outline-info btn-block mx-auto"
                       style="border-radius: 15px; width: 89%;color: #100e0e">
                 Gửi
               </button>

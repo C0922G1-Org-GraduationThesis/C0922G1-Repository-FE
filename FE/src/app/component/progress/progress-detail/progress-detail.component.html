@@ -97,7 +97,7 @@
               *ngIf="progressDetail.progressDetailPercent > 0 && progressDetail.progressDetailPercent < 100 && progressDetail.progressStatus ===false "><span
               class="badge bg-danger mx-2">Chưa hoàn thành</span></ng-container>
           <ng-container
-            *ngIf="progressDetail.progressDetailPercent > 0 && progressDetail.progressDetailPercent < 100 && progressDetail.progressStatus ===true "><span
+            *ngIf="progressDetail.progressDetailPercent >= 0 && progressDetail.progressDetailPercent < 100 && progressDetail.progressStatus ===true "><span
             class="badge bg-warning mx-2">Đang thực hiện</span></ng-container></span>
 
           <div class="progress" role="progressbar">
@@ -426,6 +426,10 @@
                                     id="description"
                                     type="divarea">
                                   </ckeditor>
+                                  <p *ngIf="formCreateAnswer.controls?.answerContent?.touched && formCreateAnswer.controls?.answerContent?.errors?.required" class="text-danger">
+                                    Bạn không được bỏ trống ô này </p>
+                                  <p *ngIf="formCreateAnswer.controls?.answerContent?.dirty && formCreateAnswer.controls?.answerContent?.errors" class="text-danger">
+                                    Bạn phải nhập hơn 4 kí tự và nhỏ hơn 100 kí tự</p>
                                   <div class="d-flex justify-content-end ">
                                     <button style="width: 4.3rem" class="btn btn-outline-dark mg-top mg-right " (click)="hideFormAnswer()">
                                       Hủy
@@ -477,6 +481,10 @@
                             id="description1"
                             type="textarea">
                           </ckeditor>
+                          <p *ngIf="formCreateQuestion.controls?.questionContent?.touched && formCreateQuestion.controls?.questionContent?.errors?.required" class="text-danger">
+                            Bạn không được bỏ trống ô này </p>
+                          <p *ngIf="formCreateQuestion.controls?.questionContent?.dirty && formCreateQuestion.controls?.questionContent?.errors" class="text-danger">
+                            Bạn phải nhập hơn 4 kí tự và nhỏ hơn 100 kí tự</p>
                           <div class="d-flex justify-content-end mt-3">
                             <button class="btn btn-outline-info" style="float: right" type="submit">Đăng</button>
                           </div>

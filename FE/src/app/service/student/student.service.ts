@@ -54,6 +54,10 @@ export class StudentService {
     return this.httpClient.get<any>(this.URL_API_STUDENT + '/api/students?nameSearch=' + nameSearch + '&page=' + pageNumber);
   }
 
+  sendMailInviteTeam(students: Student[], teamId: number): Observable<any> {
+    return this.httpClient.post<any>(this.API_URL + 'send-mail-invite-team/' + teamId, students);
+  }
+
   /**
    * create by VinhLD
    * date create 2/4/2023
@@ -76,6 +80,6 @@ export class StudentService {
   }
 
   updateLeader(studentId: number, student: Student, teamId: number): Observable<Student> {
-    return this.httpClient.put<Student>(this.API_URL + 'updateLeader/' + studentId + '/' + teamId, student);
+    return this.httpClient.post<Student>(this.API_URL + 'updateLeader/' + studentId + '/' + teamId, student);
   }
 }

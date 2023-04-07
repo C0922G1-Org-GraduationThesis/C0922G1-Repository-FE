@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import {Team} from '../../../model/team';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TeamService} from '../../../service/team.service';
+import {log} from "util";
 
 @Component({
   selector: 'app-register-team',
@@ -133,6 +134,11 @@ export class RegisterTeamComponent implements OnInit {
                   icon: 'success',
                   title: 'Đăng ký nhóm thành công'
                 });
+                this.studentService.sendMailInviteTeam(this.listTeam, team.teamId).subscribe(next => {
+                  console.log('GỬi mail thành công rồi nha', next);
+                }, error => {
+                  console.log('Gửi mail thất bại rồi nha', error)
+                })
               }, error => {
                 console.log(error);
               });

@@ -11,6 +11,8 @@ import Swal from "sweetalert2";
 import {FileService} from "../../../service/file.service";
 import {DocumentService} from "../../../service/document.service";
 import {TokenStorageService} from "../../../service/token-storage.service";
+import {Teacher} from "../../../model/teacher";
+import {TeacherService} from "../../../service/teacher.service";
 
 @Component({
   selector: 'app-document-list-create',
@@ -36,7 +38,9 @@ export class DocumentListCreateComponent implements OnInit {
   pages: number[] = [];
   role: string = '';
   documentList: Document = {};
-  roleUser?:string;
+  roleUser?: string;
+  userNameTeach?: string;
+  teacher?: Teacher;
 
   errCreateDocument: any = {
     documentName: '',
@@ -46,7 +50,8 @@ export class DocumentListCreateComponent implements OnInit {
 
   constructor(private fileService: FileService,
               private documentService: DocumentService,
-              private tokenStorageService:TokenStorageService,
+              private tokenStorageService: TokenStorageService,
+              private teacherService: TeacherService,
               @Inject(AngularFireStorage) private storage: AngularFireStorage,
   ) {
     this.formGroup = new FormGroup({
@@ -133,7 +138,6 @@ export class DocumentListCreateComponent implements OnInit {
   });
 
 
-
 // Hàm để tạo danh sách các trang
   private createPageList() {
     this.pages = [];
@@ -160,10 +164,19 @@ export class DocumentListCreateComponent implements OnInit {
   ngOnInit(): void {
     this.getAll(this.p);
     this.createPageList();
-    this.roleUser=this.tokenStorageService.getUser().roles[0];
+    this.roleUser = this.tokenStorageService.getUser().roles[0];
+    this.userNameTeach = this.tokenStorageService.getUser().username;
+    console.log(this.userNameTeach)
+    this.teacherService.findTeacherByEmail(this.userNameTeach).subscribe(next => {
+      this.teacher = next
+      this.formDocument.value.teacherId = this.teacher;
+      this.formDocument.value.flagDelete = 0;
+    })
   }
 
   createDocument() {
+
+
 
     if (this.selectedFile != null) {
       const filePath = this.selectedFile.name;
@@ -224,7 +237,6 @@ export class DocumentListCreateComponent implements OnInit {
     }
 
   }
-
 
 
   getAll(page: number) {

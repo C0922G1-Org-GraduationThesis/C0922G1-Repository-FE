@@ -7,7 +7,7 @@ import {ProgressReview} from "../../../model/progress-review";
 import {ProjectDto} from "../../../dto/project-dto";
 import {TeacherDtoProgress} from "../../../dto/teacher-dto-progress";
 import {ProgressDetail} from "../../../model/progress-detail";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {AbstractControl, FormControl, FormGroup, ValidatorFn, Validators} from "@angular/forms";
 import {StudentProgressReport} from "../../../model/student-progress-report";
 import {Question} from "../../../model/question";
 import {Answers} from "../../../model/answers";
@@ -65,14 +65,6 @@ export class ProgressDetailComponent implements OnInit {
   progressPercentage = 0;
   idTeam?: number;
   checkTeam?: boolean;
-
-  formCreateQuestion: FormGroup = new FormGroup({
-    questionContent: new FormControl()
-  });
-
-  formCreateAnswer: FormGroup = new FormGroup({
-    answerContent: new FormControl()
-  });
 
   constructor(private progressDetailService: ProgressDetailService,
               private progressReviewService: ProgressReviewService,
@@ -213,6 +205,9 @@ export class ProgressDetailComponent implements OnInit {
     }
     this.progressReviewService.getProgressReviewByRecord(this.projectId, this.record).subscribe(item => {
       this.progressReviewsRecords = item;
+      if (item.length < this.record) {
+        this.checkShowMore = false;
+      }
     });
   }
 
@@ -220,6 +215,8 @@ export class ProgressDetailComponent implements OnInit {
     this.record -= 1;
     if (this.record < 2) {
       this.checkHideMore = false;
+    } else {
+      this.checkShowMore = true;
     }
     this.progressReviewService.getProgressReviewByRecord(this.projectId, this.record).subscribe(item => {
       this.progressReviewsRecords = item;
@@ -365,4 +362,27 @@ export class ProgressDetailComponent implements OnInit {
     const max = Number(slider.max);
     this.progressPercentage = Math.round((value / max) * 100);
   }
+
+  ckeditorMinLengthValidator(minLength: number): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const contentLength = control.value.replace(/<[^>]*>/g, '').length;
+      return contentLength < minLength ? {'ckeditorMinLength': {value: control.value}} : null;
+    };
+  }
+
+  formCreateQuestion: FormGroup = new FormGroup({
+    questionContent: new FormControl('', [Validators.required, this.ckeditorMinLengthValidator(5)])
+  });
+
+  formCreateAnswer: FormGroup = new FormGroup({
+    answerContent: new FormControl('', [Validators.required, this.ckeditorMinLengthValidator(5)])
+  });
+
+  keditorMaxLengthValidator(maxLength: number): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const contentLength = control.value.replace(/<[^>]*>/g, '').length;
+      return contentLength > maxLength ? {'ckeditorMinLength': {value: control.value}} : null;
+    };
+  }
+
 }
