@@ -23,6 +23,8 @@ import {StudentService} from "../../../service/student/student.service";
 import {Student} from "../../../model/student";
 import {TeacherService} from "../../../service/teacher.service";
 import {Teacher} from "../../../model/teacher";
+import {ProjectService} from "../../../service/project.service";
+import {Team} from "../../../model/team";
 
 @Component({
   selector: 'app-progress-detail',
@@ -69,6 +71,10 @@ export class ProgressDetailComponent implements OnInit {
   checkTeam?: boolean;
   checkTeacher?:boolean;
   teacherUser?:Teacher;
+  studentQuestion?: Student;
+
+  projectIID: number;
+  teamIID: Team;
 
   constructor(private progressDetailService: ProgressDetailService,
               private progressReviewService: ProgressReviewService,
@@ -79,7 +85,8 @@ export class ProgressDetailComponent implements OnInit {
               private viewportScroller: ViewportScroller,
               private tokenStorageService: TokenStorageService,
               private studentService: StudentService,
-              private  teacherService: TeacherService) {
+              private  teacherService: TeacherService,
+              private projectService: ProjectService) {
   }
 
   ngOnInit(): void {
@@ -102,7 +109,8 @@ export class ProgressDetailComponent implements OnInit {
       this.emailFindLeader = this.tokenStorageService.getUser().username;
       this.findUser(this.emailFindLeader);
       this.idTeam = this.studentFindLeader.studentId;
-      this.checkTeam = (this.idTeam === this.projectDto.team.teamId);
+      this.checkTeam = (this.teamIID === this.projectIID);
+      console.log('check team',this.checkTeam)
       this.checkTeacher=this.teacherDto.teacherId===this.teacherUser.teacherId;
     });
   }
@@ -111,7 +119,12 @@ export class ProgressDetailComponent implements OnInit {
     if (this.role === 'ROLE_STUDENT') {
       this.studentService.findStudentByEmail(email).subscribe(next => {
         this.studentFindLeader = next;
-        this.flagLeader = this.studentFindLeader.flagLeader;
+        this.studentQuestion = next;
+        this.teamIID = next.teamId;
+        console.log('QUestion',next)
+        console.log('day la team', this.teamIID)
+        this.flagLeader = next.flagLeader;
+        console.log('chekc leader',this.flagLeader)
       })
     }else {
       this.teacherService.findTeacherByEmail(email).subscribe(next=>{
@@ -149,6 +162,7 @@ export class ProgressDetailComponent implements OnInit {
     }
     this.progressReviewService.getProgressReviewByRecord(projectId, record).subscribe(progressReviews => {
       this.progressReviewsRecords = progressReviews;
+      console.log('teacher',progressReviews)
       this.teacherDto = progressReviews[0].teacher;
     });
   }
@@ -162,6 +176,11 @@ export class ProgressDetailComponent implements OnInit {
   getProjectByProjectId(projectId: number) {
     this.progressReviewService.getProjectByProjectId(projectId).subscribe(item => {
       this.projectDto = item;
+      this.projectIID =item.projectId;
+      console.log('day la project', this.projectIID);
+      this.projectService.getProjectDetail(this.projectIID).subscribe(next => {
+        console.log(next)
+      })
     });
   }
 
@@ -341,8 +360,8 @@ export class ProgressDetailComponent implements OnInit {
 
   createQuestion() {
     this.question = this.formCreateQuestion.value;
-    this.question.studentId = 2;
-    this.question.questionTopic = 'Giai doan 3';
+    this.question.studentId = this.studentQuestion.studentId;
+    this.question.questionTopic = 'Giai doan 1';
     this.questionService.create(this.question).subscribe(data => {
       this.totalElementAnswer++;
       this.getAllQuestion();
@@ -353,7 +372,7 @@ export class ProgressDetailComponent implements OnInit {
 
   createAnswer() {
     this.answer = this.formCreateAnswer.value;
-    this.answer.teacherId = 1;
+    this.answer.teacherId = this.teacherDto.teacherId;
     this.answer.questionId = this.temp;
     console.log(this.answer.questionId);
     this.answerService.create(this.answer).subscribe(data => {
@@ -373,22 +392,22 @@ export class ProgressDetailComponent implements OnInit {
     this.progressPercentage = Math.round((value / max) * 100);
   }
 
-  ckeditorMinLengthValidator(minLength: number): ValidatorFn {
-    return (control: AbstractControl): { [key: string]: any } | null => {
-      const contentLength = control.value.replace(/<[^>]*>/g, '').length;
-      return contentLength < minLength ? {'ckeditorMinLength': {value: control.value}} : null;
-    };
-  }
+  // ckeditorMinLengthValidator(minLength: number): ValidatorFn {
+  //   return (control: AbstractControl): { [key: string]: any } | null => {
+  //     const contentLength = control.value.replace(/<[^>]*>/g, '').length;
+  //     return contentLength < minLength ? {'ckeditorMinLength': {value: control.value}} : null;
+  //   };
+  // }
 
   formCreateQuestion: FormGroup = new FormGroup({
-    questionContent: new FormControl('', [Validators.required, this.ckeditorMinLengthValidator(5)])
+    questionContent: new FormControl('', [Validators.required])
   });
 
   formCreateAnswer: FormGroup = new FormGroup({
-    answerContent: new FormControl('', [Validators.required, this.ckeditorMinLengthValidator(5)])
+    answerContent: new FormControl('', [Validators.required])
   });
 
-  keditorMaxLengthValidator(maxLength: number): ValidatorFn {
+  ckeditorMaxLengthValidator(maxLength: number): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
       const contentLength = control.value.replace(/<[^>]*>/g, '').length;
       return contentLength > maxLength ? {'ckeditorMinLength': {value: control.value}} : null;

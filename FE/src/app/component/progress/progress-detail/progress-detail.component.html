@@ -78,7 +78,8 @@
       <h4><strong>Tiến độ</strong></h4>
       <div class="row mt-2" *ngFor="let progressDetail of progressDetails">
         <div class="col-md-2">
-          <button [disabled]="!progressDetail.progressStatus||!((role==='ROLE_STUDENT')&&flagLeader&&checkTeam)"  type="button"
+          <button [disabled]="!progressDetail.progressStatus || !(role==='ROLE_STUDENT') || !flagLeader"
+                  type="button"
                   class="btn btn-outline-info"
                   style="background: #14a2b8;">
             <a style="text-decoration: none"
@@ -164,18 +165,20 @@
                 <div class="d-flex justify-content-start mb-2 align-items-center "
                      [hidden]="projectDto?.projectStatus === false">
                   <img style="width: 50px; height: 50px " class="rounded-circle"
-                       src="{{teacherDto?.teacherImg}}" [hidden]="(projectDto?.projectStatus === false || (role==='ROLE_STUDENT')||!checkTeacher)">
+                       src="{{teacherUser?.teacherImg}}"
+                       [hidden]="(projectDto?.projectStatus === false || (role==='ROLE_STUDENT'))">
                 </div>
               </div>
               <div class="col-md-10">
                 <form *ngIf="progressReviewForm" [formGroup]="progressReviewForm" (ngSubmit)="onSubmit()"
-                      [hidden]="(projectDto?.projectStatus === false || (role==='ROLE_STUDENT'))||!checkTeacher">
+                      [hidden]="(projectDto?.projectStatus === false || (role==='ROLE_STUDENT'))">
                   <input type="text" formControlName="progressReviewId" hidden>
                   <div>Đánh giá tiến độ (<span style="color: red">*</span>)
                     <div class="slider-container">
-                      <input  style="width: 68%" type="range" min="0" name="progressReviewPercent"
-                              formControlName="progressReviewPercent" max="100" [(ngModel)]="progressPercentage"  (input)="updateProgress($event)" >
-                      <span  class="progressA " [style.width.%]="progressPercentage">
+                      <input style="width: 68%" type="range" min="0" name="progressReviewPercent"
+                             formControlName="progressReviewPercent" max="100" [(ngModel)]="progressPercentage"
+                             (input)="updateProgress($event)">
+                      <span class="progressA " [style.width.%]="progressPercentage">
                       <b><span class="swal2-textarea" style="color: #117a8b">{{progressPercentage}}%</span></b>
                     </span>
                     </div>
@@ -363,26 +366,26 @@
         <div class="d-flex justify-content-center ">
           <div class="w-50 border border-2 border-info p-3 rounded">
             <h5 class="text-center"><i>Thắc mắc của sinh viên</i></h5>
-            <div class="row">
+            <div class="row" *ngIf="studentQuestion&&role==='ROLE_TEACHER'">
               <div class="card" style="width: 100%">
                 <div class="card-body">
                   <div class="row" *ngFor="let question of questions">
                     <div class="col-md-2">
                       <div class="d-flex justify-content-start mb-2 align-items-center">
-                        <img style="width: 50px; " class="rounded-circle"
-                             src="https://trello-members.s3.amazonaws.com/6419258324eb7de7ddbc2717/171c559d6c162cdfbb5ac71cc6826acb/original.png">
+                        <img style="width: 50px; height: 50px " class="rounded-circle"
+                             src="{{studentQuestion?.studentImg}}">
                       </div>
                     </div>
                     <div class="col-md-10">
                       <div class="row">
-                        <span><b>{{question.studentName}}</b></span>
+                        <span><b>{{studentQuestion?.studentName}}</b></span>
                       </div>
                       <span style="color: white" class="badge bg-primary">{{question.questionTopic}}</span>
                       <p [innerHTML]="question.questionContent"></p>
                       <div class="row">
                         <div class="col-md-9">
                           <p class="btn btn-outline-info" (click)="getAllAnswer(question.questionId)"
-                             [hidden]="(!role==='ROLE_TEACHER'||!checkTeacher)">Trả lời</p>
+                          >Trả lời</p>
                           <div class="row" *ngIf="answers">
                             <div *ngIf="temp === question.questionId">
                               <div *ngFor="let answer of answers">
@@ -390,13 +393,13 @@
                                 <hr>
                                 <div class="row mt-3 d-flex justify-content-start mb-2 align-items-center">
                                   <div class="col-md-3 ">
-                                    <img style="width: 50px; " class="rounded-circle"
-                                         src="https://trello-members.s3.amazonaws.com/63ee4a1f39e41fa07a2423fb/0f54d062f4220c53a9cce2fa068791c3/original.png  "
+                                    <img style="width: 50px; height: 50px " class="rounded-circle"
+                                         src="{{teacherDto?.teacherImg}}"
                                          alt="">
                                   </div>
                                   <div class="col-md-7 ml-5 " style="width: 100%">
                                     <div class="row">
-                                      <p id="nameTeacher">{{answer.teacherName}}</p>
+                                      <p id="nameTeacher">{{teacherDto?.teacherName}}</p>
                                     </div>
                                     <p [innerHTML]="answer.answerContent"></p>
                                   </div>
@@ -426,12 +429,17 @@
                                     id="description"
                                     type="divarea">
                                   </ckeditor>
-                                  <p *ngIf="formCreateAnswer.controls?.answerContent?.touched && formCreateAnswer.controls?.answerContent?.errors?.required" class="text-danger">
+                                  <p
+                                    *ngIf="formCreateAnswer.controls?.answerContent?.touched && formCreateAnswer.controls?.answerContent?.errors?.required"
+                                    class="text-danger">
                                     Bạn không được bỏ trống ô này </p>
-                                  <p *ngIf="formCreateAnswer.controls?.answerContent?.dirty && formCreateAnswer.controls?.answerContent?.errors" class="text-danger">
+                                  <p
+                                    *ngIf="formCreateAnswer.controls?.answerContent?.dirty && formCreateAnswer.controls?.answerContent?.errors"
+                                    class="text-danger">
                                     Bạn phải nhập hơn 4 kí tự và nhỏ hơn 100 kí tự</p>
                                   <div class="d-flex justify-content-end ">
-                                    <button style="width: 4.3rem" class="btn btn-outline-dark mg-top mg-right " (click)="hideFormAnswer()">
+                                    <button style="width: 4.3rem" class="btn btn-outline-dark mg-top mg-right "
+                                            (click)="hideFormAnswer()">
                                       Hủy
                                     </button>
                                     <button class="btn btn-outline-info mg-top" type="submit">Đăng</button>
@@ -452,18 +460,61 @@
                   </div>
                   <div class="row">
                     <div class="col-md-2"></div>
-                    <div class="col-md-6"> <span> <a style="text-align: left;color: #0a58ca" role="button" (click)="loadMoreLan()"
+                    <div class="col-md-6"> <span> <a style="text-align: left;color: #0a58ca" role="button"
+                                                     (click)="loadMoreLan()"
                                                      *ngIf="flagQuestion">Xem thêm...</a></span>
                     </div>
                     <div class="col-md-4">
-                      <span *ngIf="totalElementAnswer>1"> <a style="text-align: left; color: #0a58ca" role="button" (click)="hidden()">Ẩn đánh giá</a></span>
+                      <span *ngIf="totalElementAnswer>1"> <a style="text-align: left; color: #0a58ca" role="button"
+                                                             (click)="hidden()">Ẩn đánh giá</a></span>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+
+
+<!--            <form [formGroup]="formCreateQuestion" (ngSubmit)="createQuestion()">-->
+<!--              <div class="row" [hidden]="!(role==='ROLE_STUDENT')">-->
+<!--                <div class="card" style="width: 100%">-->
+<!--                  <div class="card-body">-->
+<!--                    <div class="row">-->
+<!--                      <div class="col-md-2">-->
+<!--                        <div class="d-flex justify-content-start mb-2">-->
+<!--                          <img style="width: 50px; height: 50px " class="rounded-circle"-->
+<!--                               src="{{studentQuestion?.studentImg}}">-->
+<!--                        </div>-->
+<!--                      </div>-->
+<!--                      <div class="col-md-10">-->
+<!--                        <form [formGroup]="formCreateQuestion" *ngIf="formCreateQuestion" (ngSubmit)="createQuestion()">-->
+<!--                          <ckeditor-->
+<!--                            #editor-->
+<!--                            formControlName="questionContent"-->
+<!--                            id="description1"-->
+<!--                            type="textarea">-->
+<!--                          </ckeditor>-->
+<!--&lt;!&ndash;                          <p&ndash;&gt;-->
+<!--&lt;!&ndash;                            *ngIf="formCreateQuestion.controls?.questionContent?.touched && formCreateQuestion.controls?.questionContent?.errors?.required"&ndash;&gt;-->
+<!--&lt;!&ndash;                            class="text-danger">&ndash;&gt;-->
+<!--&lt;!&ndash;                            Bạn không được bỏ trống ô này </p>&ndash;&gt;-->
+<!--&lt;!&ndash;                          <p&ndash;&gt;-->
+<!--&lt;!&ndash;                            *ngIf="formCreateQuestion.controls?.questionContent?.dirty && formCreateQuestion.controls?.questionContent?.errors"&ndash;&gt;-->
+<!--&lt;!&ndash;                            class="text-danger">&ndash;&gt;-->
+<!--&lt;!&ndash;                            Bạn phải nhập hơn 4 kí tự và nhỏ hơn 100 kí tự</p>&ndash;&gt;-->
+<!--                          <div class="d-flex justify-content-end mt-3">-->
+<!--                            <button class="btn btn-outline-info" style="float: right" type="submit"-->
+<!--                                    [disabled]="checkTeam">Đăng-->
+<!--                            </button>-->
+<!--                          </div>-->
+<!--                        </form>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </form>-->
             <form [formGroup]="formCreateQuestion" (ngSubmit)="createQuestion()">
-              <div class="row" [hidden]="!(role==='ROLE_STUDENT')">
+              <div class="row">
                 <div class="card" style="width: 100%">
                   <div class="card-body">
                     <div class="row">
@@ -474,21 +525,18 @@
                         </div>
                       </div>
                       <div class="col-md-10">
-                        <form [formGroup]="formCreateQuestion" *ngIf="formCreateQuestion" (ngSubmit)="createQuestion()">
                           <ckeditor
                             #editor
                             formControlName="questionContent"
-                            id="description1"
                             type="textarea">
                           </ckeditor>
                           <p *ngIf="formCreateQuestion.controls?.questionContent?.touched && formCreateQuestion.controls?.questionContent?.errors?.required" class="text-danger">
                             Bạn không được bỏ trống ô này </p>
                           <p *ngIf="formCreateQuestion.controls?.questionContent?.dirty && formCreateQuestion.controls?.questionContent?.errors" class="text-danger">
                             Bạn phải nhập hơn 4 kí tự và nhỏ hơn 100 kí tự</p>
-                          <div class="d-flex justify-content-end mt-3">
-                            <button class="btn btn-outline-info" style="float: right" type="submit" [disabled]="checkTeam">Đăng</button>
+                          <div class="d-flex justify-content-end ">
+                            <button [disabled]="formCreateQuestion.invalid"  class="btn btn-outline-info mt-2" style="float: right" type="submit">Đăng</button>
                           </div>
-                        </form>
                       </div>
                     </div>
                   </div>

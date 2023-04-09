@@ -5,7 +5,6 @@ import Swal from 'sweetalert2';
 import {Team} from '../../../model/team';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TeamService} from '../../../service/team.service';
-import {log} from "util";
 
 @Component({
   selector: 'app-register-team',

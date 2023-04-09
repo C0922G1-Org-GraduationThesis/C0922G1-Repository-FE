@@ -32,6 +32,7 @@
             <li><a class="dropdown-item" routerLink="/students/register-instructor">Đăng ký GVHD</a></li>
             <li><a class="dropdown-item" *ngIf="studentId" routerLink="/students/register-team/{{studentId}}">Đăng ký nhóm</a></li>
             <li><a class="dropdown-item" *ngIf="teamId" routerLink="/students/register-topic/{{teamId.teamId}}">Đăng ký đề tài</a></li>
+            <li><a class="dropdown-item" *ngIf="teamId" routerLink="/students/info-team/{{teamId.teamId}}">Thông tin nhóm</a></li>
             <li><a class="dropdown-item" routerLink="/progress/progress-management">Quản lý tiến độ</a></li>
             <li><a class="dropdown-item" *ngIf="flagStudentLeader" href="/progress/report/{{idProject}}/{{idStage}}">Báo cáo tiến độ</a></li>
             <li><a class="dropdown-item" routerLink="/document">Tài liệu hướng dẫn</a></li>
@@ -45,7 +46,21 @@
             <li><a class="dropdown-item" routerLink="/teachers/list">Quản lý giáo viên</a></li>
           </ul>
         </div>
-        <a href="#scrollspyHeading2" class="nav-item nav-link">Liên Hệ</a>
+        <div class="text-black-50"><a href="#scrollspyHeading2" class="nav-item nav-link" style="color: black">Liên Hệ</a></div>
+      </div>
+      <div class="dropdown">
+        <a class="me-3 dropdown-toggle hidden-arrow" href="#" id="navbarDropdownMenuLink"
+           role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+          <i class="fas fa-bell"></i>
+          <span class="badge rounded-pill badge-notification bg-danger"></span>
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <li *ngFor="let announcement of listAnnouncement">
+            <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal10">
+              <a class="dropdown-item">{{announcement.announcementName}}: {{announcement.announcementContent}}</a>
+            </button>
+          </li>
+        </ul>
       </div>
       <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNav">
         <ul class="navbar-nav flex-grow-1 d-flex justify-content-end">
@@ -124,3 +139,22 @@
 </div>
 <!--</div>-->
 <!-- Navbar End -->
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal10" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>{{nameNoti}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" (click)="notJoin()" class="btn btn-secondary" data-bs-dismiss="modal">Không tham gia</button>
+        <button type="button" (click)="joinTeam()" class="btn btn-primary" data-bs-dismiss="modal">Tham gia</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -8,6 +8,7 @@ import {ProgressReportService} from "../../../service/progress-report.service";
 import {Team} from "../../../model/team";
 import {Announcement} from "../../../model/announcement";
 import {AnnouncementService} from "../../../service/announcement.service";
+import {Route, Router} from "@angular/router";
 
 @Component({
   selector: 'app-header',
@@ -26,16 +27,20 @@ export class HeaderComponent implements OnInit {
   studentId: number;
   teamId?: Team;
   listAnnouncement: Announcement[];
+  idTeam: number;
+  nameNoti: string;
 
   constructor(private tokenStorageService: TokenStorageService,
               private shareService: ShareService,
               private teacherService: TeacherService,
               private studentService: StudentService,
               private progressReportService: ProgressReportService,
-              private announcementService: AnnouncementService) {
+              private announcementService: AnnouncementService,
+              private route: Router) {
     this.shareService.getClickEvent().subscribe(() => {
       this.loadHeader();
     });
+    this.findNameUser();
   }
 
   loadHeader(): void {
@@ -60,12 +65,13 @@ export class HeaderComponent implements OnInit {
       });
     } else {
       this.studentService.findStudentByEmail(this.username).subscribe(next => {
-        console.log(next)
+        console.log('student', next)
         this.name = next.studentName;
         this.img = next.studentImg;
         this.flagStudentLeader = next.flagLeader;
         this.studentId = next.studentId;
-        this.teamId = next.teamId;
+        this.teamId = next.team;
+        this.findAllAnnouncement(this.studentId);
       });
     }
   }
@@ -87,6 +93,20 @@ export class HeaderComponent implements OnInit {
   findAllAnnouncement(studentId: number) {
     this.announcementService.findAll(studentId).subscribe(announcements => {
       this.listAnnouncement = announcements;
+      this.idTeam = +announcements[0].attach;
+      this.nameNoti = announcements[0].announcementContent;
     });
+  }
+
+  notJoin() {
+    this.announcementService.notJoin(this.idProject).subscribe(next => {
+      console.log(next)
+    })
+  }
+
+  joinTeam() {
+    this.announcementService.joinTeam(this.studentId, this.idTeam, this.idProject).subscribe(next => {
+      this.route.navigateByUrl('/students/info-team/' + this.idTeam);
+    })
   }
 }

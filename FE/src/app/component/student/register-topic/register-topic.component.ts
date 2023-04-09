@@ -51,7 +51,7 @@ export class RegisterTopicComponent implements OnInit {
   initForm() {
     this.formCreate = new FormGroup({
       projectName: new FormControl('', [Validators.required,
-        Validators.pattern('^[A-Z][a-zA-ZÀ-Ỹà-ỹ0-9\\s]{4,44}[a-zA-ZÀ-Ỹà-ỹ0-9]?$'),
+        // Validators.pattern('^[A-Z][a-zA-ZÀ-Ỹà-ỹ0-9\\s]{4,44}[a-zA-ZÀ-Ỹà-ỹ0-9]?$'),
         Validators.minLength(15),
         Validators.maxLength(250)]),
       projectContent: new FormControl('', [Validators.required,
