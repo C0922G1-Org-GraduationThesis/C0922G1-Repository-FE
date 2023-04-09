@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {ProgressDto} from '../model/dto/progress-dto';
 import {Observable} from 'rxjs';
+import {ProgressDto} from "../dto/progress-dto";
 
 @Injectable({
   providedIn: 'root'

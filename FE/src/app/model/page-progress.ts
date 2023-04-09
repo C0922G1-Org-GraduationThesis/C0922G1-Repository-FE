@@ -1,4 +1,4 @@
-import {ProgressDto} from './dto/progress-dto';
+import {ProgressDto} from "../dto/progress-dto";
 
 export interface PageProgress {
   content: ProgressDto[];

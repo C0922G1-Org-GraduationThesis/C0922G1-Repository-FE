@@ -13,19 +13,22 @@
     <div class="col-md-10">
       <div class="row">
         <div class="row">
-          <div class="col-md-4">  <div style="margin-bottom: 2%"><a routerLink="/progress/progress-management"
-                                                                    style="text-decoration: none">
-            <button type="button" class="btn btn-outline-info  mx-auto"
-                    style="border-radius: 15px; width: auto">Quay lại
-            </button>
-          </a>
-          </div> </div>
           <div class="col-md-4">
-        <h4 class="text-center  my-3">Các thành viên trong nhóm</h4>
+            <div style="margin-bottom: 2%"><a routerLink="/progress/progress-management"
+                                              style="text-decoration: none">
+              <button type="button" class="btn btn-outline-info  mx-auto"
+                      style="border-radius: 15px; width: auto">Quay lại
+              </button>
+            </a>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <h4 class="text-center  my-3">Các thành viên trong nhóm</h4>
           </div>
           <div class="col-md-4"></div>
         </div>
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 card-margin my-2" *ngFor="let progressStudentDto of progressStudentDtos">
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 card-margin my-2"
+             *ngFor="let progressStudentDto of progressStudentDtos">
           <div class="card" style="  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, opacity 0.3s ease-in-out;
   opacity: 0.9;">
@@ -36,22 +39,26 @@
             <div class="card-body">
               <h5 class="card-title text-primary">{{progressStudentDto.studentName}}</h5>
               <p class="card-text">
-                <label style="margin-left: -2px"><img src="../../../../assets/img/icons8-id-verified-24.png" width="28px" height="28px"></label>
+                <label style="margin-left: -2px"><img src="../../../../assets/img/icons8-id-verified-24.png"
+                                                      width="28px" height="28px"></label>
                 <label style="font-weight: bold">&ensp;Mã sinh viên: </label>
-                <label >&ensp;{{progressStudentDto.studentCode}}</label>
+                <label>&ensp;{{progressStudentDto.studentCode}}</label>
               </p>
               <p class="card-text ">
-                <label style="margin-left: -2px" ><img src="../../../../assets/img/classroom.png" width="28px" height="28px"></label>
+                <label style="margin-left: -2px"><img src="../../../../assets/img/classroom.png" width="28px"
+                                                      height="28px"></label>
                 <label style="font-weight: bold; ">&ensp;Lớp: </label>
                 <label>&ensp;{{progressStudentDto.studentClassName}}</label>
               </p>
               <p class="card-text">
-                <label style="margin-left: 2px"><img  src="../../../../assets/img/icons8-sign-mail-24.png" width="20px" height="22px"></label>
+                <label style="margin-left: 2px"><img src="../../../../assets/img/icons8-sign-mail-24.png" width="20px"
+                                                     height="22px"></label>
                 <label style="font-weight: bold">&ensp;Email: </label>
                 <label style="font-size: 13px">&ensp;{{progressStudentDto.studentEmail}}</label>
               </p>
               <p class="card-text">
-                <label style="margin-left: 3px"><img src="../../../../assets/img/icons8-phone-24.png" width="15px" height="17px"></label>
+                <label style="margin-left: 3px"><img src="../../../../assets/img/icons8-phone-24.png" width="15px"
+                                                     height="17px"></label>
                 <label style="font-weight: bold">&ensp;Sđt: </label>
                 <label style="font-size: 13px">&ensp;{{progressStudentDto.studentPhoneNumber}}</label>
               </p>
@@ -71,14 +78,17 @@
       <h4><strong>Tiến độ</strong></h4>
       <div class="row mt-2" *ngFor="let progressDetail of progressDetails">
         <div class="col-md-2">
-          <button [disabled]="!progressDetail.progressStatus" type="button" class="btn btn-outline-info"
+          <button [disabled]="!progressDetail.progressStatus||!((role==='ROLE_STUDENT')&&flagLeader&&checkTeam)"
+                  type="button"
+                  class="btn btn-outline-info"
                   style="background: #14a2b8;">
             <a style="text-decoration: none"
                routerLink="/progress/report/{{projectId}}/{{progressDetail.stageId}}"><span
               style="color: white">{{progressDetail.progressDetailName}}</span></a></button>
         </div>
         <div class="col-md-8">
-          <span>Giai đoạn {{progressDetail.stageId}}: Từ <i><b>{{progressDetail.progressDateStart |date: "dd-MM-yyyy"}}</b></i>
+          <span>Giai đoạn {{progressDetail.stageId}}
+            : Từ <i><b>{{progressDetail.progressDateStart |date: "dd-MM-yyyy"}}</b></i>
             đến <i><b>{{progressDetail.progressDateEnd |date: "dd-MM-yyyy"}}</b></i></span>
           <span><ng-container *ngIf="progressDetail.progressDetailPercent === 100"><span
             class="badge bg-success mx-2">Hoàn thành</span></ng-container><ng-container
@@ -88,8 +98,8 @@
               *ngIf="progressDetail.progressDetailPercent > 0 && progressDetail.progressDetailPercent < 100 && progressDetail.progressStatus ===false "><span
               class="badge bg-danger mx-2">Chưa hoàn thành</span></ng-container>
           <ng-container
-            *ngIf="progressDetail.progressDetailPercent > 0 && progressDetail.progressDetailPercent < 100 && progressDetail.progressStatus ===true "><span
-            class="badge bg-secondary mx-2">Đang thực hiện</span></ng-container></span>
+            *ngIf="progressDetail.progressDetailPercent >= 0 && progressDetail.progressDetailPercent < 100 && progressDetail.progressStatus ===true "><span
+            class="badge bg-warning mx-2">Đang thực hiện</span></ng-container></span>
 
           <div class="progress" role="progressbar">
             <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger"
@@ -154,47 +164,57 @@
               <div class="col-md-2">
                 <div class="d-flex justify-content-start mb-2 align-items-center "
                      [hidden]="projectDto?.projectStatus === false">
-                  <img style="width: 50px; " class="rounded-circle"
-                       src="{{teacherDto?.teacherImg}}" [hidden]="projectDto?.projectStatus === false">
+                  <img style="width: 50px; height: 50px " class="rounded-circle"
+                       src="{{teacherDto?.teacherImg}}"
+                       [hidden]="(projectDto?.projectStatus === false || (role==='ROLE_STUDENT'))">
                 </div>
               </div>
               <div class="col-md-10">
                 <form *ngIf="progressReviewForm" [formGroup]="progressReviewForm" (ngSubmit)="onSubmit()"
-                      [hidden]="projectDto?.projectStatus === false">
+                      [hidden]="(projectDto?.projectStatus === false || (role==='ROLE_STUDENT'))">
                   <input type="text" formControlName="progressReviewId" hidden>
-                  <div class="row">
-            <span>Đánh giá tiến độ:(<span style="color: red">*</span>) <div class="form-check-inline mx-1">
-  <input class="form-check-input" type="radio" name="progressReviewPercent" formControlName="progressReviewPercent"
-         id="exampleRadios1" [value]=25 checked>
-                   <label class="form-check-label" for="exampleRadios1">
-    25%
-  </label>
-                </div>
-<div class="form-check-inline">
-  <input class="form-check-input" type="radio" name="progressReviewPercent" formControlName="progressReviewPercent"
-         id="exampleRadios2" [value]=50>
-                     <label class="form-check-label" for="exampleRadios2">
-    50%
-  </label>
-                 </div><div class="form-check-inline">
-  <input class="form-check-input" type="radio" name="progressReviewPercent" formControlName="progressReviewPercent"
-         id="exampleRadios3" [value]=75>
-                 <label class="form-check-label" for="exampleRadios2">
-    75%
-  </label>
-                   </div><div class="form-check-inline">
-  <input class="form-check-input" type="radio" name="progressReviewPercent" formControlName="progressReviewPercent"
-         id="exampleRadios4" [value]=100>
-                <label class="form-check-label" for="exampleRadios2">
-    100%
-  </label>
-</div>
-            </span>
+                  <div>Đánh giá tiến độ (<span style="color: red">*</span>)
+                    <div class="slider-container">
+                      <input style="width: 68%" type="range" min="0" name="progressReviewPercent"
+                             formControlName="progressReviewPercent" max="100" [(ngModel)]="progressPercentage"
+                             (input)="updateProgress($event)">
+                      <span class="progressA " [style.width.%]="progressPercentage">
+                      <b><span class="swal2-textarea" style="color: #117a8b">{{progressPercentage}}%</span></b>
+                    </span>
+                    </div>
+                    <!--                <div class="form-check-inline mx-1">-->
+                    <!--    <input class="form-check-input" type="radio" name="progressReviewPercent" formControlName="progressReviewPercent"-->
+                    <!--           id="exampleRadios1" [value]=25 checked>-->
+                    <!--                     <label class="form-check-label" for="exampleRadios1">-->
+                    <!--      25%-->
+                    <!--    </label>-->
+                    <!--                  </div>-->
+                    <!--  <div class="form-check-inline">-->
+                    <!--    <input class="form-check-input" type="radio" name="progressReviewPercent" formControlName="progressReviewPercent"-->
+                    <!--           id="exampleRadios2" [value]=50>-->
+                    <!--                       <label class="form-check-label" for="exampleRadios2">-->
+                    <!--      50%-->
+                    <!--    </label>-->
+                    <!--                   </div><div class="form-check-inline">-->
+                    <!--    <input class="form-check-input" type="radio" name="progressReviewPercent" formControlName="progressReviewPercent"-->
+                    <!--           id="exampleRadios3" [value]=75>-->
+                    <!--                   <label class="form-check-label" for="exampleRadios2">-->
+                    <!--      75%-->
+                    <!--    </label>-->
+                    <!--                     </div><div class="form-check-inline">-->
+                    <!--    <input class="form-check-input" type="radio" name="progressReviewPercent" formControlName="progressReviewPercent"-->
+                    <!--           id="exampleRadios4" [value]=100>-->
+                    <!--                  <label class="form-check-label" for="exampleRadios2">-->
+                    <!--      100%-->
+                    <!--    </label>-->
+                    <!--  </div>-->
                   </div>
 
                   <div class="text-danger"
-                        *ngIf="progressReviewForm.controls.progressReviewPercent.touched && progressReviewForm.controls.progressReviewPercent?.errors?.required">Bạn không được bỏ trống ô này</div>
-                  <label class="col-form-label">Tiêu đề:(<span style="color: red">*</span>)</label>
+                       *ngIf="progressReviewForm.controls.progressReviewPercent.touched && progressReviewForm.controls.progressReviewPercent?.errors?.required">
+                    Bạn không được bỏ trống ô này
+                  </div>
+                  <label class="col-form-label">Tiêu đề (<span style="color: red">*</span>)</label>
                   <div class="input-group  mb-2 ">
                     <input type="text" class="form-control" formControlName="progressReviewTitle" aria-label="Username">
                   </div>
@@ -208,8 +228,8 @@
                      *ngIf="progressReviewForm.controls.progressReviewTitle.dirty && progressReviewForm.controls.progressReviewTitle?.errors?.maxLength">
                     Bận phài nhập dưới 100 kí tự</p>
                   <div class="form-group">
-                    <label for="exampleFormControlTextarea1">Nội dung:(<span style="color: red">*</span>)
-                    </label><textarea   placeholder="Nhập nội dung ở đây"
+                    <label for="exampleFormControlTextarea1">Nội dung (<span style="color: red">*</span>)
+                    </label><textarea placeholder="Nhập nội dung ở đây"
                                       formControlName="progressReviewContent"
                                       class="form-control"
                                       id="exampleFormControlTextarea1"
@@ -236,26 +256,31 @@
               </div>
             </div>
             <div class="row mt-4" *ngFor="let progressReview of progressReviewsRecords">
-              <div class="col-md-2">
-                <div class="d-flex justify-content-start mb-2 align-items-center">
-                  <img style="width: 50px; " class="rounded-circle"
-                       src="{{progressReview.teacher?.teacherImg}}">
-                </div>
-              </div>
-              <div class="col-md-10">
-                <div class="row">
-                  <span><b>{{progressReview?.teacher?.teacherName}}</b></span>
-                </div>
-                <span class="badge bg-success">{{progressReview?.progressReviewTitle}}</span>
-                <div class="row">
-                  <div class="col md-8">
-                    <p>{{progressReview?.progressReviewContent}}</p>
-                  </div>
-                  <div class="col-md-4">
-                    <span style="text-align: left; font-size: 12px">{{progressReview?.progressReviewDateCreate}}</span>
+              <ng-container *ngIf="progressReviewsRecords.length ===0"><span class="text-center text-danger">Chưa có đánh giá nào</span>
+              </ng-container>
+              <ng-container *ngIf="progressReviewsRecords.length !==0">
+                <div class="col-md-2">
+                  <div class="d-flex justify-content-start mb-2 align-items-center">
+                    <img style="width: 50px;height: 50px " class="rounded-circle"
+                         src="{{progressReview.teacher?.teacherImg}}">
                   </div>
                 </div>
-              </div>
+                <div class="col-md-10">
+                  <div class="row">
+                    <span><b>{{progressReview?.teacher?.teacherName}}</b></span>
+                  </div>
+                  <span class="badge bg-success">{{progressReview?.progressReviewTitle}}</span>
+                  <div class="row">
+                    <div class="col md-8">
+                      <p>{{progressReview?.progressReviewContent}}</p>
+                    </div>
+                    <div class="col-md-4">
+                      <span
+                        style="text-align: left; font-size: 12px">{{progressReview?.progressReviewDateCreate}}</span>
+                    </div>
+                  </div>
+                </div>
+                </ng-container>
             </div>
             <hr>
             <div class="row">
@@ -293,12 +318,18 @@
                           <span><b style=" font-size: 16px">{{studentProgressReport.studentName}}</b></span>
                         </div>
                         <p class="badge bg-info" style=" font-size: 14px">{{studentProgressReport.stageName}}</p>
-                        <p><span><img src="../../../../assets/img/progress_report_icon_img/icons8-content-90.png" style="width: 4%; height: 8%;" alt="">&nbsp;</span><span>{{studentProgressReport.progressReportContent}}</span></p>
+                        <p><span><img src="../../../../assets/img/progress_report_icon_img/icons8-content-90.png"
+                                      style="width: 4%; height: 8%;"
+                                      alt="">&nbsp;</span><span>{{studentProgressReport.progressReportContent}}</span>
+                        </p>
                         <p>
-                          <span><img src="../../../../assets/img/progress_report_icon_img/icons8-downloads-90.png" style="width: 4%; height: 8%;" alt="">&nbsp;</span><span>File báo cáo : </span><strong><span>{{studentProgressReport.progressReportFileName}}</span></strong>
+                          <span><img src="../../../../assets/img/progress_report_icon_img/icons8-downloads-90.png"
+                                     style="width: 4%; height: 8%;"
+                                     alt="">&nbsp;</span><span>File báo cáo : </span><strong><span>{{studentProgressReport.progressReportFileName}}</span></strong>
                           <span>
         <input hidden type="text" [(ngModel)]="studentProgressReport.progressReportFile">
-          <a [href]="studentProgressReport.progressReportFile" download="" target="_blank"><span>&nbsp;&nbsp;&nbsp;</span><img
+          <a [href]="studentProgressReport.progressReportFile" download=""
+             target="_blank"><span>&nbsp;&nbsp;&nbsp;</span><img
             class="mx-auto" width="30px"
             height="30px"
             src="../../../../assets/img/progress_report_icon_img/file_download_icon.png"
@@ -308,7 +339,8 @@
                           <div class="col-md-8">
                           </div>
                           <div class="col-md-4">
-                            <p style="font-size: 12px">{{studentProgressReport.progressReportTime| date: "yyyy-MM-dd hh:mm:ss"}}</p>
+                            <p
+                              style="font-size: 12px">{{studentProgressReport.progressReportTime| date: "yyyy-MM-dd hh:mm:ss"}}</p>
                           </div>
                         </div>
                       </div>
@@ -325,7 +357,7 @@
                   <div class="col-md-2"></div>
                   <div class="col-md-3">
   <span *ngIf="totalElementProgress > 1"> <a style="text-align: center; color: #0a58ca" role="button"
-                                             (click)="hiddenLess()">Ẩn báo cáo...</a></span>
+                                             (click)="hiddenLess()">Ẩn báo cáo</a></span>
                   </div>
                   <div class="col-md-1"></div>
                 </div>
@@ -334,7 +366,7 @@
           </div>
         </div>
       </div>
-<!--      Task của lan-->
+      <!--      Task của lan-->
       <div class="tab-pane" id="messages" role="tabpanel" aria-labelledby="messages-tab">
         <div class="d-flex justify-content-center ">
           <div class="w-50 border border-2 border-info p-3 rounded">
@@ -357,7 +389,8 @@
                       <p [innerHTML]="question.questionContent"></p>
                       <div class="row">
                         <div class="col-md-9">
-                          <p class="btn btn-outline-info" (click)="getAllAnswer(question.questionId)">Trả lời</p>
+                          <p class="btn btn-outline-info" (click)="getAllAnswer(question.questionId)"
+                             [hidden]="!(role==='ROLE_TEACHER')">Trả lời</p>
                           <div class="row" *ngIf="answers">
                             <div *ngIf="temp === question.questionId">
                               <div *ngFor="let answer of answers">
@@ -387,14 +420,14 @@
                                   <div class="col-md-2 ml-5">
                                   </div>
                                   <div class="row d-flex justify-content-end"><span
-                                    style="font-size: 12px"><small>{{answer.dateTime | date: "dd-MM-yyyy hh:ss"}}</small></span>
+                                    style="font-size: 12px"><small>{{answer.dateTime | date: "dd-MM-yyyy hh:mm:ss"}}</small></span>
                                   </div>
                                 </div>
                                 <div class="row"></div>
                               </div>
                               <div *ngIf="answerFlag">
-                                <form [formGroup]="formCreateAnswer" *ngIf="formCreateAnswer" (ngSubmit)="createAnswer()">
-                                  <label for="description">Nhập câu trả lời của bạn vào đây</label>
+                                <form [formGroup]="formCreateAnswer" *ngIf="formCreateAnswer"
+                                      (ngSubmit)="createAnswer()">
                                   <ckeditor
                                     #editor
                                     formControlName="answerContent"
@@ -402,8 +435,11 @@
                                     type="divarea">
                                   </ckeditor>
                                   <div class="d-flex justify-content-end ">
-                                    <button class="btn btn-outline-success mg-top" type="submit">Đăng</button>
-                                    <button class="btn btn-outline-danger mg-top mg-left " (click)="hideFormAnswer()">Hủy</button>
+                                    <button style="width: 4.3rem" class="btn btn-outline-dark mg-top mg-right "
+                                            (click)="hideFormAnswer()">
+                                      Hủy
+                                    </button>
+                                    <button class="btn btn-outline-info mg-top" type="submit">Đăng</button>
                                   </div>
                                 </form>
                               </div>
@@ -412,7 +448,8 @@
                           </div>
                         </div>
                         <div class="col-md-3">
-                          <span class="" style="font-size: 12px;"><small>{{question.dateTime| date: 'dd-MM-yyyy hh:mm'}}</small></span>
+                          <span class=""
+                                style="font-size: 12px;"><small>{{question.dateTime| date: 'dd-MM-yyyy hh:mm:ss'}}</small></span>
                         </div>
                       </div>
                       <hr>
@@ -420,18 +457,20 @@
                   </div>
                   <div class="row">
                     <div class="col-md-2"></div>
-                    <div class="col-md-6"> <span> <a style="text-align: left" role="button" (click)="loadMoreLan()"
-                                                     *ngIf="flagQuestion">Xem thêm</a></span>
+                    <div class="col-md-6"> <span> <a style="text-align: left;color: #0a58ca" role="button"
+                                                     (click)="loadMoreLan()"
+                                                     *ngIf="flagQuestion">Xem thêm...</a></span>
                     </div>
                     <div class="col-md-4">
-                      <span *ngIf="totalElementAnswer>1"> <a style="text-align: left" role="button" (click)="hidden()">Ẩn đánh giá</a></span>
+                      <span *ngIf="totalElementAnswer>1"> <a style="text-align: left; color: #0a58ca" role="button"
+                                                             (click)="hidden()">Ẩn đánh giá</a></span>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
             <form [formGroup]="formCreateQuestion" (ngSubmit)="createQuestion()">
-              <div class="row">
+              <div class="row" [hidden]="!(role==='ROLE_STUDENT')">
                 <div class="card" style="width: 100%">
                   <div class="card-body">
                     <div class="row">
@@ -443,14 +482,13 @@
                       </div>
                       <div class="col-md-10">
                         <form [formGroup]="formCreateQuestion" *ngIf="formCreateQuestion" (ngSubmit)="createQuestion()">
-                          <label for="description1">Nhập thắc mắc của bạn vào đây</label>
                           <ckeditor
                             #editor
                             formControlName="questionContent"
                             id="description1"
                             type="textarea">
                           </ckeditor>
-                          <div class="d-flex justify-content-end ">
+                          <div class="d-flex justify-content-end mt-3">
                             <button class="btn btn-outline-info" style="float: right" type="submit">Đăng</button>
                           </div>
                         </form>

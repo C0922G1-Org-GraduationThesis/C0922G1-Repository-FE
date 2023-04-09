@@ -1,5 +1,3 @@
-import {Stage} from './stage';
-
 export interface ProgressDetail {
   progressDetailId: number;
   progressDetailName: string;

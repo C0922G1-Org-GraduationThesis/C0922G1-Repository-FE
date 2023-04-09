@@ -15,7 +15,7 @@ export interface Student {
   studentImg?: string;
   flagDelete?: boolean;
   flagLeader?: boolean;
-  teamId?: Team;
+  team?: Team;
   clazzId?: Clazz;
   accountId?: Account;
   questionId?: Question;

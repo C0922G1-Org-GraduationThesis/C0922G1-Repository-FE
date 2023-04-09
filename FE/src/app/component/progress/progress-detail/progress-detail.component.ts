@@ -1,23 +1,28 @@
 import {Component, OnInit} from '@angular/core';
-import {ProgressDetailService} from '../../../service/progress-detail.service';
-import {ActivatedRoute, ParamMap} from '@angular/router';
-import {ProgressDto} from '../../../model/dto/progress-dto';
-import {ProgressStudentDto} from '../../../model/dto/progress-student-dto';
-import {ProgressReviewService} from '../../../service/progress-review.service';
-import {ProgressReview} from '../../../model/progress-review';
-import {ProgressDetail} from '../../../model/progress-detail';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {ProjectDto} from '../../../model/dto/project-dto';
-import {TeacherDto} from '../../../model/dto/teacher-dto';
+
 import Swal from 'sweetalert2';
-import {templateJitUrl} from '@angular/compiler';
-import {StudentProgressReport} from '../../../model/student-progress-report';
-import {StudentProgressReportService} from '../../../service/student-progress-report.service';
-import {Question} from '../../../model/question';
-import {Answers} from '../../../model/answers';
-import {AnswerService} from '../../../service/answer.service';
-import {QuestionService} from '../../../service/question.service';
-import {ViewportScroller} from '@angular/common';
+import {ProgressDto} from "../../../dto/progress-dto";
+import {ProgressStudentDto} from "../../../dto/progress-student-dto";
+import {ProgressReview} from "../../../model/progress-review";
+import {ProjectDto} from "../../../dto/project-dto";
+import {TeacherDtoProgress} from "../../../dto/teacher-dto-progress";
+import {ProgressDetail} from "../../../model/progress-detail";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {StudentProgressReport} from "../../../model/student-progress-report";
+import {Question} from "../../../model/question";
+import {Answers} from "../../../model/answers";
+import {ProgressDetailService} from "../../../service/progress-detail.service";
+import {ProgressReviewService} from "../../../service/progress-review.service";
+import {ActivatedRoute, ParamMap} from "@angular/router";
+import {StudentProgressReportService} from "../../../service/student-progress-report.service";
+import {QuestionService} from "../../../service/question.service";
+import {AnswerService} from "../../../service/answer.service";
+import {ViewportScroller} from "@angular/common";
+import {TokenStorageService} from "../../../service/token-storage.service";
+import {StudentService} from "../../../service/student/student.service";
+import {Student} from "../../../model/student";
+import {ProjectService} from "../../../service/project.service";
+import {IteamDTOO} from "../../../dto/iteam-DTOO";
 
 @Component({
   selector: 'app-progress-detail',
@@ -30,7 +35,7 @@ export class ProgressDetailComponent implements OnInit {
   progressReviews: ProgressReview[];
   progressReviewsRecords: ProgressReview[];
   projectDto: ProjectDto;
-  teacherDto?: TeacherDto;
+  teacherDto?: TeacherDtoProgress;
   checkShowMore = true;
   checkHideMore = true;
   projectId: number;
@@ -38,6 +43,7 @@ export class ProgressDetailComponent implements OnInit {
   private record = 2;
   progressDetails: ProgressDetail[];
   progressReviewForm: FormGroup;
+  teamDto: IteamDTOO;
   // SyVT
   studentProgressReports: StudentProgressReport[];
   totalElementProgress = 2;
@@ -54,8 +60,15 @@ export class ProgressDetailComponent implements OnInit {
   temp: number;
   answerFlag = false;
 
-   value = 50;
-
+  value = 50;
+  role?: string;
+  emailFindLeader?: string;
+  flagLeader?: boolean;
+  studentFindLeader?: Student;
+  progressPercentage = 0;
+  idTeamLeader?: number;
+  checkTeam?: boolean;
+  idTeam?: number;
   formCreateQuestion: FormGroup = new FormGroup({
     questionContent: new FormControl()
   });
@@ -70,7 +83,10 @@ export class ProgressDetailComponent implements OnInit {
               private studentProgressReportService: StudentProgressReportService,
               private questionService: QuestionService,
               private answerService: AnswerService,
-              private viewportScroller: ViewportScroller) {
+              private viewportScroller: ViewportScroller,
+              private tokenStorageService: TokenStorageService,
+              private studentService: StudentService,
+              private projectService: ProjectService) {
   }
 
   ngOnInit(): void {
@@ -89,7 +105,25 @@ export class ProgressDetailComponent implements OnInit {
       this.getLengthStudentProgressReport();
       this.saveAutoProgressDetail(this.projectId);
       this.getAllQuestion();
+      this.findTeamByProjectId(this.projectId);
+      this.role = this.tokenStorageService.getUser().roles[0];
+      this.emailFindLeader = this.tokenStorageService.getUser().username;
+      this.findStudentLeader(this.emailFindLeader);
+      this.checkTeam = (this.idTeamLeader === this.idTeam);
     });
+  }
+
+  findStudentLeader(email: string) {
+    if (this.role === 'ROLE_STUDENT') {
+      this.studentService.findStudentByEmail(email).subscribe(next => {
+        this.studentFindLeader = next;
+        this.flagLeader = this.studentFindLeader.flagLeader;
+        this.idTeamLeader = next.team?.teamId;
+        // console.log('Studnet' + next);
+        // console.log('Studnetid' + next.team.teamId);
+        // console.log('Studnetleader' + next.flagLeader);
+      })
+    }
   }
 
   getProjectById(projectId: number) {
@@ -107,6 +141,7 @@ export class ProgressDetailComponent implements OnInit {
   getProgressReview(projectId: number) {
     this.progressReviewService.getProgressReviewByProjectId(projectId).subscribe(item => {
       this.progressReviews = item;
+      this.progressPercentage = item[0].progressReviewPercent;
       if (this.maxSizeProgressReview === 0) {
         this.checkShowMore = false;
       }
@@ -186,6 +221,9 @@ export class ProgressDetailComponent implements OnInit {
     }
     this.progressReviewService.getProgressReviewByRecord(this.projectId, this.record).subscribe(item => {
       this.progressReviewsRecords = item;
+      if (item.length < this.record) {
+        this.checkShowMore = false;
+      }
     });
   }
 
@@ -193,6 +231,8 @@ export class ProgressDetailComponent implements OnInit {
     this.record -= 1;
     if (this.record < 2) {
       this.checkHideMore = false;
+    } else {
+      this.checkShowMore = true;
     }
     this.progressReviewService.getProgressReviewByRecord(this.projectId, this.record).subscribe(item => {
       this.progressReviewsRecords = item;
@@ -203,7 +243,6 @@ export class ProgressDetailComponent implements OnInit {
   private getLengthStudentProgressReport() {
     this.studentProgressReportService.getStudentProgressReport(this.projectId).subscribe(item => {
       this.maxElement = item.length;
-      console.log(this.maxElement);
     });
   }
 
@@ -211,7 +250,6 @@ export class ProgressDetailComponent implements OnInit {
     this.studentProgressReportService.getAllStudentProgressReport(this.projectId, this.totalElementProgress).subscribe(
       (data) => {
         this.studentProgressReports = data;
-        console.log(data.length);
       }
     );
   }
@@ -224,8 +262,6 @@ export class ProgressDetailComponent implements OnInit {
     this.studentProgressReportService.getAllStudentProgressReport(this.projectId, this.totalElementProgress).subscribe(
       (data) => {
         this.studentProgressReports = data;
-        console.log(data.length);
-        console.log(this.totalElementProgress);
       }
     );
   }
@@ -240,8 +276,6 @@ export class ProgressDetailComponent implements OnInit {
     this.studentProgressReportService.getAllStudentProgressReport(this.projectId, this.totalElementProgress).subscribe(
       (data) => {
         this.studentProgressReports = data;
-        console.log(data);
-        console.log(data.length);
       }
     );
   }
@@ -252,13 +286,20 @@ export class ProgressDetailComponent implements OnInit {
     });
   }
 
+  findTeamByProjectId(projectId: number) {
+    this.projectService.findTeamById(projectId).subscribe(item => {
+      this.teamDto = item;
+      this.idTeam = item.teamId;
+      console.log('idTeam' + this.idTeam);
+    })
+  }
+
   //////////////////////// LanNan
   getAllQuestion() {
     this.questionService.getAllQuestion(this.totalElementAnswer).subscribe(
       (data) => {
         this.questions = data.content;
         this.maxElementAnswer = data.totalPages;
-        console.log(data.content);
       }
     );
   }
@@ -271,8 +312,6 @@ export class ProgressDetailComponent implements OnInit {
     this.questionService.getAllQuestion(this.totalElementAnswer).subscribe(
       (data) => {
         this.questions = data.content;
-        console.log(data.content);
-        console.log(this.totalElementAnswer);
       }
     );
   }
@@ -287,8 +326,6 @@ export class ProgressDetailComponent implements OnInit {
     this.questionService.getAllQuestion(this.totalElementAnswer).subscribe(
       (data) => {
         this.questions = data.content;
-        console.log(data.content);
-        // console.log(data.totalPages);
       }
     );
   }
@@ -296,11 +333,9 @@ export class ProgressDetailComponent implements OnInit {
   getAllAnswer(questionId: number) {
     this.answerFlag = true;
     this.temp = questionId;
-    console.log('abc ' + questionId);
     this.answerService.getAllAnswer(questionId).subscribe(
       (data) => {
         this.answers = data;
-        console.log(this.answers);
       }
     );
   }
@@ -310,7 +345,6 @@ export class ProgressDetailComponent implements OnInit {
     this.question.studentId = 2;
     this.question.questionTopic = 'Giai doan 3';
     this.questionService.create(this.question).subscribe(data => {
-      alert('Them moi thac mac thanh cong');
       this.totalElementAnswer++;
       this.getAllQuestion();
       this.formCreateQuestion.reset();
@@ -320,11 +354,10 @@ export class ProgressDetailComponent implements OnInit {
 
   createAnswer() {
     this.answer = this.formCreateAnswer.value;
-    this.answer.teacherId = 1;
+    this.answer.teacherId = this.teacherDto.teacherId;
     this.answer.questionId = this.temp;
     console.log(this.answer.questionId);
     this.answerService.create(this.answer).subscribe(data => {
-      alert('Them moi cau tra loi thanh cong');
       this.getAllAnswer(this.temp);
       this.formCreateAnswer.reset();
     });
@@ -332,5 +365,12 @@ export class ProgressDetailComponent implements OnInit {
 
   hideFormAnswer() {
     this.answerFlag = false;
+  }
+
+  updateProgress(event: Event) {
+    const slider = event.target as HTMLInputElement;
+    const value = Number(slider.value);
+    const max = Number(slider.max);
+    this.progressPercentage = Math.round((value / max) * 100);
   }
 }

@@ -4,7 +4,7 @@ import {ActivatedRoute} from '@angular/router';
 import {ProgressReport} from '../../../model/progress-report';
 import {HttpClient} from '@angular/common/http';
 import {ProgressReportService} from '../../../service/progress-report.service';
-import {PageSy} from '../../../model/page-sy';
+import {PageProgressReport} from '../../../model/page-progress-report';
 
 
 
@@ -21,7 +21,7 @@ export class ProgressReportHistoryComponent implements OnInit {
   page = 0;
   fileNameSearch = '';
   progressReportPage: ProgressReport[] = [];
-  teamPage!: PageSy;
+  teamPage!: PageProgressReport;
   currentPage: number;
   flag = false;
 

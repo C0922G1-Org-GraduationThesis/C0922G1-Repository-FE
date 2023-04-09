@@ -24,12 +24,10 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css",
-              "node_modules/sweetalert2/dist/sweetalert2.min.css"
+              "src/styles.css"
             ],
             "scripts": [
-              "src/assets/bootstrap-5.1.3-dist/js/bootstrap.min.js",
-              "node_modules/sweetalert2/dist/sweetalert2.min.js"
+              "src/assets/bootstrap-5.1.3-dist/js/bootstrap.min.js"
             ]
           },
           "configurations": {
@@ -92,9 +90,10 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+
             ],
-            "scripts": []
+            "scripts": [
+            ]
           }
         },
         "lint": {
@@ -125,5 +124,9 @@
       }
     }
   },
-  "defaultProject": "graduation-thesis-angular"
+  "defaultProject": "graduation-thesis-angular",
+  "cli": {
+    "analytics": "86154399-c9c9-4db5-9400-ec1b8e446df3"
+  }
 }
+

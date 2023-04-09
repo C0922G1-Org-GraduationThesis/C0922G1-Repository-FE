@@ -1,10 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {Project} from '../model/project';
-import {ProgressDto} from '../model/dto/progress-dto';
-import {ProgressStudentDto} from '../model/dto/progress-student-dto';
 import {ProgressDetail} from '../model/progress-detail';
+import {ProgressDto} from "../dto/progress-dto";
+import {ProgressStudentDto} from "../dto/progress-student-dto";
 
 @Injectable({
   providedIn: 'root'

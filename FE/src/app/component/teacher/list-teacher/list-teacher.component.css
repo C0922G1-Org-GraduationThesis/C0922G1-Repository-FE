@@ -1,0 +1,130 @@
+/**
+create by :HungPV
+date create : 02/04/2023
+screen : css
+ */
+.text--info {
+  text-align: center;
+}
+
+.mg-top-1 {
+  margin-top: -1rem;
+}
+
+h2 {
+  color: #17a2b8;
+}
+
+.card {
+  width: 19rem;
+  box-shadow: 3px 4px 8px rgba(0, 0, 0, .5);
+  background-color: #f8f9fa;
+
+}
+
+.card-margin {
+  margin: -5px;
+}
+
+.card-title {
+  text-align: center;
+  color: green;
+}
+
+.card-text {
+  font-size: 14px;
+  margin: 0px;
+}
+
+.row {
+  padding-top: 15px;
+}
+
+.container {
+  padding-top: 30px;
+}
+
+img {
+  object-fit: cover;
+}
+
+h4 {
+  color: red;
+  text-align: center;
+}
+
+.button-create {
+  margin: 30px;
+}
+
+.button-search {
+  width: 130px;
+}
+
+.div-paginable {
+  margin-top: 30px;
+
+}
+
+.button-modal-delete {
+  width: 90px;
+}
+
+.rounded-pill {
+  margin-left: 5px;
+}
+
+.card {
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  opacity: 0.9;
+}
+
+.text-truncate {
+  text-align: left;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-break: break-all;
+  margin-bottom: -6px;
+}
+
+span.instructor, h5 {
+  color: #17a2b8;
+}
+
+.btn-custom {
+  color: #17a2b8;
+  border-color: #17a2b8;
+}
+
+.btn-custom:hover {
+  background-color: #17a2b8;
+  border-color: #17a2b8;
+  color: white;
+}
+
+.modal-content {
+  border: 2px solid #17a2b8;
+  border-radius: 5px;
+}
+
+.form-control:hover {
+  border: 1px solid #17a2b8;
+  border-radius: 5px;
+}
+
+.img-instructor {
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+}
+
+.img-instructor:hover {
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.8);
+}
+
+.mg-top {
+  margin-top: -1.5rem;
+}
+

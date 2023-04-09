@@ -3,6 +3,6 @@ import {Role} from './role';
 
 export interface AccountRole {
   accountRoleId?: number;
-  accountId?: Account;
-  roleId?: Role;
+  account?: Account;
+  role?: Role;
 }

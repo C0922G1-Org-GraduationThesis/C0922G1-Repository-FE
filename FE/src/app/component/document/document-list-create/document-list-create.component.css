@@ -1,0 +1,34 @@
+.parent-div input[type=file] {
+  left: 0;
+  top: 0;
+  opacity: 0;
+  position: absolute;
+  font-size: 90px;
+}
+
+.btn-upload {
+  background-color: #E9ECEF;
+  color: #212529;
+  padding: 10px 25px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: normal;
+  border: 1px solid #CED4DA;
+}
+
+.fixed-height {
+  height: 40vh;
+  overflow-y: scroll;
+}
+
+.fixed-tr {
+  height: 5vh;
+}
+
+.mg-right {
+  margin-right: 1rem;
+}
+
+.mg-top {
+  margin-top: -4rem;
+}

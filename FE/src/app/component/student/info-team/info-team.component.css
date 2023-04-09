@@ -1,0 +1,55 @@
+.bg-secondary {
+  background-color: #00394f !important;
+}
+
+
+.text-primary {
+  color: #17a2b8 !important;
+}
+
+.card {
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  opacity: 0.9;
+}
+
+.card:hover {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  transform: translateY(-5px);
+  opacity: 1;
+}
+
+.table-shadow {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.mg {
+  margin-top: 2rem;
+}
+
+.pagination-ellipsis {
+  padding: 0 5px;
+}
+
+.fixed-height {
+  height: 80vh;
+}
+
+@media (max-width: 768px) {
+  .fixed-height {
+    overflow-y: scroll;
+  }
+}
+
+.bg {
+  background-color: #f8f9fa;
+}
+
+.img-card {
+  max-width: 70vh;
+  height: 40vh;
+}
+
+.mg-left {
+  margin-right: 0.5rem;
+}

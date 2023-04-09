@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {ProjectManagementComponent} from './project-management/project-management.component';
 import {ProgressDetailComponent} from './progress-detail/progress-detail.component';
-import {ProgressReportComponent} from './progress-report/progress-report.component';
-import {ProgressReportHistoryComponent} from './progress-report-history/progress-report-history.component';
+
 import {DatePipe} from '@angular/common';
+import {ProjectManagementComponent} from "./project-management/project-management.component";
+import {ProgressReportComponent} from "./progress-report/progress-report.component";
+import {ProgressReportHistoryComponent} from "./progress-report-history/progress-report-history.component";
 
 
 const routes: Routes = [

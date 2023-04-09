@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {ProgressReview} from '../model/progress-review';
-import {ProjectDto} from '../model/dto/project-dto';
+import {ProjectDto} from "../dto/project-dto";
 
 @Injectable({
   providedIn: 'root'

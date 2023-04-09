@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ProgressService} from '../../../service/progress.service';
-import {ProgressDto} from '../../../model/dto/progress-dto';
 import {PageProgress} from '../../../model/page-progress';
 import {ViewportScroller} from '@angular/common';
+import {ProgressDto} from "../../../dto/progress-dto";
 
 
 @Component({
@@ -20,8 +20,10 @@ export class ProjectManagementComponent implements OnInit {
 
   teamPage!: PageProgress;
   nameProject = '';
-  status: any;
+  status: Boolean;
   page = 0;
+
+  nullValue = null;
 
   ngOnInit(): void {
     this.getAll();
