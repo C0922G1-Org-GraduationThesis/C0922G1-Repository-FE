@@ -4,9 +4,6 @@ export interface StudentProgressReport {
   progressReportFileName?: string;
   progressReportTime?: string;
   studentName?: string;
-  studentImg?: string
-  stageName?: string
+  studentImg?: string;
+  stageName?: string;
 }
-
-
-

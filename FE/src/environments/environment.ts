@@ -5,14 +5,13 @@
 export const environment = {
   production: false,
   firebaseConfig : {
-    apiKey: "AIzaSyDvREGAKpaP12Rqblbm-2SQApObL6q1sNY",
-    authDomain: "graduationthesissyvt.firebaseapp.com",
-    databaseURL: "https://graduationthesissyvt-default-rtdb.firebaseio.com",
-    projectId: "graduationthesissyvt",
-    storageBucket: "graduationthesissyvt.appspot.com",
-    messagingSenderId: "549862452470",
-    appId: "1:549862452470:web:806b52c634ad9c09fd90d7",
-    measurementId: "G-17RESEKM9Z"
+    apiKey : 'AIzaSyAybGnI8nYrUxnlnkqpd-MJpz4F2A3G0_E' ,
+    authDomain : 'uploadfirebase-408b4.firebaseapp.com' ,
+    projectId : 'uploadfirebase-408b4' ,
+    storageBucket : 'uploadfirebase-408b4.appspot.com' ,
+    messagingSenderId : '495779286451' ,
+    appId : '1:495779286451:web:4d2a3b63e77bc4971b0fc6' ,
+    measurementId : 'G-GHGT7L5CN5'
   }
 };
 

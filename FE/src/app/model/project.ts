@@ -5,7 +5,7 @@ export interface Project {
   projectName?: string;
   projectContent?: string;
   projectDescription?: string;
-  projectStatus?: boolean;
+  projectStatus?: Boolean;
   projectImg?: string;
-  teamId?: Team;
+  team?: Team;
 }

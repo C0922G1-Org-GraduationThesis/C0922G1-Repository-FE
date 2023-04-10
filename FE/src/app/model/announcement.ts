@@ -4,4 +4,5 @@ export interface Announcement {
   announcementName?: string;
   announcementTime?: string;
   announcementContent?: string;
+  attach?: string;
 }

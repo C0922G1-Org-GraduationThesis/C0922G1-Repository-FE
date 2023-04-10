@@ -1,0 +1,216 @@
+<h2 class="text-center fw-bold  my-3"style="color: #17a2b8">QUẢN LÝ SINH VIÊN </h2>
+<div class="p-3 mg-top" style="min-height: 58vh">
+  <div class="row mt-3">
+    <div style="margin-left: 50px" class="col-2 ">
+      <a routerLink="/students/create">
+        <button class="btn btn-outline-primary w-100 mt-2">Thêm mới sinh viên</button>
+      </a>
+    </div>
+    <div class="col-4"></div>
+    <div class="col-4 col-sm-4 ">
+      <input style="margin-bottom: 15px; margin-left: 45px" type="text" [(ngModel)]="nameSearch"
+             class="form-control rounded-pill mt-2" id="title"
+             placeholder="Nhập tên sinh viên cần tìm..."
+             onfocus="this.style.borderColor='#14a2b8';this.style.boxShadow='none';this.style.outline='2px solid #14a2b8';"
+             onblur="this.style.borderColor='#ced4da';this.style.outline='none';">
+    </div>
+    <div class="col-1">
+      <button class="btn btn-outline-primary w-100 mt-2"
+              style=" margin-left: 25px; "
+              (click)="searchStudent()">
+        Tìm kiếm
+      </button>
+
+    </div>
+
+
+  </div>
+
+
+  <div class="row row-cols-1 row-cols-md-4 g-4" style="margin-left: 40px;margin-right: 30px"
+       *ngIf="studentDtos.length!=0,else elseBlock">
+    <!--1-->
+    <div class="col" *ngFor="let item of studentDtos">
+      <div class="card" style="background-color: #ECECEC;" >
+        <img style="" src="{{item.studentImg}}"
+             class="card-img-top" height="370px">
+
+
+        <div class="card-body">
+
+          <h5 class="card-title text-primary" style="text-align: center;">{{item.studentName}}</h5>
+          <!--
+                   <p class="card-text">This is a longer card with supporting text below as a natural lead-ihfhfhfhfhfhh. This content is a little bit longer.</p>-->
+
+
+
+          <div>
+            <img style="margin-left: -10px; margin-right: 5px" src="../../../../assets/img/icons8-id-verified-24.png" height="24" width="24"/>
+            <!--            <img src="img/icons8-id-verified-24.png" height="24" width="24"/>-->
+            <span style="font-weight:bold; padding-right: 5px">Mã sinh viên:</span>
+            <span>{{item.studentCode}}</span>
+          </div>
+          <div>
+
+            <!--            <img src="img/icons8-class-48.png" height="30" width="30"/>-->
+            <img style="margin-left: -10px" src="../../../../assets/img/icons8-class-48.png" height="30" width="30"/>
+            <span style="font-weight:bold; padding-right: 5px">Lớp:</span>
+            <span>{{item.nameClazz}}</span>
+          </div>
+          <div>
+
+
+            <!--            <img style="margin-left: 2px" src="img/icons8-sign-mail-24.png" height="20" width="20  "/>-->
+
+
+            <img style="margin-left: -7px; margin-right: 5px" src="../../../../assets/img/icons8-sign-mail-24.png" height="20" width="20"/>
+            <span style="font-weight: bold; padding-right: 5px">Email:</span>
+            <span>{{item.studentEmail}}</span>
+          </div>
+          <div>
+
+
+            <!--            <img style="padding-left: 3px" src="img/icons8-phone-24.png" height="20" width="20"/>-->
+            <img style="margin-left: -7px; margin-right: 5px" src="../../../../assets/img/icons8-phone-24.png" height="20" width="20"/>
+            <span style="font-weight:bold; padding-right: 5px">SĐT:</span>
+            <span>{{item.studentPhoneNumber}}</span>
+
+          </div>
+          <div style="margin-top: 8px;text-align: right; margin-bottom: -10px ">
+            <a routerLink="/students/update/{{item.studentId}}">
+              <button style="border-radius: 50px/60px" class="btn btn-outline-warning btn-sm">
+                <img src="../../../../assets/img/pencil--v1.png" height="25" width="25"/></button>
+            </a>
+
+            <button style="border-radius: 50px/60px; margin-left: 5px" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#detail1" (click)="getStudentById(item.studentId)">
+
+              <img src="https://icon-library.com/images/information-i-icon/information-i-icon-7.jpg" height="25" width="25"/></button>
+
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template #elseBlock><h4 style="text-align: center;color: #ff0000">Không có sinh viên cần tìm</h4></ng-template>
+
+
+</div>
+
+<div style="margin-left: 40%">
+  <div class="row" style="padding: 0; margin: 0" *ngIf="studentDtos.length!=0">
+    <div class="col- 8"></div>
+    <div *ngIf="studentPage" class="col- 4">
+      <ul class="pagination">
+        <li class="page-item" [ngClass]="studentPage.first ? 'disabled': ''">
+          <a role="button" class="page-link" (click)="changePage(0)">Trang đầu</a>
+        </li>
+        <li class="page-item" [ngClass]="studentPage.first ? 'disabled': ''">
+          <a role="button" class="page-link" (click)="changePage(studentPage.number - 1)"><</a>
+        </li>
+        <li class="page-item" *ngIf="studentPage.number - 3 > 0">
+          <a role="button" class="page-link"
+             (click)="changePage(studentPage.number - 4)">{{studentPage.number - 3}}</a>
+        </li>
+        <li class="page-item" *ngIf="studentPage.number - 2 > 0">
+          <a role="button" class="page-link"
+             (click)="changePage(studentPage.number - 3)">{{studentPage.number - 2}}</a>
+        </li>
+        <li class="page-item" *ngIf="studentPage.number - 1 > 0">
+          <a role="button" class="page-link"
+             (click)="changePage(studentPage.number - 2)">{{studentPage.number - 1}}</a>
+        </li>
+        <li class="page-item" *ngIf="studentPage.number > 0">
+          <a role="button" class="page-link"
+             (click)="changePage(studentPage.number - 1)">{{studentPage.number}}</a>
+        </li>
+        <li class="page-item active"><a class="page-link">{{studentPage.number + 1}}</a></li>
+        <li class="page-item" *ngIf="studentPage.number + 2 <= studentPage.totalPages">
+          <a role="button" class="page-link"
+             (click)="changePage(studentPage.number + 1)">{{studentPage.number + 2}}</a>
+        </li>
+        <li class="page-item" *ngIf="studentPage.number + 3 <= studentPage.totalPages">
+          <a role="button" class="page-link"
+             (click)="changePage(studentPage.number + 2)">{{studentPage.number + 3}}</a>
+        </li>
+        <li class="page-item" *ngIf="studentPage.number + 4 <= studentPage.totalPages">
+          <a role="button" class="page-link"
+             (click)="changePage(studentPage.number + 3)">{{studentPage.number + 4}}</a>
+        </li>
+        <li class="page-item" *ngIf="studentPage.number + 5 <= studentPage.totalPages">
+          <a role="button" class="page-link"
+             (click)="changePage(studentPage.number + 4)">{{studentPage.number + 5}}</a>
+        </li>
+        <li class="page-item" [ngClass]="studentPage.last ? 'disabled': ''">
+          <a role="button" class="page-link"
+             (click)="changePage(studentPage.number + 1)">></a>
+        </li>
+        <li class="page-item" [ngClass]="studentPage.last ? 'disabled': ''">
+          <a role="button" class="page-link"
+             (click)="changePage(studentPage.totalPages - 1)">
+            Trang cuối
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!--Hiển thị chi tiết-->
+<div class="modal fade " id="detail1" tabindex="-1" aria-labelledby="detailLabel1" aria-hidden="true"
+     data-bs-centered="true">
+  <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="detailLabel1">Thông tin chi tiết</h5>
+      </div>
+      <div class="modal-body d-flex flex-wrap justify-content-around align-items-center detail" *ngIf="student">
+        <div class="col-lg-4 col-md-12 col-sm-12 d-flex align-items-center justify-content-center pb-2">
+          <div>
+            <img class="img-instructor" [src]="student.studentImg" alt="img" style="height: 380px;width: 100%">
+          </div>
+        </div>
+        <div class="col-lg-5 col-md-6 col-sm-12">
+          <div class="mb-3">
+            <label class="form-label">Tên sinh viên:</label>
+            <input type="text" class="form-control" [value]="student.studentName" disabled>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Email:</label>
+            <input type="text" class="form-control" [value]="student.studentEmail" disabled>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Địa chỉ:</label>
+            <input type="text" class="form-control" [value]="student.studentAddress" disabled>
+          </div>
+
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12">
+          <div class="mb-3">
+            <label class="form-label">Giới tính:</label>
+            <div *ngIf="student.studentGender === true">
+              <input type="text" class="form-control" value="Nam" disabled>
+            </div>
+            <div *ngIf="student.studentGender === false">
+              <input type="text" class="form-control" value="Nữ" disabled>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Ngày sinh:</label>
+            <input type="text" class="form-control" [value]="student.studentDateOfBirth" disabled>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Số điện thoại:</label>
+            <input type="text" class="form-control" [value]="student.studentPhoneNumber" disabled>
+          </div>
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Đóng</button>
+      </div>
+    </div>
+  </div>
+</div>

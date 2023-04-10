@@ -1,0 +1,189 @@
+<style>
+
+  #content1 {
+    flex-basis: 100%;
+  }
+  #img{
+    width: 200px;
+    height: 250px;
+  }
+  #content2 {
+    flex-basis: 100%;
+  }
+  #content3 {
+    flex-basis: 100%;
+  }
+
+  #mg-top{
+    margin-top: 5%;
+  }
+
+
+  @media (min-width: 800px) {
+    #content1{
+      flex-basis: 30%;
+      text-align: center;
+    }
+    #content2{
+      flex-basis: 30%;
+    }
+    #content3{
+      flex-basis: 30%;
+    }
+    /*.parent-div input[type=file] {*/
+    /*  left: 0;*/
+    /*  top: 0;*/
+    /*  opacity: 0;*/
+    /*  position: absolute;*/
+    /*  font-size: 90px;*/
+    /*}*/
+    /*  .btn-upload {*/
+    /*    background-color: #17a2b8;*/
+    /*    color: white;*/
+    /*    padding: 10px 25px;*/
+    /*    border-radius: 10px;*/
+    /*    font-size: 15px;*/
+    /*    font-weight: bold;*/
+    /*  }*/
+    /*}*/
+  }
+  .parent-div input[type=file] {
+    left: 0;
+    top: 0;
+    opacity: 0;
+    position: absolute;
+    font-size: 90px;
+  }
+  .btn-upload {
+    background-color: #17a2b8;
+    color: white;
+    padding: 10px 25px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: bold;
+  }
+</style>
+<div  class="row" style="overflow: hidden;margin: 0;padding: 0;">
+  <div><h2 style="padding-top: 20px;color: #17a2b8" class="text-center">CHỈNH SỬA GIÁO VIÊN</h2></div>
+  <div class="col-1">
+  </div>
+  <div class="col-10 shadow p-3">
+    <div class="row">
+      <form  [formGroup]="formUpdateTeacher" class="row" style=" padding: 10px">
+        <div class="col-4 col-sm-12 col-xs-12 col-lg-12 text-center" id="content1">
+          <div>
+            <img  [src]="linkImg"
+                  id="img">
+          </div>
+          <div style="margin: 10%" class="parent-div">
+            <label style="cursor: pointer" for="upfile" class="btn-upload">Chọn ảnh đại diện</label>
+            <input #uploadFile (change)="uploadFileImg()" style="width: 0" type="file" id="upfile" name="upfile" />
+          </div>
+        </div>
+        <div class="col-4 col-sm-12 col-xs-12 col-lg-12" id="content2">
+          <div hidden class="mb-3">
+            <label for="exampleInputEmail" class="form-label">ID:(<span style="color: red">*</span>)</label>
+            <input formControlName="teacherId" type="email" class="form-control" id="exampleInputEmail"
+                   aria-describedby="emailHelp">
+          </div>
+          <div style="width: 100%; height: 70px" class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Tên giáo viên(<span style="color: red">*</span>)</label>
+            <input formControlName="teacherName" type="email" class="form-control" id="exampleInputEmail1"
+                   aria-describedby="emailHelp">
+            <p style="color: red;font-size: 13px;text-align: left" *ngIf="formUpdateTeacher.controls.teacherName.hasError('required') && formUpdateTeacher.controls.teacherName.touched">Vui lòng nhập trường này.</p>
+            <p style="color: red;font-size: 13px;text-align: left">{{errorsUpdate.teacherName}}</p>
+
+          </div>
+
+          <div style="width: 100%; height: 70px" class="mb-3">
+            <label for="exampleInputEmail2" class="form-label">Ngày sinh(<span
+              style="color: red">*</span>)</label>
+            <input formControlName="teacherDateOfBirth" type="date" class="form-control" id="exampleInputEmail2"
+                   aria-describedby="emailHelp">
+            <p style="color: red;font-size: 13px;text-align: left" *ngIf="formUpdateTeacher.controls.teacherDateOfBirth.hasError('required') && formUpdateTeacher.controls.teacherDateOfBirth.touched">Vui lòng nhập trường này.</p>
+            <p style="color: red;font-size: 13px;text-align: left">{{errorsUpdate.teacherDateOfBirth}}</p>
+          </div>
+
+          <div style="width: 100%; height: 70px" class="mb-3">
+            <label class="form-label">Học vị(<span style="color: red">*</span>)</label>
+            <select  formControlName="degree"  [compareWith]="compareWithDegree"class="form-select"
+                     aria-label="Default select example">
+              <option *ngFor="let degree of listDegree" [ngValue]="degree">{{degree.degreeName}}</option>
+            </select>
+            <p style="color: red;font-size: 13px;text-align: right" *ngIf="formUpdateTeacher.controls.degree.hasError('required') && formUpdateTeacher.controls.degree.touched">Vui lòng nhập trường này.</p>
+            <p style="color: red;font-size: 13px;text-align: left">{{errorsUpdate.degree}}</p>
+
+          </div>
+
+          <div style="width: 100%; height: 70px" class="mb-3">
+            <label for="exampleInputEmail4" class="form-label">Địa chỉ(<span
+              style="color: red">*</span>)</label>
+            <input formControlName="teacherAddress" type="text" class="form-control" id="exampleInputEmail4"
+                   aria-describedby="emailHelp">
+            <p style="color: red;font-size: 13px;text-align: left" *ngIf="formUpdateTeacher.controls.teacherAddress.hasError('required') && formUpdateTeacher.controls.teacherAddress.touched">Vui lòng nhập trường này.</p>
+
+            <p style="color: red;font-size: 13px;text-align: left">{{errorsUpdate.teacherAddress}}</p>
+
+          </div>
+        </div>
+        <div class="col-4 col-sm-12 col-xs-12 col-lg-12" id="content3">
+          <div style="width: 100%; height: 70px" class="mb-3">
+            <p>Giới tính(<span style="color: red">*</span>)</p>
+            <div class="d-flex">
+              <div class="form-check" style="margin-right: 10px">
+                <input formControlName="teacherGender" [value]="true" class="form-check-input" type="radio"
+                       id="flexRadioDefault1">
+                <label class="form-check-label" for="flexRadioDefault1">
+                  Nam
+                </label>
+              </div>
+              <div class="form-check" style="margin-right: 10px">
+                <input formControlName="teacherGender" [value]="false" class="form-check-input" type="radio"
+                       id="flexRadioDefault2">
+                <label class="form-check-label" for="flexRadioDefault2">
+                  Nữ
+                </label>
+              </div>
+            </div>
+          </div>
+          <div style="width: 100%; height: 70px" class="mb-3">
+            <label for="exampleInputEmail5" class="form-label">Số điện thoại(<span style="color: red">*</span>)</label>
+            <input formControlName="teacherPhoneNumber" type="text" class="form-control" id="exampleInputEmail5"
+                   aria-describedby="emailHelp">
+            <p style="color: red;font-size: 13px;text-align: left" *ngIf="formUpdateTeacher.controls.teacherPhoneNumber.hasError('required') && formUpdateTeacher.controls.teacherPhoneNumber.touched">Nhập số điện thoại</p>
+            <p style="color: red;font-size: 13px;text-align: left">{{errorsUpdate.teacherPhoneNumber}}</p>
+          </div>
+          <div style="width: 100%; height: 70px" class="mb-3">
+            <label class="form-label">Khoa(<span style="color: red">*</span>)</label>
+            <select formControlName="faculty" [compareWith]="compareWithFaculty" class="form-select"
+                    aria-label="Default select example">
+              <option *ngFor="let faculty of listFaculty" [ngValue]="faculty">{{faculty.facultyName}}</option>
+            </select>
+            <p style="color: red;font-size: 13px;text-align: right">{{errorsUpdate.faculty}}</p>
+          </div>
+          <div style="width: 100%; height: 90px" class="mb-3">
+            <label for="exampleInputEmail6" class="form-label">Email(<span style="color: red">*</span>)</label>
+            <input formControlName="teacherEmail" type="text" class="form-control" id="exampleInputEmail6"
+                   aria-describedby="emailHelp">
+            <p style="color: red;font-size: 13px;text-align: left" *ngIf="formUpdateTeacher.controls.teacherEmail.hasError('required') && formUpdateTeacher.controls.teacherEmail.touched">Vui lòng nhập trường này.</p>
+
+            <p style="color: red;font-size: 13px;text-align: left">{{errorsUpdate.teacherEmail}}</p>
+          </div>
+          <div class="mb-3">
+            <div class="mg-10 d-flex justify-content-center">
+              <button [routerLink]="['/teachers/list']" type="button" class="btn btn-outline-secondary"
+                      style="margin-right: 2%;right: 0;border-radius: 60px/80px; width: 26%">
+                Thoát
+              </button>
+              <button [disabled]="!formUpdateTeacher.valid" (click)="updateTeacher()" type="button" class="btn btn-outline-info "
+                      style="border-radius: 60px/80px; width: 26%">
+                Lưu
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="col-1"></div>
+</div>

@@ -12,54 +12,113 @@
     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
       <div class="navbar-nav font-weight-bold mx-auto py-0">
         <a href="index.html" class="nav-item nav-link">Trang Chủ</a>
-        <a href="" class="nav-item nav-link">Tin Tức</a>
+        <a href="#scrollspyHeading1" class="nav-item nav-link">Tin Tức</a>
         <div class="nav-item dropdown">
-          <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Giáo Viên</a>
+          <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" [hidden]="!isLoggedIn"
+             *ngIf="role==='ROLE_TEACHER'|| role==='ROLE_ADMIN'">Giáo Viên</a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Đăng thông báo</a></li>
-            <li><a class="dropdown-item" href="#">Danh sách đề tài</a></li>
-            <li><a class="dropdown-item" href="#">Kiểm duyệt đề tài</a></li>
-            <li><a class="dropdown-item" href="#">Danh sách sinh viên</a></li>
-            <li><a class="dropdown-item" href="#">Quản lý tiến độ</a></li>
-            <li><a class="dropdown-item" href="#">Thắc mắc của sinh viên</a></li>
-            <li><a class="dropdown-item" href="#">Tài liệu hướng dẫn</a></li>
+            <li><a class="dropdown-item" routerLink="/notification-teacher/create">Đăng thông báo</a></li>
+            <li><a class="dropdown-item" routerLink="/projects/list">Danh sách đề tài</a></li>
+            <li><a class="dropdown-item" routerLink="/projects/pro">Kiểm duyệt đề tài</a></li>
+            <li><a class="dropdown-item" routerLink="/students/instructor">Danh sách sinh viên</a></li>
+            <li><a class="dropdown-item" routerLink="/progress/progress-management">Quản lý tiến độ</a></li>
+            <li><a class="dropdown-item" routerLink="/document">Tài liệu hướng dẫn</a></li>
           </ul>
         </div>
         <div class="nav-item dropdown">
-          <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Sinh Viên</a>
+          <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" [hidden]="!isLoggedIn"
+             *ngIf="role==='ROLE_STUDENT'|| role==='ROLE_ADMIN'">Sinh Viên</a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Đăng ký GVHD</a></li>
-            <li><a class="dropdown-item" href="#">Đăng ký Đề Tài</a></li>
-            <li><a class="dropdown-item" href="#">Thông tin hướng dẫn</a></li>
-            <li><a class="dropdown-item" href="#">Báo cáo tiến độ</a></li>
-            <li><a class="dropdown-item" href="#">Tương tác</a></li>
+            <li><a class="dropdown-item" routerLink="/students/register-instructor">Đăng ký GVHD</a></li>
+            <li><a class="dropdown-item" *ngIf="studentId" routerLink="/students/register-team/{{studentId}}">Đăng ký nhóm</a></li>
+            <li><a class="dropdown-item" *ngIf="teamId" routerLink="/students/register-topic/{{teamId.teamId}}">Đăng ký đề tài</a></li>
+            <li><a class="dropdown-item" routerLink="/progress/progress-management">Quản lý tiến độ</a></li>
+            <li><a class="dropdown-item" *ngIf="flagStudentLeader" href="/progress/report/{{idProject}}/{{idStage}}">Báo cáo tiến độ</a></li>
+            <li><a class="dropdown-item" routerLink="/document">Tài liệu hướng dẫn</a></li>
           </ul>
         </div>
-        <a href="" class="nav-item nav-link">Liên Hệ</a>
+        <div class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" [hidden]="!isLoggedIn"
+             *ngIf="role==='ROLE_ADMIN'">Quản Lý</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" routerLink="/students/list">Quản lý sinh viên</a></li>
+            <li><a class="dropdown-item" routerLink="/teachers/list">Quản lý giáo viên</a></li>
+          </ul>
+        </div>
+        <a href="#scrollspyHeading2" class="nav-item nav-link">Liên Hệ</a>
       </div>
-      <!-- Avatar -->
-      <div class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-          <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (31).webp" class="rounded-circle"
-               height="50" alt="Avatar" loading="lazy"/>
-        </a>
-        <ul class="dropdown-menu" style="padding: 0">
-          <li>
-            <a class="dropdown-item" href="#">
-              <i class="fa fa-address-card"></i> Thông tin
-            </a>
+      <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNav">
+        <ul class="navbar-nav flex-grow-1 d-flex justify-content-end">
+          <li class="nav-item d-flex align-items-center mg-left" [hidden]="!isLoggedIn" *ngIf="name">
+            <b style="color: #14a2b8" class="text-center">{{name}}</b>
+            <b class="nav-link" [hidden]="isLoggedIn">Chưa đăng nhập</b>
           </li>
-          <li>
-            <a class="dropdown-item" href="#"><img src="assets/setting.png" height="17" width="17"/>
-              Cài đặt</a>
-          </li>
-          <li>
-            <a class="dropdown-item" href="#"><img src="assets/logout.png" height="17" width="17"/>
-              Đăng xuất</a>
+          <li class="nav-item">
+            <div class="dropdown user mg-left" [hidden]="!isLoggedIn">
+              <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                <img src="{{img}}" class="rounded-circle"
+                     height="50" width="50" alt="Avatar" loading="lazy"/>
+
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarUser">
+                <li>
+                  <a href="" class="dropdown-item" (click)="logOut()">
+                    <img src="../../../../assets/logout.png" height="20"
+                                                           width="20"/> Đăng xuất
+                  </a>
+                </li>
+                <li>
+                  <a href="" class="dropdown-item" *ngIf="role==='ROLE_ADMIN'||role==='ROLE_TEACHER'"
+                     routerLink="teachers/admin-detail">
+                    <i class="fa fa-address-card"></i> Thông tin
+                  </a>
+                  <a href="" class="dropdown-item" *ngIf="role==='ROLE_STUDENT'" routerLink="students/detail">
+                    <i class="fa fa-address-card"></i> Thông tin
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="dropdown user " [hidden]="isLoggedIn" style="margin-right: 45px">
+              <a class="nav-link dropdown-toggle text-dark" href="#" role="button"
+                 data-toggle="dropdown" aria-expanded="false">
+                <i class="fa fa-user"></i>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarUser">
+                <li>
+                  <a href="" class="dropdown-item" routerLink="login">
+                    <img src="../../../../assets/login.png" height="20" width="20"/>
+                    Đăng nhập
+                  </a>
+                </li>
+              </ul>
+            </div>
           </li>
         </ul>
+        <!-- Avatar -->
+        <!--      <div class="nav-item dropdown">-->
+        <!--        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">-->
+        <!--                  <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (31).webp" class="rounded-circle"-->
+        <!--                       height="50" alt="Avatar" loading="lazy"/>-->
+        <!--        </a>-->
+        <!--        <ul class="dropdown-menu" style="padding: 0">-->
+        <!--          <li>-->
+        <!--            <a class="dropdown-item" href="#">-->
+        <!--              <i class="fa fa-address-card"></i> Thông tin-->
+        <!--            </a>-->
+        <!--          </li>-->
+        <!--          <li>-->
+        <!--            <a class="dropdown-item" href="#"><img src="assets/setting.png" height="17" width="17"/>-->
+        <!--              Cài đặt</a>-->
+        <!--          </li>-->
+        <!--          <li>-->
+        <!--            <a class="dropdown-item" href="#"><img src="assets/logout.png" height="17" width="17"/>-->
+        <!--              Đăng xuất</a>-->
+        <!--          </li>-->
+        <!--        </ul>-->
+        <!--      </div>-->
+        <!-- End Avatar -->
       </div>
-      <!-- End Avatar -->
     </div>
   </nav>
 </div>

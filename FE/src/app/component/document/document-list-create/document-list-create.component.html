@@ -1,0 +1,251 @@
+<div style="text-align: center; margin: 0; padding: 0;overflow: hidden">
+
+  <div>
+    <h2 style="size:32px; margin-top: 50px; margin-bottom: 50px; text-align: center;color: #14a2b8">DANH SÁCH TÀI LIỆU
+      HƯỚNG DẪN</h2>
+  </div>
+  <div class="row" style="margin-left: 50%;">
+    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1"></div>
+    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 col-xl-10" style="text-align: right;">
+      <form class="form-inline" [formGroup]="formGroup">
+        <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7 col-xl-7 mg-top" style="padding-right: 5px;">
+          <input class="form-control rounded-pill mg-right" type="search" placeholder="Nhập tên tài liệu"
+                 aria-label="Search" formControlName="search" [(ngModel)]="search"
+                 style="border: 1px solid #14a2b8; width: 100%;"
+                 onfocus="this.style.borderColor='#14a2b8';this.style.boxShadow='none';this.style.outline='2px solid #14a2b8';"
+                 onblur="this.style.borderColor='#ced4da';this.style.outline='none';">
+        </div>
+        <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 col-xl-5 mg-top" style="padding-left: 0px;">
+          <button class="btn btn-outline-primary" type="submit" (click)="searchNameDocument()"
+                  style="border: 1px solid #14a2b8; width: 50%; color: #14a2b8;float: left"
+                  onmouseover="this.style.backgroundColor='#14a2b8'" onmouseout="this.style.backgroundColor='white';"
+                  onfocus="this.style.borderColor='#14a2b8';this.style.boxShadow='none';this.style.outline='2px solid #14a2b8';"
+                  onblur="this.style.borderColor='#ced4da';this.style.outline='none';">
+            <span style="margin: 0; padding: 0">Tìm kiếm</span>
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1"></div>
+  </div>
+
+
+  <div class="justify-content-center m-0 mb-2">
+    <div>
+      <div style="margin-top: 1%">
+        <div class="col-sm-1 col-xs-1 col-lg-1 col-md-1 col-xl-1"></div>
+        <div class="col-sm-9 col-xs-9 col-lg-9 col-md-9 col-xl-9  container-fluid ">
+          <table class="table table-bordered table-hover" style="box-shadow: 0 0 20px 0 #253365;">
+            <thead class="table-info" style="font-size: 100%">
+            <tr>
+              <th scope="col" style="width: 20%">STT</th>
+              <th scope="col" style="width: 30%">Tên tài liệu</th>
+              <th scope="col" style="width: 30%">Mô tả</th>
+              <th scope="col" style="width: 10%">Tải về</th>
+              <th scope="col" style="width: 10%" *ngIf="roleUser==='ROLE_ADMIN'||roleUser==='ROLE_TEACHER'">Xóa</th>
+            </tr>
+            </thead>
+            <tbody *ngIf="documentDtoList.length > 0; else noMembers" class="fixed-height">
+            <tr *ngFor="let documentDto of documentDtoList ,index as item" class="fixed-tr">
+              <td style="text-align: center;vertical-align: middle;">{{item + 1}}</td>
+              <td
+                style="text-align: center;vertical-align: middle;text-align: left; max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; word-break: break-all;">{{documentDto.documentName}}</td>
+              <td
+                style="text-align: center;vertical-align: middle;text-align: left; max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; word-break: break-all;">{{documentDto.documentDescribe}}</td>
+              <td style="text-align: center;vertical-align: middle;">
+                <div style="display: flex; justify-content: center;">
+                  <a href="{{documentDto.documentFile}}" download="" target="_blank">
+                    <button class="btn btn-outline-success"
+                            style="border: 1px #CFF4FC;text-align: center; display: flex; justify-content: center; align-items: center;width: 50px;height: 50px;padding: 0;border-radius: 5px;">
+
+                      <img
+                        src="https://img.icons8.com/external-basicons-line-edtgraphics/50/000000/external-Download-arrows-basicons-line-edtgraphics.png"
+                        style="width: 80%; height: 80%;  max-width: 100%;max-height: 100%"/>
+                    </button>
+                  </a>
+                </div>
+              </td>
+              <td *ngIf="roleUser==='ROLE_ADMIN'||roleUser==='ROLE_TEACHER'"
+                  style="text-align: center;vertical-align: middle;">
+                <div style="display: flex; justify-content: center;">
+                  <button class="btn btn-outline-danger"
+                          style="border: 1px #CFF4FC;text-align: center; display: flex; justify-content: center; align-items: center;width: 50px;height: 50px;padding: 0;border-radius: 5px;"
+                          (click)="documentList=documentDto">
+                    <img src="https://img.icons8.com/glyph-neue/64/null/trash.png"
+                         style="width: 65%; height: 65%;  max-width: 100%;max-height: 100%;"
+                         data-bs-toggle="modal" data-bs-target="#exampleModal"/>
+                  </button>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+            <ng-template #noMembers>
+              <tbody>
+              <tr style="text-align: center">
+                <td colspan="5"><h4 style="color: red;">Danh sách tài liệu hướng dẫn trống!</h4></td>
+              </tr>
+              </tbody>
+            </ng-template>
+          </table>
+          <div class="container" style="margin-top: 5%">
+            <div class="d-flex justify-content-center">
+              <nav *ngIf="teamPage !== null" aria-label="Page navigation example">
+                <ul class="pagination justify-content-end">
+                  <li class="page-item" [ngClass]="teamPage.first ? 'disabled': ''"><a
+                    class="page-link text-info text-info" type="button" (click)="goToPage(0)"
+                    onfocus="this.style.borderColor='#CFF4FC';this.style.boxShadow='none';this.style.outline='2px solid #CFF4FC';"
+                    onblur="this.style.borderColor='#ced4da';this.style.outline='none';">Trang đầu</a></li>
+                  <li class="page-item"><a class="page-link text-info text-info" (click)="previousPageTen()"
+                                           *ngIf="p >9"
+                                           onfocus="this.style.borderColor='#CFF4FC';this.style.boxShadow='none';this.style.outline='2px solid #CFF4FC';"
+                                           onblur="this.style.borderColor='#ced4da';this.style.outline='none';"><< </a>
+                  </li>
+                  <li class="page-item"><a class="page-link text-info text-info" (click)="previousPage()"
+                                           *ngIf="p <=9 && p>0"
+                                           onfocus="this.style.borderColor='#CFF4FC';this.style.boxShadow='none';this.style.outline='2px solid #CFF4FC';"
+                                           onblur="this.style.borderColor='#ced4da';this.style.outline='none';">< </a>
+                  </li>
+                  <li class="page-item" *ngFor="let page of pages" [ngClass]="{'active': page === p }">
+                    <a class="page-link" (click)="goToPage(page)"
+                       style="font-weight: bold; border: 1px solid #DEE2E6;"
+                       onfocus="this.style.borderColor='#CFF4FC';this.style.boxShadow='none';this.style.outline='2px solid #CFF4FC';"
+                       onblur="this.style.borderColor='#ced4da';this.style.outline='none';"
+                       [ngStyle]="{'background-color': page === p ? '#14a2b8' : '#FFFFFF', 'color': page === p ? '#FFFFFF' : '#14a2b8'}">
+                      {{ page + 1 }}
+                    </a>
+                  </li>
+
+                  <li class="page-item"><a class="page-link text-info text-info" (click)="nextPage()"
+                                           *ngIf="(p <= 9 && totalPage > 0 && this.p < this.totalPage - 1) || (p >= totalPage - 1 && p <= totalPage && totalPage > 1 && p < totalPage - 4 && totalPage > 10 && this.p < this.totalPage - 1) || (p >= (totalPage - 10) && p <= totalPage && totalPage > 10 && p > totalPage - 11 && this.p < this.totalPage - 1) "
+                                           onfocus="this.style.borderColor='#CFF4FC';this.style.boxShadow='none';this.style.outline='2px solid #CFF4FC';"
+                                           onblur="this.style.borderColor='#ced4da';this.style.outline='none';">></a>
+                  </li>
+                  <li class="page-item"><a class="page-link text-info text-info" (click)="nextPageTen()"
+                                           *ngIf="p < totalPage - 10 && p >9"
+                                           onfocus="this.style.borderColor='#CFF4FC';this.style.boxShadow='none';this.style.outline='2px solid #CFF4FC';"
+                                           onblur="this.style.borderColor='#ced4da';this.style.outline='none';">>></a>
+                  </li>
+                  <li class="page-item" [ngClass]="teamPage.last ? 'disabled': ''"><a
+                    class="page-link text-info text-info" type="button" (click)="goToPage(totalPage - 1)"
+                    onfocus="this.style.borderColor='#CFF4FC';this.style.boxShadow='none';this.style.outline='2px solid #CFF4FC';"
+                    onblur="this.style.borderColor='#ced4da';this.style.outline='none';">Trang cuối</a></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-1 col-xs-1 col-lg-1 col-md-1 col-xl-1 "></div>
+      </div>
+    </div>
+  </div>
+  <form [formGroup]="formDocument" (ngSubmit)="createDocument()">
+    <div class="row">
+      <div class="col-1" style="margin: 0; padding: 0">
+        <span class="bg-info text-black-50"
+              style="border: 1px solid #DEE2E6;font-weight: bold; display: block;width: 120%; margin-left: 203.5%;">Tải lên</span>
+      </div>
+      <div class="col-11"></div>
+    </div>
+    <div class="row">
+      <div class="col-sm-1 col-xs-1 col-lg-1 col-md-1 col-xl-1 "></div>
+      <div class="col-sm-9 col-xs-9 col-lg-9 col-md-9 col-xl-9  "
+           style="border: 1px solid #DEE2E6;max-width: 72%;margin-left: 5.7%;">
+        <div style="width: 95%; margin-top: 3%; margin-left: 3%">
+
+          <div class="form-group" style="display: flex ">
+
+            <label for="exampleInputEmail1"
+                   style=" font-weight: bold; text-align: left;display: block; float: left;">Tên
+              tài liệu (<span style="color: red">*</span>) </label>
+            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                   formControlName="documentName"
+                   style="width: 43%;margin-left: 3%;border-color: #ced4da;"
+                   onfocus="this.style.borderColor='#CFF4FC';this.style.boxShadow='none';this.style.outline='2px solid #CFF4FC';"
+                   onblur="this.style.borderColor='#ced4da';this.style.outline='none';">
+            <!--            <div style="margin: -0.2%; display: inline-grid;width: 11%; margin-left: 3%" >-->
+            <!--              <label style="cursor: pointer;height: 79%" for="upfile" class="btn-upload" >Chọn tệp</label>-->
+            <!--              <input style="height: 0" type="file" #uploadFile (change)="uploadFileImg()"  id="upfile" name="upfile" />-->
+            <!--            </div>-->
+            <label for="exampleInputEmail1"
+                   style=" font-weight: bold; text-align: left;display: block; float: left;margin-left: 3%">
+              <input type="file" #uploadFile (change)="uploadFileImg()" class="form-control rounded-pill"
+              />
+            </label>
+
+            <input class="form-control" aria-describedby="emailHelp" hidden formControlName="documentFile"
+                   style="width: 43%;margin-left: 3%;border-color: #ced4da;"
+                   onfocus="this.style.borderColor='#CFF4FC';this.style.boxShadow='none';this.style.outline='2px solid #CFF4FC';"
+                   onblur="this.style.borderColor='#ced4da';this.style.outline='none';">
+          </div>
+          <p style="margin-top: -2%;color: red;font-weight: normal;display: block; float: left"
+             *ngIf="formDocument.controls.documentName?.touched && formDocument.controls.documentName?.errors?.required">
+            Không được để trống !</p>
+          <p style="color: red">{{errCreateDocument.documentDescribe}}</p>
+          <div class="form-group" style="margin-bottom: 1%; margin-top: 2%">
+
+            <label for="exampleFormControlTextarea1"
+                   style="margin-bottom: 2%; margin-top: -1%; font-weight: bold; text-align: left;display: block; float: left;">
+              Mô tả (<span style="color: red">*</span>)
+            </label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="4" formControlName="documentDescribe"
+                      style="border-color: #ced4da;"
+                      onfocus="this.style.borderColor='#CFF4FC';this.style.boxShadow='none';this.style.outline='2px solid #CFF4FC';"
+                      onblur="this.style.borderColor='#ced4da';this.style.outline='none';"></textarea>
+            <p style="color: red;float: left;margin-top: 1%"
+               *ngIf="formDocument.controls.documentDescribe?.touched && formDocument.controls.documentDescribe?.errors?.required">
+              Không được để trống !</p>
+
+            <p style="color: red">{{errCreateDocument.documentDescribe}}</p>
+          </div>
+          <div class="row" style="margin-bottom: 2%">
+            <div class="col-sm-1 col-xs-1 col-lg-1 col-md-1 col-xl-1 "></div>
+            <div class="col-sm-9 col-xs-9 col-lg-9 col-md-9 col-xl-9 "
+                 style=" text-align: right;display: block; float: right; margin-left: 3.5%">
+              <button type="submit" class="btn btn-outline-info mt-3">
+                Tải file lên
+              </button>
+            </div>
+            <div class="col-sm-1 col-xs-1 col-lg-1 col-md-1 col-xl-1 "></div>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-sm-1 col-xs-1 col-lg-1 col-md-1 col-xl-1 "></div>
+    </div>
+  </form>
+</div>
+
+<!--style="border: 1px solid #CFF4FC;margin-bottom: 3%; margin-top: 2%;font-size: 100%; width: 20%;color:black;font-weight: bold;"-->
+<!--onmouseover="this.style.backgroundColor='#CFF4FC'" onmouseout="this.style.backgroundColor='white';"-->
+<!--onfocus="this.style.borderColor='#CFF4FC';this.style.boxShadow='none';this.style.outline='2px solid #CFF4FC';"-->
+<!--onblur="this.style.borderColor='#ced4da';this.style.outline='none';"-->
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Tài liệu hướng dẫn</h5>
+        <button type="button" class="btn-close d-flex justify-content-center align-items-center "
+                data-bs-dismiss="modal" aria-label="Close"
+                style="font-size: 1em; width: 2rem; height: 2rem; padding: 0 ;border-radius: 15%;background-color: #DEE1E6; padding-bottom: 1%;  text-align: center;line-height: 1; border: none;"
+                onmouseover="this.style.backgroundColor='#ED2248'; this.style.color='#FFF';"
+                onmouseout="this.style.backgroundColor='#DEE1E6'; this.style.color='#5F6368';"
+                onfocus="this.style.boxShadow='none';this.style.outline='2px solid #CFF4FC';"
+                onblur="this.style.outline='none';"></button>
+      </div>
+      <div class="modal-body">
+        <p>Bạn có chắc sẽ xóa <span style="color: red; font-weight: bold"> {{documentList.documentName}}</span> không ?
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Không</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                (click)="deleteDocument(documentList.documentId)">
+          Đồng ý
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
