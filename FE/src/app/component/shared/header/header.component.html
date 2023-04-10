@@ -50,10 +50,11 @@
 
 
       <div class="dropdown" [hidden]="username === undefined || role !== 'ROLE_STUDENT'">
-        <button class="btn btn-link" type="button" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+        <a class="me-3 dropdown-toggle hidden-arrow" href="#" id="navbarDropdownMenuLink"
+           role="button" data-mdb-toggle="dropdown" aria-expanded="false">
           <i class="fas fa-bell"></i>
-          <span class="badge bg-danger">{{listAnnouncement?.length}}</span>
-        </button>
+          <span class="badge rounded-pill badge-notification bg-danger" style="font-size: 10px">{{listAnnouncement?.length}}</span>
+        </a>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
           <ng-container *ngIf="listAnnouncement?.length > 0; else noAnnouncement">
             <li *ngFor="let announcement of listAnnouncement">
@@ -162,8 +163,8 @@
         <p>{{nameNoti}}</p>
       </div>
       <div class="modal-footer">
-        <button type="button" (click)="notJoin()" class="btn btn-secondary" data-bs-dismiss="modal">Không tham gia</button>
-        <button type="button" (click)="joinTeam()" class="btn btn-primary" data-bs-dismiss="modal">Tham gia</button>
+        <button type="button" (click)="notJoin()" class="btn btn-outline-secondary" data-bs-dismiss="modal">Không tham gia</button>
+        <button type="button" (click)="joinTeam()" class="btn btn-outline-info" data-bs-dismiss="modal">Tham gia</button>
       </div>
     </div>
   </div>
