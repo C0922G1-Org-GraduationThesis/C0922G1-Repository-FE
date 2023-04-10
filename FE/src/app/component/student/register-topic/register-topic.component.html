@@ -75,7 +75,7 @@
               <span
                 class="text-danger"
                 *ngIf="
-                    formCreate.controls.projectDescription?.touched &&
+                    formCreate.controls.projectDescription?.dirty &&
                     formCreate.controls.projectDescription?.errors?.required">
                     Phải nhập trường này.
                 </span>
@@ -86,7 +86,7 @@
               <span
                 class="text-danger"
                 *ngIf="
-                    formCreate.controls.projectImg?.touched &&
+                    formCreate.controls.projectImg?.dirty &&
                     formCreate.controls.projectImg?.errors?.required">
                     Phải nhập trường này.
                 </span>

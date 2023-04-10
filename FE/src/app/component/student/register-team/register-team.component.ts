@@ -53,9 +53,9 @@ export class RegisterTeamComponent implements OnInit {
   addStudent(id: number) {
     if (this.listTeam.length === 6) {
       Swal.fire({
-        title: 'Lỗi',
+        title: 'Thông báo',
         text: 'Mỗi nhóm chỉ được 7 thành viên!',
-        icon: 'error'
+        icon: 'warning'
       });
       return;
     }
@@ -79,6 +79,14 @@ export class RegisterTeamComponent implements OnInit {
   }
 
   onSubmit() {
+    if (this.listTeam.length === 1) {
+      Swal.fire({
+        title: 'Thông báo',
+        text: 'Mỗi nhóm ít nhất là 3 thành viên!',
+        icon: 'warning'
+      });
+      return;
+    }
     const validGroupNameRegex = /^[A-Z][a-zA-ZÀ-Ỹà-ỹ0-9\s]{4,44}[a-zA-ZÀ-Ỹà-ỹ0-9]?$/;
     Swal.fire({
       title: 'Nhập tên nhóm',

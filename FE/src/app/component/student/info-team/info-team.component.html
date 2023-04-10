@@ -39,10 +39,16 @@
                 <label>&ensp;{{student.studentDateOfBirth}}</label>
               </p>
             </div>
-            <div class="card-body d-flex justify-content-center">
-              <button type="button" class="btn btn-outline-success">Đã tham gia
+            <div class="card-body d-flex justify-content-center" *ngIf="student.flagLeader === true; else isNotLeader">
+              <button type="button" class="btn btn-success">Nhóm trưởng
               </button>
             </div>
+            <ng-template #isNotLeader>
+              <div class="card-body d-flex justify-content-center">
+                <button type="button" class="btn btn-primary">Thành viên
+                </button>
+              </div>
+            </ng-template>
           </div>
         </div>
       </div>
