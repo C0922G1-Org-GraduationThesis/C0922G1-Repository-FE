@@ -50,15 +50,23 @@ export class RegisterTopicComponent implements OnInit {
 
   initForm() {
     this.formCreate = new FormGroup({
-      projectName: new FormControl('', [Validators.required,
-        // Validators.pattern('^[A-Z][a-zA-ZÀ-Ỹà-ỹ0-9\\s]{4,44}[a-zA-ZÀ-Ỹà-ỹ0-9]?$'),
+      projectName: new FormControl('',
+        [Validators.required,
+        Validators.pattern('^[A-Z][a-zA-ZÀ-Ỹà-ỹ0-9\\s]{4,44}[a-zA-ZÀ-Ỹà-ỹ0-9]?$'),
         Validators.minLength(15),
-        Validators.maxLength(250)]),
-      projectContent: new FormControl('', [Validators.required,
+        Validators.maxLength(250)]
+      ),
+      projectContent: new FormControl('',
+        [Validators.required,
         Validators.maxLength(10000),
-        Validators.minLength(50)]),
-      projectDescription: new FormControl('', [Validators.required]),
-      projectImg: new FormControl('', [Validators.required]),
+        Validators.minLength(50)]
+      ),
+      projectDescription: new FormControl('',
+        [Validators.required]
+      ),
+      projectImg: new FormControl('',
+        [Validators.required]
+      ),
       teamId: new FormControl(this.teamId)
     });
   }
@@ -121,16 +129,23 @@ export class RegisterTopicComponent implements OnInit {
         icon: 'success'
       });
       this.route.navigateByUrl('projects/detail/' + project.projectId);
+    }, error => {
+      console.log('đã có lỗi xảy ra khi thêm mới đề tài', error);
+      Swal.fire({
+        title: 'Thông báo',
+        text: 'Đăng ký đề tài thất bại.',
+        icon: 'error'
+      });
     });
   }
 
   uploadFileImg() {
     this.selectedFile = this.avatarDom?.nativeElement.files[0];
-    this.onSubmit();
+    // this.onSubmit();
   }
 
   uploadFileDes() {
     this.selectedFileDes = this.avatarDomDes?.nativeElement.files[0];
-    this.onSubmit();
+    // this.onSubmit();
   }
 }

@@ -6,6 +6,9 @@ import {Team} from '../../../model/team';
 import {TeamService} from '../../../service/team.service';
 import {ProjectService} from "../../../service/project.service";
 import {Project} from "../../../model/project";
+import {TokenStorageService} from "../../../service/token-storage.service";
+import {ShareService} from "../../../service/share.service";
+import {TeacherService} from "../../../service/teacher.service";
 
 @Component({
   selector: 'app-info-team',
@@ -24,12 +27,16 @@ export class InfoTeamComponent implements OnInit {
   project: Project = null;
   totalElement = 0;
   memberNotJoin = 0;
+  flagStudentLeader?: boolean;
+  username: string;
 
   constructor(private studentService: StudentService,
               private route: Router,
               private activatedRoute: ActivatedRoute,
               private teamService: TeamService,
-              private projectService: ProjectService) {
+              private projectService: ProjectService,
+              private tokenStorageService: TokenStorageService,
+              private shareService: ShareService) {
     this.activatedRoute.paramMap.subscribe(paramMap => {
       this.teamId = +paramMap.get('teamId');
       this.teamService.findById(this.teamId).subscribe(team => {
@@ -37,14 +44,29 @@ export class InfoTeamComponent implements OnInit {
         this.team = team;
         this.teamPage = team;
       });
-      this.projectService.getProjectDetail(this.teamId).subscribe(projet =>{
-        this.project = projet;
+      this.projectService.getProjectDetail(this.teamId).subscribe(project =>{
+        this.project = project;
       });
     });
     this.onSearch();
   }
 
   ngOnInit(): void {
+    this.loadHeader();
+  }
+
+  findNameUser(): void {
+      this.studentService.findStudentByEmail(this.username).subscribe(next => {
+        console.log('student', next)
+        this.flagStudentLeader = next.flagLeader;
+      });
+  }
+
+  loadHeader(): void {
+    if (this.tokenStorageService.getToken()) {
+      this.username = this.tokenStorageService.getUser().username;
+    }
+    this.findNameUser();
   }
 
   onSearch() {

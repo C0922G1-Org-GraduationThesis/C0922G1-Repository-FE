@@ -30,8 +30,7 @@
              *ngIf="role==='ROLE_STUDENT'|| role==='ROLE_ADMIN'">Sinh Viên</a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" routerLink="/students/register-instructor">Đăng ký GVHD</a></li>
-            <li><a class="dropdown-item" *ngIf="studentId" routerLink="/students/register-team/{{studentId}}">Đăng ký nhóm</a></li>
-            <li><a class="dropdown-item" *ngIf="teamId" routerLink="/students/register-topic/{{teamId.teamId}}">Đăng ký đề tài</a></li>
+            <li><a class="dropdown-item" [hidden]="teamId !== null" *ngIf="studentId" routerLink="/students/register-team/{{studentId}}">Đăng ký nhóm</a></li>
             <li><a class="dropdown-item" *ngIf="teamId" routerLink="/students/info-team/{{teamId.teamId}}">Thông tin nhóm</a></li>
             <li><a class="dropdown-item" routerLink="/progress/progress-management">Quản lý tiến độ</a></li>
             <li><a class="dropdown-item" *ngIf="flagStudentLeader" href="/progress/report/{{idProject}}/{{idStage}}">Báo cáo tiến độ</a></li>
@@ -48,20 +47,31 @@
         </div>
         <div class="text-black-50"><a href="#scrollspyHeading2" class="nav-item nav-link" style="color: black">Liên Hệ</a></div>
       </div>
-      <div class="dropdown">
-        <a class="me-3 dropdown-toggle hidden-arrow" href="#" id="navbarDropdownMenuLink"
-           role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+
+
+      <div class="dropdown" [hidden]="username === undefined">
+        <button class="btn btn-link" type="button" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
           <i class="fas fa-bell"></i>
-          <span class="badge rounded-pill badge-notification bg-danger"></span>
-        </a>
-        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <li *ngFor="let announcement of listAnnouncement">
-            <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal10">
-              <a class="dropdown-item">{{announcement.announcementName}}: {{announcement.announcementContent}}</a>
-            </button>
-          </li>
+          <span class="badge bg-danger">{{listAnnouncement?.length}}</span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+          <ng-container *ngIf="listAnnouncement?.length > 0; else noAnnouncement">
+            <li *ngFor="let announcement of listAnnouncement">
+              <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal10">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>{{announcement.announcementName}}</div>&nbsp;
+                  <div class="text-muted">{{announcement.announcementContent}}</div>
+                </div>
+              </a>
+            </li>
+          </ng-container>
+          <ng-template #noAnnouncement>
+            <li><a class="dropdown-item" href="#">Không có thông báo</a></li>
+          </ng-template>
         </ul>
       </div>
+
+
       <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNav">
         <ul class="navbar-nav flex-grow-1 d-flex justify-content-end">
           <li class="nav-item d-flex align-items-center mg-left" [hidden]="!isLoggedIn" *ngIf="name">

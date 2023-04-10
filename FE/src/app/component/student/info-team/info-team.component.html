@@ -149,7 +149,8 @@
     <span class="d-flex justify-content-center">
        <button type="button" class="btn btn-outline-secondary" *ngIf="project === null "
                [disabled]="totalElement !== team.memberOfTeam"
-               (click)="onSubmit()">
+               (click)="onSubmit()"
+       [hidden]="flagStudentLeader === false">
       Đăng ký đề tài</button>
     </span>
   </div>
