@@ -125,21 +125,11 @@ export class RegisterTeamComponent implements OnInit {
               this.studentService.updateLeader(this.studentId, student, team.teamId).subscribe(next => {
                 console.log(next);
                 console.log(team);
-                const Toast = Swal.mixin({
-                  toast: true,
-                  position: 'top-end',
-                  showConfirmButton: false,
-                  timer: 3000,
-                  timerProgressBar: true,
-                  didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer);
-                    toast.addEventListener('mouseleave', Swal.resumeTimer);
-                  }
-                });
                 this.route.navigateByUrl('/students/info-team/' + team.teamId);
-                Toast.fire({
-                  icon: 'success',
-                  title: 'Đăng ký nhóm thành công'
+                Swal.fire({
+                  title: 'Thông báo',
+                  text: 'Đăng ký nhóm thành công!',
+                  icon: 'success'
                 });
                 this.studentService.sendMailInviteTeam(this.listTeam, team.teamId).subscribe(next => {
                   console.log('GỬi mail thành công rồi nha', next);
@@ -152,20 +142,10 @@ export class RegisterTeamComponent implements OnInit {
             });
           }, error => {
             // Tên nhóm bị trùng
-            const Toast = Swal.mixin({
-              toast: true,
-              position: 'top-end',
-              showConfirmButton: false,
-              timer: 3000,
-              timerProgressBar: true,
-              didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer);
-                toast.addEventListener('mouseleave', Swal.resumeTimer);
-              }
-            });
-            Toast.fire({
-              icon: 'error',
-              title: 'Tên nhóm bị trùng, vui lòng chọn tên khác'
+            Swal.fire({
+              title: 'Thông báo',
+              text: 'Đăng ký nhóm thất bại, tên nhóm bị trùng!',
+              icon: 'error'
             });
           });
         }
