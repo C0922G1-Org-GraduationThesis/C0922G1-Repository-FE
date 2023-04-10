@@ -49,7 +49,7 @@
       </div>
 
 
-      <div class="dropdown" [hidden]="username === undefined">
+      <div class="dropdown" [hidden]="username === undefined || role !== 'ROLE_STUDENT'">
         <button class="btn btn-link" type="button" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
           <i class="fas fa-bell"></i>
           <span class="badge bg-danger">{{listAnnouncement?.length}}</span>

@@ -29,6 +29,7 @@ export class RegisterTopicComponent implements OnInit {
   fileUrl: string;
   fileUrlDes: string;
   selectedFileDes: any = null;
+  fileUploaded: boolean = false;
 
   constructor(private projectService: ProjectService,
               private activatedRoute: ActivatedRoute,
@@ -52,14 +53,14 @@ export class RegisterTopicComponent implements OnInit {
     this.formCreate = new FormGroup({
       projectName: new FormControl('',
         [Validators.required,
-        Validators.pattern('^[A-Z][a-zA-ZÀ-Ỹà-ỹ0-9\\s]{4,44}[a-zA-ZÀ-Ỹà-ỹ0-9]?$'),
-        Validators.minLength(15),
-        Validators.maxLength(250)]
+          Validators.pattern('^[A-Z][a-zA-ZÀ-Ỹà-ỹ0-9\\s]{4,44}[a-zA-ZÀ-Ỹà-ỹ0-9]?$'),
+          Validators.minLength(15),
+          Validators.maxLength(250)]
       ),
       projectContent: new FormControl('',
         [Validators.required,
-        Validators.maxLength(10000),
-        Validators.minLength(50)]
+          Validators.maxLength(10000),
+          Validators.minLength(50)]
       ),
       projectDescription: new FormControl('',
         [Validators.required]
@@ -89,6 +90,48 @@ export class RegisterTopicComponent implements OnInit {
   }
 
   onSubmit() {
+    this.uploadFile();
+    if (this.fileUploaded === true) {
+      this.formCreate.value.projectDescription = this.fileUrlDes;
+      this.formCreate.value.projectImg = this.fileUrl;
+      const project = this.formCreate.value;
+      console.log(project);
+      this.projectService.save(project).subscribe(project => {
+        console.log(project);
+        Swal.fire({
+          title: 'Thông báo',
+          text: 'Đăng ký đề tài thành công!',
+          icon: 'success'
+        });
+        this.route.navigateByUrl('projects/detail/' + project.projectId);
+      }, error => {
+        console.log('đã có lỗi xảy ra khi thêm mới đề tài', error);
+        Swal.fire({
+          title: 'Thông báo',
+          text: 'Đăng ký đề tài thất bại.',
+          icon: 'error'
+        });
+      });
+    } else {
+      Swal.fire({
+        title: 'Thông báo',
+        text: 'Vui lòng đợi trong giây lát, chúng tôi đang upload file',
+        icon: 'warning'
+      });
+    }
+  }
+
+  uploadFileImg() {
+    this.selectedFile = this.avatarDom?.nativeElement.files[0];
+    // this.onSubmit();
+  }
+
+  uploadFileDes() {
+    this.selectedFileDes = this.avatarDomDes?.nativeElement.files[0];
+    // this.onSubmit();
+  }
+
+  uploadFile() {
     if (this.selectedFile != null) {
       const filePath = this.selectedFile.name;
       const fileRef = this.storage.ref(filePath);
@@ -99,6 +142,7 @@ export class RegisterTopicComponent implements OnInit {
           fileRef.getDownloadURL().toPromise().then(url => {
             this.fileUrl = url;
             console.log(this.fileUrl);
+            this.fileUploaded = true;
           });
         })
       ).subscribe();
@@ -113,39 +157,10 @@ export class RegisterTopicComponent implements OnInit {
           fileRef.getDownloadURL().toPromise().then(url => {
             this.fileUrlDes = url;
             console.log(this.fileUrlDes);
+            this.fileUploaded = true;
           });
         })
       ).subscribe();
     }
-    this.formCreate.value.projectDescription = this.fileUrlDes;
-    this.formCreate.value.projectImg = this.fileUrl;
-    const project = this.formCreate.value;
-    console.log(project);
-    this.projectService.save(project).subscribe(project => {
-      console.log(project);
-      Swal.fire({
-        title: 'Thông báo',
-        text: 'Đăng ký đề tài thành công!',
-        icon: 'success'
-      });
-      this.route.navigateByUrl('projects/detail/' + project.projectId);
-    }, error => {
-      console.log('đã có lỗi xảy ra khi thêm mới đề tài', error);
-      Swal.fire({
-        title: 'Thông báo',
-        text: 'Đăng ký đề tài thất bại.',
-        icon: 'error'
-      });
-    });
-  }
-
-  uploadFileImg() {
-    this.selectedFile = this.avatarDom?.nativeElement.files[0];
-    // this.onSubmit();
-  }
-
-  uploadFileDes() {
-    this.selectedFileDes = this.avatarDomDes?.nativeElement.files[0];
-    // this.onSubmit();
   }
 }
