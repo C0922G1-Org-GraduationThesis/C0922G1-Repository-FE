@@ -18,7 +18,7 @@
           <h5 class="card-title text-primary d-flex justify-content-center">Đăng ký đề tài</h5>
           <form [formGroup]="formCreate" (ngSubmit)="onSubmit()">
             <div class="mb-3">
-              <label for="nameTopic" class="form-label text-color">Tên đề tài(<span class="text-danger">*</span>)</label>
+              <label for="nameTopic" class="form-label text-color"><b class="text-info">Tên đề tài</b>(<span class="text-danger">*</span>)</label>
               <input type="text" class="form-control" id="nameTopic" placeholder="" formControlName="projectName">
               <span
                 class="text-danger"
@@ -47,7 +47,7 @@
               </span>
             </div>
             <div class="mb-3">
-              <label for="contentTopic" class="form-label text-color">Nội dung đề tài(<span class="text-danger">*</span>)</label>
+              <label for="contentTopic" class="form-label text-color"><b class="text-info">Nội dung đề tài</b>(<span class="text-danger">*</span>)</label>
               <textarea class="form-control" id="contentTopic" rows="3" formControlName="projectContent"></textarea>
               <span
                 class="text-danger"
@@ -70,7 +70,7 @@
               </span>
             </div>
             <div class="mb-3">
-              <label for="description" class="form-label text-color">Mô tả(<span class="text-danger">*</span>)</label>
+              <label for="description" class="form-label text-color"><b class="text-info">Mô tả</b>(<span class="text-danger">*</span>)</label>
               <input class="form-control" type="file" #uploadFile1 (change)="uploadFileDes()" id="description" formControlName="projectDescription">
               <span
                 class="text-danger"
@@ -81,7 +81,7 @@
                 </span>
             </div>
             <div class="mb-3">
-              <label for="img" class="form-label text-color">Hình ảnh(<span class="text-danger">*</span>)</label>
+              <label for="img" class="form-label text-color"><b class="text-info">Hình ảnh</b>(<span class="text-danger">*</span>)</label>
               <input class="form-control" type="file" #uploadFile (change)="uploadFileImg()" id="img" formControlName="projectImg">
               <span
                 class="text-danger"

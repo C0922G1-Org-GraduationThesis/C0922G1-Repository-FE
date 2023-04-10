@@ -24,7 +24,7 @@
 }
 
 .mg {
-  margin-top: 2rem;
+  margin-top: 2.5rem;
 }
 
 .pagination-ellipsis {
@@ -36,6 +36,18 @@
 }
 
 @media (max-width: 768px) {
+  .fixed-height {
+    overflow-y: scroll;
+  }
+}
+
+@media (max-width: 920px) {
+  .fixed-height {
+    overflow-y: scroll;
+  }
+}
+
+@media (max-width: 1000px) {
   .fixed-height {
     overflow-y: scroll;
   }

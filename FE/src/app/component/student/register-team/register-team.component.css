@@ -47,6 +47,18 @@
   }
 }
 
+@media (max-width: 920px) {
+  .fixed-height {
+    overflow-y: scroll;
+  }
+}
+
+@media (max-width: 1000px) {
+  .fixed-height {
+    overflow-y: scroll;
+  }
+}
+
 .fixed-height-table {
   height: 40vh;
   overflow-y: scroll;

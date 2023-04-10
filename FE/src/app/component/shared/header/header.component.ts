@@ -109,4 +109,8 @@ export class HeaderComponent implements OnInit {
       this.route.navigateByUrl('/students/info-team/' + this.idTeam);
     })
   }
+
+  resetAnnouncement() {
+    this.listAnnouncement = [];
+  }
 }
