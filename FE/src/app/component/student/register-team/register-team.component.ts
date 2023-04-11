@@ -32,10 +32,16 @@ export class RegisterTeamComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.onSearch();
+    this.findAll();
   }
 
   onSearch() {
+    this.currentPage = 0;
+    this.listSearchStudent = [];
+    this.findAll();
+  }
+
+  findAll() {
     this.studentService.findAll(this.searchStr, this.currentPage, this.size).subscribe(data => {
       this.listSearchStudent = data.content.filter(student => !this.listTeam
         .some(teamStudent => teamStudent.studentId === student.studentId));
@@ -62,7 +68,7 @@ export class RegisterTeamComponent implements OnInit {
     this.studentService.findById(id).subscribe(student => {
       if (!this.listTeam.some(s => s.studentId === student.studentId)) {
         this.listTeam.push(student);
-        this.onSearch();
+        this.findAll();
       }
     });
   }
@@ -70,12 +76,12 @@ export class RegisterTeamComponent implements OnInit {
 
   delete(id: number) {
     this.listTeam = this.listTeam.filter(student => student.studentId !== id);
-    this.onSearch();
+    this.findAll();
   }
 
   changePage(pageNumber: number) {
     this.currentPage = pageNumber;
-    this.onSearch();
+    this.findAll();
   }
 
   onSubmit() {
