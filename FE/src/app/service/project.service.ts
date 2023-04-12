@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Project} from '../model/project';
+import {IteamDTOO} from "../dto/iteam-dtoo";
 
 @Injectable({
   providedIn: 'root'
@@ -66,6 +67,14 @@ export class ProjectService {
    */
   save(project: Project): Observable<Project> {
     return this.httpClient.post(this.API_URL + 'save', project);
+  }
+
+  /**
+   * Created by: VuLX
+   * Date create: 04/04/2023
+   */
+  findTeamById(projectId: number): Observable<IteamDTOO> {
+    return this.httpClient.get<IteamDTOO>(this.API_URL + 'detail/team/' + projectId);
   }
 }
 

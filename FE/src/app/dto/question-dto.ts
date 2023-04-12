@@ -1,9 +1,6 @@
-import {Student} from './student';
-
-export interface Question {
+export interface QuestionDto {
   questionId?: number;
   dateTime?: string;
   questionContent?: string;
   questionTopic?: string;
-  student?: Student;
 }

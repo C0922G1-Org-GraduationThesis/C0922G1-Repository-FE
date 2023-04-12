@@ -139,7 +139,7 @@
       </div>
     </div>
   </div>
-  <form [formGroup]="formDocument" (ngSubmit)="createDocument()">
+  <form [hidden]="roleUser !== 'ROLE_TEACHER'" [formGroup]="formDocument" (ngSubmit)="createDocument()">
     <div class="row">
       <div class="col-1" style="margin: 0; padding: 0">
         <span class="bg-info text-black-50"

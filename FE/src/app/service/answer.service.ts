@@ -13,11 +13,10 @@ export class AnswerService {
   }
 
   getAllAnswer(questionId: number): Observable<Answers[]> {
-    console.log(questionId);
     return this.httpClient.get<Answers[]>(this.apiUrl + '?questionId=' + questionId);
   }
 
-  create(answers: Answers) {
-    return this.httpClient.post(this.apiUrl + '/save-answer', answers);
+  createAnswer(answers: Answers): Observable<void> {
+    return this.httpClient.post<void>(this.apiUrl + '/save-answer', answers);
   }
 }

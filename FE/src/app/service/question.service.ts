@@ -18,7 +18,7 @@ export class QuestionService {
     return this.httpClient.get<Page<Question>>(this.apiUrl + '?totalElement=' + totalElement);
   }
 
-  create(question: Question) {
-    return this.httpClient.post(this.apiUrl + '/save-question', question);
+  create(question: Question, studentId: number) {
+    return this.httpClient.post(this.apiUrl + '/save-question/'+studentId, question);
   }
 }

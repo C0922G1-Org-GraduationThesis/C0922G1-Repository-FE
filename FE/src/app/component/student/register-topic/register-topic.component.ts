@@ -113,11 +113,31 @@ export class RegisterTopicComponent implements OnInit {
         });
       });
     } else {
+
+      let timerInterval
       Swal.fire({
-        title: 'Thông báo',
-        text: 'Vui lòng đợi trong giây lát, chúng tôi đang upload file',
-        icon: 'warning'
+        title: 'Vui lòng đợi trong giây lát!',
+        html: 'Quá trình tải file lên sẽ hoàn tất trong <b></b> milliseconds.',
+        timer: 5000,
+        timerProgressBar: true,
+        didOpen: () => {
+          Swal.showLoading()
+          const b = Swal.getHtmlContainer().querySelector('b')
+          timerInterval = setInterval(() => {
+            b.textContent = String(Swal.getTimerLeft())
+          }, 100)
+        },
+        willClose: () => {
+          clearInterval(timerInterval)
+        }
+      }).then((result) => {
+        /* Read more about handling dismissals below */
+        if (result.dismiss === Swal.DismissReason.timer) {
+          console.log('I was closed by the timer')
+        }
+        this.onSubmit();
       });
+
     }
   }
 
