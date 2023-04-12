@@ -49,12 +49,11 @@
 
 
       <div class="dropdown" [hidden]="username === undefined || role !== 'ROLE_STUDENT'">
-        <a class="me-3 dropdown-toggle hidden-arrow" href="#" id="navbarDropdownMenuLink"
-           role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+        <a class="me-3 dropdown-toggle hidden-arrow" href="#" id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown" aria-expanded="false" (click)="hideNotification()">
           <i class="fas fa-bell"></i>
-          <span class="badge rounded-pill badge-notification bg-danger" style="font-size: 10px">{{listAnnouncement?.length}}</span>
+          <span class="badge rounded-pill badge-notification bg-danger" style="font-size: 10px" *ngIf="notificationCount">{{notificationCount}}</span>
         </a>
-        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" (click)="resetAnnouncement()">
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
           <ng-container *ngIf="listAnnouncement?.length > 0; else noAnnouncement">
             <li *ngFor="let announcement of listAnnouncement">
               <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal10">
@@ -70,6 +69,7 @@
           </ng-template>
         </ul>
       </div>
+
 
 
       <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNav">

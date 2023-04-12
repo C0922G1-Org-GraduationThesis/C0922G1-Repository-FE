@@ -29,6 +29,7 @@ export class HeaderComponent implements OnInit {
   listAnnouncement: Announcement[];
   idTeam: number;
   nameNoti: string;
+  notificationCount?: number;
 
   constructor(private tokenStorageService: TokenStorageService,
               private shareService: ShareService,
@@ -95,7 +96,12 @@ export class HeaderComponent implements OnInit {
       this.listAnnouncement = announcements;
       this.idTeam = +announcements[0].attach;
       this.nameNoti = announcements[0].announcementContent;
+      this.notificationCount = this.listAnnouncement.length;
     });
+  }
+
+  hideNotification() {
+    this.notificationCount = 0;
   }
 
   notJoin() {
