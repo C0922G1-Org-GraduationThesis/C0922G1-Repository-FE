@@ -22,7 +22,7 @@
             <li><a class="dropdown-item" routerLink="/projects/pro">Kiểm duyệt đề tài</a></li>
             <li><a class="dropdown-item" routerLink="/students/instructor">Danh sách sinh viên</a></li>
             <li><a class="dropdown-item" routerLink="/progress/progress-management">Quản lý tiến độ</a></li>
-            <li><a class="dropdown-item" routerLink="/document">Tài liệu hướng dẫn</a></li>
+<!--            <li><a class="dropdown-item" routerLink="/document">Tài liệu hướng dẫn</a></li>-->
           </ul>
         </div>
         <div class="nav-item dropdown">
@@ -33,7 +33,7 @@
             <li><a class="dropdown-item" [hidden]="teamId !== null" *ngIf="studentId" routerLink="/students/register-team/{{studentId}}">Đăng ký nhóm</a></li>
             <li><a class="dropdown-item" *ngIf="teamId" routerLink="/students/info-team/{{teamId.teamId}}">Thông tin nhóm</a></li>
             <li><a class="dropdown-item" routerLink="/progress/progress-management">Quản lý tiến độ</a></li>
-            <li><a class="dropdown-item" routerLink="/document">Tài liệu hướng dẫn</a></li>
+<!--            <li><a class="dropdown-item" routerLink="/document">Tài liệu hướng dẫn</a></li>-->
           </ul>
         </div>
         <div class="nav-item dropdown">

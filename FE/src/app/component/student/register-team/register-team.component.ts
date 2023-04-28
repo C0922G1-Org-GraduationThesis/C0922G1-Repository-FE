@@ -57,6 +57,7 @@ export class RegisterTeamComponent implements OnInit {
   }
 
   addStudent(id: number) {
+    window.scrollTo(0, 800);
     if (this.listTeam.length === 6) {
       Swal.fire({
         title: 'Thông báo',
@@ -75,6 +76,7 @@ export class RegisterTeamComponent implements OnInit {
 
 
   delete(id: number) {
+    this.view();
     this.listTeam = this.listTeam.filter(student => student.studentId !== id);
     this.findAll();
   }
@@ -157,6 +159,10 @@ export class RegisterTeamComponent implements OnInit {
         }
       }
     });
+  }
+
+  view(): void {
+    window.scrollTo(0, 30);
   }
 
 }

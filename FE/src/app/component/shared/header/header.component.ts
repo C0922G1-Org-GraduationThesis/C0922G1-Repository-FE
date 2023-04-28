@@ -1,14 +1,15 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {TokenStorageService} from "../../../service/token-storage.service";
 import {ShareService} from "../../../service/share.service";
 import {TeacherService} from "../../../service/teacher.service";
 import {StudentService} from "../../../service/student/student.service";
-import {ProgressService} from "../../../service/progress.service";
 import {ProgressReportService} from "../../../service/progress-report.service";
 import {Team} from "../../../model/team";
 import {Announcement} from "../../../model/announcement";
 import {AnnouncementService} from "../../../service/announcement.service";
 import {Route, Router} from "@angular/router";
+import {PasswordChangeService} from "../../../service/password-change.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-header',
@@ -30,6 +31,7 @@ export class HeaderComponent implements OnInit {
   idTeam: number;
   nameNoti: string;
   notificationCount?: number;
+  passwordChangedSubscription: Subscription;
 
   constructor(private tokenStorageService: TokenStorageService,
               private shareService: ShareService,
@@ -37,11 +39,19 @@ export class HeaderComponent implements OnInit {
               private studentService: StudentService,
               private progressReportService: ProgressReportService,
               private announcementService: AnnouncementService,
-              private route: Router) {
+              private route: Router,
+              private passwordChangeService: PasswordChangeService) {
     this.shareService.getClickEvent().subscribe(() => {
       this.loadHeader();
     });
     this.findNameUser();
+    this.passwordChangedSubscription = this.passwordChangeService.passwordChanged$.subscribe(() => {
+      this.tokenStorageService.signOut();
+      this.isLoggedIn = false;
+      this.name = null;
+      this.username = undefined;
+      this.findNameUser();
+    });
   }
 
   loadHeader(): void {
@@ -76,7 +86,6 @@ export class HeaderComponent implements OnInit {
       });
     }
   }
-
 
   logOut() {
     this.tokenStorageService.signOut();

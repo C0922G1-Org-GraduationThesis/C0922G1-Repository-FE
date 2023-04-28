@@ -23,7 +23,7 @@
           <tbody>
           <tr *ngFor="let p of projects;index as i">
             <th scope="row">{{i + 1}}</th>
-            <td style="text-align: center">{{p.teamName}}</td>
+            <td style="text-align: left">{{p.teamName}}</td>
             <td style="text-align: left">{{p.projectName}}</td>
             <td style="text-align: center">
               <a
@@ -39,7 +39,7 @@
 
 
             <td>
-              <button *ngIf="p.projectStatus == null" class="btn btn-outline-success" data-bs-toggle="modal"
+              <button *ngIf="p.projectStatus == null" class="btn btn-outline-info" data-bs-toggle="modal"
                       data-bs-target="#exampleModal" (click)="pro=p">Duyệt
               </button>
 

@@ -53,6 +53,7 @@ export class InfoTeamComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadHeader();
+    window.scrollTo(0, 0);
   }
 
   findNameUser(): void {

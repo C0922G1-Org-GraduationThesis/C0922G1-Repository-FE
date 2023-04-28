@@ -14,8 +14,7 @@ export const InterceptorSkipHeader = 'X-Skip-Interceptor';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-  constructor(private tokenService: TokenStorageService,
-              private router: Router) {
+  constructor(private tokenService: TokenStorageService) {
   }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {

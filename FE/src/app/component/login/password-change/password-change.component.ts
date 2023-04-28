@@ -4,6 +4,7 @@ import {AbstractControl, FormControl, FormGroup, ValidatorFn, Validators} from '
 import {TokenStorageService} from '../../../service/token-storage.service';
 import Swal from 'sweetalert2';
 import {AccountService} from "../../../service/account.service";
+import {PasswordChangeService} from "../../../service/password-change.service";
 
 
 @Component({
@@ -19,7 +20,8 @@ export class PasswordChangeComponent implements OnInit {
 
   constructor(private route: Router,
               private accountService: AccountService,
-              private tokenStorageService: TokenStorageService) {
+              private tokenStorageService: TokenStorageService,
+              private passwordChangeService: PasswordChangeService) {
   }
 
   ngOnInit(): void {
@@ -52,6 +54,7 @@ export class PasswordChangeComponent implements OnInit {
         });
         this.tokenStorageService.signOut();
         this.route.navigateByUrl('login');
+        this.passwordChangeService.passwordChanged();
       },
       object => {
         const Toast = Swal.mixin({

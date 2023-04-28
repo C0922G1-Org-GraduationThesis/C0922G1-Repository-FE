@@ -147,6 +147,29 @@ export class UpdateTeacherComponent implements OnInit {
   }
 
   private submit() {
+    let timerInterval
+    Swal.fire({
+      title: 'Vui lòng đợi trong giây lát!',
+      html: 'Quá trình tải ảnh lên sẽ hoàn tất trong <b></b> milliseconds.',
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: () => {
+        Swal.showLoading()
+        const b = Swal.getHtmlContainer().querySelector('b')
+        timerInterval = setInterval(() => {
+          b.textContent = String(Swal.getTimerLeft())
+        }, 100)
+      },
+      willClose: () => {
+        clearInterval(timerInterval)
+      }
+    }).then((result) => {
+      /* Read more about handling dismissals below */
+      if (result.dismiss === Swal.DismissReason.timer) {
+        console.log('I was closed by the timer')
+      }
+    });
+
     if (this.selectedImage != null) {
       const filePath = this.selectedImage.name;
       const fileRef = this.storage.ref(filePath);

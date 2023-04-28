@@ -63,6 +63,29 @@ export class StudentCreateComponent implements OnInit {
   }
 
   uploadFileImg() {
+    let timerInterval
+    Swal.fire({
+      title: 'Vui lòng đợi trong giây lát!',
+      html: 'Quá trình tải ảnh lên sẽ hoàn tất trong <b></b> milliseconds.',
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: () => {
+        Swal.showLoading()
+        const b = Swal.getHtmlContainer().querySelector('b')
+        timerInterval = setInterval(() => {
+          b.textContent = String(Swal.getTimerLeft())
+        }, 100)
+      },
+      willClose: () => {
+        clearInterval(timerInterval)
+      }
+    }).then((result) => {
+      /* Read more about handling dismissals below */
+      if (result.dismiss === Swal.DismissReason.timer) {
+        console.log('I was closed by the timer')
+      }
+    });
+
     this.selectedImage = this.avatarDom?.nativeElement.files[0];
     this.submit();
   }

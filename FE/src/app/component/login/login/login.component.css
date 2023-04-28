@@ -6,6 +6,12 @@
 body {
 
 }
+
+.bg-cus{
+  background-image: url(https://ngocthiensup.com/wp-content/uploads/zoom-lop-hoc-07.jpg);
+  margin-bottom: -3rem;
+}
+
 .card-title{
   font-weight: bolder !important;
   color: #14a2b8;

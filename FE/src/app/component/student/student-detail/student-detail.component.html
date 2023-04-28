@@ -1,36 +1,38 @@
-<div class="container">
-  <div class="row justify-content-center">
-    <div class="col-sm-12 col-md-10 col-lg-9 mx-auto my-3">
-      <div class="card">
-        <div class="card-body">
-          <h2 class="card-title text-center">THÔNG TIN CHI TIẾT</h2>
-          <div class="d-flex flex-column flex-md-row">
-            <img src="{{studentDetail.studentImg}}" class=" img flex-shrink-0 me-md-5 mb-3 mb-md-0" style="width: 20%; height: 50%;" alt="...">
-            <div class="flex-grow-1">
-              <div class="mb-2">
-                <span><label class="form-label">Họ và tên:</label></span>
-                <span *ngIf="studentDetail">{{studentDetail.studentName}}</span>
-              </div>
-              <div class="mb-2">
-                <span><label class="form-label">Ngày sinh:</label></span>
-                <span *ngIf="studentDetail">{{studentDetail.studentDateOfBirth}}</span>
-              </div>
-              <div class="mb-2">
-                <span><label class="form-label">Số điện thoại:</label></span>
-                <span *ngIf="studentDetail">{{studentDetail.studentPhoneNumber}}</span>
-              </div>
-              <div class="mb-2">
-                <span><label class="form-label">Email:</label></span>
-                <span *ngIf="studentDetail">{{studentDetail.studentEmail}}</span>
-              </div>
-              <div class="mb-2">
-                <span><label class="form-label">Địa chỉ:</label></span>
-                <span *ngIf="studentDetail">{{studentDetail.studentAddress}}</span>
-              </div>
-              <div class="mb-2 d-flex justify-content-end">
-                <button *ngIf="studentDetail" type="button" class="btn btn-outline-secondary">Thoát</button>&nbsp;
+<div class="bg-cus">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-sm-12 col-md-10 col-lg-9 mx-auto my-3">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="card-title text-center">THÔNG TIN CHI TIẾT</h2>
+            <div class="d-flex flex-column flex-md-row">
+              <img src="{{studentDetail.studentImg}}" class=" img flex-shrink-0 me-md-5 mb-3 mb-md-0" style="width: 20%; height: 50%;" alt="...">
+              <div class="flex-grow-1">
+                <div class="mb-2">
+                  <span><label class="form-label">Họ và tên:</label></span>
+                  <span *ngIf="studentDetail">{{studentDetail.studentName}}</span>
+                </div>
+                <div class="mb-2">
+                  <span><label class="form-label">Ngày sinh:</label></span>
+                  <span *ngIf="studentDetail">{{studentDetail.studentDateOfBirth}}</span>
+                </div>
+                <div class="mb-2">
+                  <span><label class="form-label">Số điện thoại:</label></span>
+                  <span *ngIf="studentDetail">{{studentDetail.studentPhoneNumber}}</span>
+                </div>
+                <div class="mb-2">
+                  <span><label class="form-label">Email:</label></span>
+                  <span *ngIf="studentDetail">{{studentDetail.studentEmail}}</span>
+                </div>
+                <div class="mb-2">
+                  <span><label class="form-label">Địa chỉ:</label></span>
+                  <span *ngIf="studentDetail">{{studentDetail.studentAddress}}</span>
+                </div>
+                <div class="mb-2 d-flex justify-content-end">
+                  <button *ngIf="studentDetail" type="button" class="btn btn-outline-secondary">Thoát</button>&nbsp;
 
-                <button type="button" class="btn  btn-outline-info" routerLink="change-password">Thay đổi mật khẩu</button>
+                  <button type="button" class="btn  btn-outline-info" routerLink="change-password">Thay đổi mật khẩu</button>
+                </div>
               </div>
             </div>
           </div>
@@ -38,4 +40,5 @@
       </div>
     </div>
   </div>
+
 </div>
